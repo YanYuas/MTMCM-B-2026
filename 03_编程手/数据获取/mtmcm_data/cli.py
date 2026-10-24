@@ -844,6 +844,17 @@ def cmd_governance(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_existing(args: argparse.Namespace) -> int:
+    from .existing_audit import build_existing_audit
+
+    store = Store()
+    md_path, csv_path, rows = build_existing_audit(store)
+    print(f"已有数据审计：{store.rel(md_path)}")
+    print(f"已有数据表格：{store.rel(csv_path)}")
+    print(f"数据集：{len(rows)} 个")
+    return 0
+
+
 def cmd_verify(args: argparse.Namespace) -> int:
     config = load_config()
     store = Store()
@@ -934,6 +945,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_governance = sub.add_parser("governance", help="生成多源数据治理报告与数据卡")
     p_governance.set_defaults(func=cmd_governance)
+
+    p_existing = sub.add_parser("existing", help="审计赛题已有 8 组附件的格式/时间/空间/质量")
+    p_existing.set_defaults(func=cmd_existing)
 
     p_verify = sub.add_parser("verify", help="核验 manifest、raw 文件和本地附件")
     p_verify.set_defaults(func=cmd_verify)

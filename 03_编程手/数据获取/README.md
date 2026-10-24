@@ -34,25 +34,28 @@ cd "03_编程手\数据获取"
 # 1) 看有哪些来源
 python -m mtmcm_data list
 
-# 2) 抓全部元数据（首次会建缓存；--refresh 强制重抓）
+# 2) 先审计赛题已有 8 组附件（先内后外）
+python -m mtmcm_data existing
+
+# 3) 抓全部元数据（首次会建缓存；--refresh 强制重抓）
 python -m mtmcm_data fetch all
 
-# 3) 下载 TPDC 数据文件（默认跳过 >50MB；大文件加 --include-large）
+# 4) 下载 TPDC 数据文件（默认跳过 >50MB；大文件加 --include-large）
 python -m mtmcm_data download all
 
-# 4) 生成审计报告
+# 5) 生成来源审计报告
 python -m mtmcm_data report
 
-# 5) 核对事件前 72 小时站点/再分析降水
+# 6) 核对事件前 72 小时站点/再分析降水
 python -m mtmcm_data audit
 
-# 6) 按来源逐项核验抓取质量
+# 7) 按来源逐项核验抓取质量
 python -m mtmcm_data validate
 
-# 7) 生成数据治理报告与数据卡
+# 8) 生成数据治理报告与数据卡
 python -m mtmcm_data governance
 
-# 8) 核验 raw 文件与本地附件
+# 9) 核验 raw 文件与本地附件
 python -m mtmcm_data verify
 ```
 
@@ -167,6 +170,8 @@ GET  /view/metadataView/getGoogleJson?metadataId=<uuid>
 │   │   ├── validation.csv
 │   │   ├── data_governance.md   # 数据来源角色/质量/不确定性传导
 │   │   ├── data_governance.csv
+│   │   ├── existing_data_audit.md # 已有 8 组附件的格式/时间/空间/质量审计
+│   │   ├── existing_data_audit.csv
 │   │   └── event_window_audit.md
 │   ├── data_cards/<id>.md       # 每来源一张数据卡（角色/边界/质量/风险）
 │   ├── runs/<run_id>.json       # 每次运行的汇总
@@ -294,6 +299,23 @@ POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
 - `config/governance.json`：治理配置，新增来源时必须补条目；`validate` 会检查。
 
 > 关键写法：不要把“爬了很多数据”当亮点；要写“可追溯的多源数据治理 + 质量不确定性传导 + 关键缺口补齐”。
+
+### 7.4 已有 8 组附件的审计（`existing` 命令）
+
+`python -m mtmcm_data existing` 直接读 `05_辅助文档/题目附件/附件/`，输出 `data/reports/existing_data_audit.md`。它回答“先内后外”的第一步：
+
+| 数据集 | 关键审计结果 |
+|---|---|
+| TPDC-01 | 24 CSV / 210,336 行；MET/SOIL 缺测约 11%，FLUX 约 32%；有效观测约 2021-04-23 至 2026-08-27；事件前 72 h 降水 0.0 mm |
+| TPDC-02 | 21 XLSX / 7,519 行；2025 只有 214 天（到 08-02） |
+| TPDC-03 | 168 个 TIFF，4 个 5 年时段；含 dhdt 与 dhdt_err |
+| TPDC-04 | HDF5/NetCDF4；变量含 DEM/slope/thickness/velocity；CRS 为 UTM45N |
+| TPDC-05 | 4 期 6336×3957、30 m；0 是 nodata，1–10 无图例 |
+| TPDC-06 | 84 个多边形、33 字段；**无事件发生时间**，只有解译/影像时间 |
+| TPDC-07 | 1816×1148、30 m；实际 85.1898–85.6941E, 28.2455–28.5644N；高程 1621–7254 m |
+| TPDC-08 | 1 个县多边形；合计 17,536，另有“人口数”16,155（口径不同） |
+
+报告还给出 7 步治理流水线（登记冻结→格式审计→时空基准→缺失/异常→质量标记→派生层→冻结交接）和“先内后外”的外部补充准入条件。
 
 ---
 
