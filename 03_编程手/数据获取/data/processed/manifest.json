@@ -1,0 +1,55 @@
+{
+  "batch": "1",
+  "generated_at": "2026-10-24T11:36:45",
+  "datasets": [
+    "TPDC-01 逐小时综合观测",
+    "TPDC-02 逐日平均气温",
+    "TPDC-06 历史灾点（沟域多边形）"
+  ],
+  "outputs": [
+    {
+      "path": "data/processed/tpdc01_hourly/tpdc01_key_vars_long.csv.gz",
+      "bytes": 3612052,
+      "sha256": "3d3d437c74a1cd60772cac5a4b1c8751493cbf7500092265650e272eb6ab451f"
+    },
+    {
+      "path": "data/processed/tpdc01_hourly/tpdc01_missing_by_variable.csv",
+      "bytes": 701,
+      "sha256": "57c30278f4547f824dde482277d86205f6070f51645371cbb054f7fe161d2f1f"
+    },
+    {
+      "path": "data/processed/tpdc01_hourly/tpdc01_variable_dictionary.csv",
+      "bytes": 617,
+      "sha256": "13a62d51b87477c0ac566f5dabcaacc0c14fffe653d3b240c2c672bfa8831cc0"
+    },
+    {
+      "path": "data/processed/tpdc02_temp/tpdc02_temp_long.csv.gz",
+      "bytes": 479100,
+      "sha256": "e7759ca3c3a09cfdb3d1f1b70dfd56c41a7540b7a39d29d150b7006f2675351a"
+    },
+    {
+      "path": "data/processed/tpdc02_temp/tpdc02_temp_wide.csv.gz",
+      "bytes": 342530,
+      "sha256": "bcd52d4173b1894e3c11754ae47443d05a4f05695c6d0e0b2df39bac8f5f56ee"
+    },
+    {
+      "path": "data/processed/tpdc02_temp/tpdc02_coverage_by_county.csv",
+      "bytes": 345,
+      "sha256": "d57022b5d9fce87114a51af4b6a55698d275c68df0c5687f2b246a82ca7b4ff1"
+    },
+    {
+      "path": "data/processed/tpdc06_points/tpdc06_points.geojson",
+      "bytes": 994968,
+      "sha256": "9de2272737d32f894816b0d9a87ac6b31957d11cfc8aa8c34a6200db94e3a91d"
+    },
+    {
+      "path": "data/processed/tpdc06_points/tpdc06_fields.csv",
+      "bytes": 1161,
+      "sha256": "8d7368f7e369b09d7d1f32bcb8015b7ad53a927864c2eb9a6be45d2017c045aa"
+    }
+  ],
+  "notes": [
+    "原始附件只读；processed 层可由 python -m mtmcm_data process --batch 1 重建",
+    "缺失值不补零；QC=8 标记缺失；解译/影像时间不是事件时间"
+  ]
+}

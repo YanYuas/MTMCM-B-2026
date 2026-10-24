@@ -1,0 +1,12 @@
+﻿variable,unit,description,qc_column,qc_available,source_type
+H,W/m2,sensible heat flux,,False,FLUX
+LE,W/m2,latent heat flux,,False,FLUX
+Precip,mm,precipitation,,False,MET
+RH_2m,%,2 m relative humidity,QC_RH_2m,True,MET
+Rld,W/m2,downward longwave radiation,QC_rld,True,RADM
+Rsd,W/m2,downward shortwave radiation,QC_Rsd,True,RADM
+Ta_2m,degree C,2 m air temperature,QC_Ta_2m,True,MET
+USTAR,m/s,friction velocity,,False,FLUX
+VWC_0.4m,m3/m3,0.4 m volumetric water content,QC_VWC_0.4m,True,SOIL
+WS_10m,m/s,10 m wind speed,QC_WS_10m,True,MET
+soilT_0.4m,degree C,0.4 m soil temperature,QC_soilT_0.4m,True,SOIL

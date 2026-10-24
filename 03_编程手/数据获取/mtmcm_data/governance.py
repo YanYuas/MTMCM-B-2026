@@ -275,6 +275,7 @@ def build_governance_report(config: Config, store: Store, manifest: Manifest) ->
         f"> 生成时间：{datetime.now().isoformat(timespec='seconds')}",
         "> 定位：不是“爬虫技术章节”，而是论文的“多源数据治理与质量评估”小节底稿。",
         "> 先内后外：已有 8 组附件的格式/质量审计见 `data/reports/existing_data_audit.md`。",
+        "> 第一批 processed 基线（TPDC-01/02/06）见 `data/processed/README.md`。",
         "> 原则：每个来源都写清“能支持什么、不能支持什么、质量如何进入不确定性”。",
         "",
         f"**汇总**：{len(rows)} 个来源，{len(cards)} 张数据卡；治理配置缺失 {sum(1 for r in rows if r['role'] == '缺少治理配置')} 个。",

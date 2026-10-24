@@ -37,25 +37,28 @@ python -m mtmcm_data list
 # 2) 先审计赛题已有 8 组附件（先内后外）
 python -m mtmcm_data existing
 
-# 3) 抓全部元数据（首次会建缓存；--refresh 强制重抓）
+# 3) 生成第一批 processed 基线（TPDC-01/02/06）
+python -m mtmcm_data process --batch 1
+
+# 4) 抓全部元数据（首次会建缓存；--refresh 强制重抓）
 python -m mtmcm_data fetch all
 
-# 4) 下载 TPDC 数据文件（默认跳过 >50MB；大文件加 --include-large）
+# 5) 下载 TPDC 数据文件（默认跳过 >50MB；大文件加 --include-large）
 python -m mtmcm_data download all
 
-# 5) 生成来源审计报告
+# 6) 生成来源审计报告
 python -m mtmcm_data report
 
-# 6) 核对事件前 72 小时站点/再分析降水
+# 7) 核对事件前 72 小时站点/再分析降水
 python -m mtmcm_data audit
 
-# 7) 按来源逐项核验抓取质量
+# 8) 按来源逐项核验抓取质量
 python -m mtmcm_data validate
 
-# 8) 生成数据治理报告与数据卡
+# 9) 生成数据治理报告与数据卡
 python -m mtmcm_data governance
 
-# 9) 核验 raw 文件与本地附件
+# 10) 核验 raw 文件与本地附件
 python -m mtmcm_data verify
 ```
 
@@ -174,6 +177,12 @@ GET  /view/metadataView/getGoogleJson?metadataId=<uuid>
 │   │   ├── existing_data_audit.csv
 │   │   └── event_window_audit.md
 │   ├── data_cards/<id>.md       # 每来源一张数据卡（角色/边界/质量/风险）
+│   ├── processed/               # 第一批基线（TPDC-01/02/06），可再生
+│   │   ├── manifest.json
+│   │   ├── README.md
+│   │   ├── tpdc01_hourly/
+│   │   ├── tpdc02_temp/
+│   │   └── tpdc06_points/
 │   ├── runs/<run_id>.json       # 每次运行的汇总
 │   └── manifest.jsonl           # 一行一个请求的审计清单
 ├── logs/crawl.log
@@ -316,6 +325,20 @@ POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
 | TPDC-08 | 1 个县多边形；合计 17,536，另有“人口数”16,155（口径不同） |
 
 报告还给出 7 步治理流水线（登记冻结→格式审计→时空基准→缺失/异常→质量标记→派生层→冻结交接）和“先内后外”的外部补充准入条件。
+
+### 7.5 第一批 processed 基线（`process --batch 1`）
+
+`python -m mtmcm_data process --batch 1` 生成 `data/processed/`，只做已有数据的“可建模基线”，不掺外部数据：
+
+| 目录 | 内容 | 规模 |
+|---|---|---|
+| `tpdc01_hourly/` | `tpdc01_key_vars_long.csv.gz`：时间×变量长表，含 `qc_flag`/`missing_flag`/`qc_missing`/`qc_suspect` | 578,424 行 / 11 变量 / 3.5 MB gz |
+| `tpdc01_hourly/` | `tpdc01_missing_by_variable.csv` + `tpdc01_variable_dictionary.csv` | 11 行缺测汇总 + 变量字典 |
+| `tpdc02_temp/` | 长表 + 宽表（日期×县） | 37,595 行 / 7,519 行 |
+| `tpdc06_points/` | `tpdc06_points.geojson`：84 个沟域多边形 + 属性；`tpdc06_fields.csv` | 84 features / 33 字段 |
+| 每目录 | `manifest.json`：源文件 sha256、变换规则、输出 sha256 | — |
+
+关键约束：TPDC-01 的 `9999.9`/`QC=8` 已标缺失、不补零；TPDC-02 的 2025 只有 214 天；TPDC-06 的 `解译Time`/`影像Time` 不是事件发生时间。第二批（TPDC-05 土地覆盖、TPDC-07 DEM 派生层）尚未生成。
 
 ---
 

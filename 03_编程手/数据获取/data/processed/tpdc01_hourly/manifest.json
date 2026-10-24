@@ -1,0 +1,45 @@
+{
+  "dataset": "TPDC-01 逐小时综合观测",
+  "source_zip": "C:/Users/21722/Desktop/妈妈杯秋季赛/MTMCM比赛协作/05_辅助文档/题目附件/附件/（1）西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）.zip",
+  "source_sha256": "f2bd69a185af973ca137de4ed87986af9e723589bc6e91352e5213455f503515",
+  "generated_at": "2026-10-24T11:36:44",
+  "rows": 578424,
+  "variables": [
+    "H",
+    "LE",
+    "Precip",
+    "RH_2m",
+    "Rld",
+    "Rsd",
+    "Ta_2m",
+    "USTAR",
+    "VWC_0.4m",
+    "WS_10m",
+    "soilT_0.4m"
+  ],
+  "time_start": "2021-01-01 00:00:00",
+  "time_end": "2026-12-31 23:00:00",
+  "rules": [
+    "9999.9 与 NaN 均标记 missing_flag=1，value 置空，不补零",
+    "QC=8 标记 qc_missing=1；QC=1/2 标记 qc_suspect=1",
+    "保留原始 timestamp（UTC+8，不转 UTC）",
+    "长表：一行 = 时间 × 变量"
+  ],
+  "outputs": [
+    {
+      "path": "data/processed/tpdc01_hourly/tpdc01_key_vars_long.csv.gz",
+      "bytes": 3612052,
+      "sha256": "3d3d437c74a1cd60772cac5a4b1c8751493cbf7500092265650e272eb6ab451f"
+    },
+    {
+      "path": "data/processed/tpdc01_hourly/tpdc01_missing_by_variable.csv",
+      "bytes": 701,
+      "sha256": "57c30278f4547f824dde482277d86205f6070f51645371cbb054f7fe161d2f1f"
+    },
+    {
+      "path": "data/processed/tpdc01_hourly/tpdc01_variable_dictionary.csv",
+      "bytes": 617,
+      "sha256": "13a62d51b87477c0ac566f5dabcaacc0c14fffe653d3b240c2c672bfa8831cc0"
+    }
+  ]
+}

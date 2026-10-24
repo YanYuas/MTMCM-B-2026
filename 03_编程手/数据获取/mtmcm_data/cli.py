@@ -855,6 +855,17 @@ def cmd_existing(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_process(args: argparse.Namespace) -> int:
+    from .process import build_processed
+
+    store = Store()
+    manifest = build_processed(store, batch=args.batch)
+    print(f"processed 批次：{manifest.get('batch')}")
+    print(f"数据集：{', '.join(manifest.get('datasets') or [])}")
+    print(f"输出目录：{store.rel(store.data_dir / 'processed')}")
+    return 0
+
+
 def cmd_verify(args: argparse.Namespace) -> int:
     config = load_config()
     store = Store()
@@ -948,6 +959,10 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_existing = sub.add_parser("existing", help="审计赛题已有 8 组附件的格式/时间/空间/质量")
     p_existing.set_defaults(func=cmd_existing)
+
+    p_process = sub.add_parser("process", help="生成 data/processed 基线（第一批：TPDC-01/02/06）")
+    p_process.add_argument("--batch", default="1", choices=["1"], help="批次；当前只实现 1")
+    p_process.set_defaults(func=cmd_process)
 
     p_verify = sub.add_parser("verify", help="核验 manifest、raw 文件和本地附件")
     p_verify.set_defaults(func=cmd_verify)
