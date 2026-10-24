@@ -1,0 +1,130 @@
+[
+  {
+    "id": "V1",
+    "expected": 0.351,
+    "actual": 0.35091672772962546,
+    "unit": "-",
+    "pass": true,
+    "note": "m_cr"
+  },
+  {
+    "id": "V2",
+    "expected": 1.043,
+    "actual": 1.0434251345948131,
+    "unit": "-",
+    "pass": true,
+    "note": "FS"
+  },
+  {
+    "id": "V3",
+    "expected": 2.041,
+    "actual": 2.041241452319315,
+    "unit": "mm/h",
+    "pass": true,
+    "note": "I_c"
+  },
+  {
+    "id": "V4",
+    "expected": 5.61,
+    "actual": 5.609999999999999,
+    "unit": "mm",
+    "pass": true,
+    "note": "API72"
+  },
+  {
+    "id": "V5",
+    "expected": 1.496,
+    "actual": 1.496357947932701,
+    "unit": "-",
+    "pass": true,
+    "note": "m_cr>1"
+  },
+  {
+    "id": "V6a",
+    "expected": 0.7472,
+    "actual": 0.7472,
+    "unit": "-",
+    "pass": true,
+    "note": "WOE global"
+  },
+  {
+    "id": "V6b",
+    "expected": 0.5279,
+    "actual": 0.5278856265859885,
+    "unit": "-",
+    "pass": true,
+    "note": "WOE block r0c0"
+  },
+  {
+    "id": "V6c",
+    "expected": 0.6496,
+    "actual": 0.649638207265752,
+    "unit": "-",
+    "pass": true,
+    "note": "WOE block r1c0"
+  },
+  {
+    "id": "V7",
+    "expected": 0.4,
+    "actual": 0.4,
+    "unit": "-",
+    "pass": true,
+    "note": "HI"
+  },
+  {
+    "id": "V8",
+    "expected": 0.5,
+    "actual": 0.5,
+    "unit": "km/km²",
+    "pass": true,
+    "note": "Dd"
+  },
+  {
+    "id": "V9",
+    "expected": 0.25,
+    "actual": 0.25,
+    "unit": "-",
+    "pass": true,
+    "note": "glacier_fraction"
+  },
+  {
+    "id": "V10a",
+    "expected": 0.8,
+    "actual": 0.8,
+    "unit": "-",
+    "pass": true,
+    "note": "H(I=1)"
+  },
+  {
+    "id": "V10b",
+    "expected": 0.0,
+    "actual": 0.0,
+    "unit": "-",
+    "pass": true,
+    "note": "H(I=0)"
+  },
+  {
+    "id": "V11",
+    "expected": 8.046,
+    "actual": 8.046310104389182,
+    "unit": "%",
+    "pass": true,
+    "note": "S_ch"
+  },
+  {
+    "id": "V12a",
+    "expected": 1,
+    "actual": 1,
+    "unit": "0/1",
+    "pass": true,
+    "note": "ice trigger"
+  },
+  {
+    "id": "V12b",
+    "expected": 0,
+    "actual": 0,
+    "unit": "0/1",
+    "pass": true,
+    "note": "ice trigger low z"
+  }
+]
