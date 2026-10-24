@@ -1,0 +1,132 @@
+{
+  "source_id": "tpdc_06_disaster_points",
+  "source_name": "TPDC-06 吉隆县泥石流灾害区历史灾点数据",
+  "kind": "tpdc_dataset",
+  "questions": [
+    "Q2"
+  ],
+  "notes": "84 个沟域多边形；只有解译时间/影像时间，没有事件发生时间。",
+  "metadata_id": "db142594-2819-403b-8da0-5ebb2a0ca951",
+  "landing_url": "https://www.tpdc.ac.cn/zh-hans/data/db142594-2819-403b-8da0-5ebb2a0ca951",
+  "title": "西藏日喀则市吉隆县泥石流灾害区历史灾点数据",
+  "title_en": "Historical disaster point data of debris flow disaster area in Jilong County, Shigatse City, Xizang",
+  "doi": "",
+  "doi_url": "",
+  "cstr": "",
+  "authors": [
+    {
+      "name": "邹强",
+      "name_en": "ZOU Qiang",
+      "unit": "中国科学院、水利部成都山地灾害与环境研究所",
+      "unit_en": "Institute of Mountain Hazards and Environment, Chinese Academy of Sciences",
+      "email": "zouqiang@imde.ac.cn",
+      "orcid": ""
+    }
+  ],
+  "publisher": "TPDC",
+  "date_published": "2026-08-27",
+  "year": "2026",
+  "description": "2026年8月26日10时30分，因尼泊尔一侧发生泥石流灾害，造成西藏日喀则市吉隆县吉隆口岸重大人员伤亡、失联。为应对此次泥石流灾害，方便科研工作者分析，特共享吉隆县历史泥石流灾点位置数据。上述位置数据是基于第二次青藏高原科学考察所得，该数据旨在为相关科研机构提供精准的空间基准，以便结合基础地理、地形、气象及历史灾害等多源数据，开展灾害成因机制分析、灾情空间展布规律研究以及灾后恢复重建选址评估等工作。",
+  "instructions": "该数据集以shp格式给出。",
+  "use_terms": "为尊重知识产权、保障数据作者的权益、扩展数据中心的服务、评估数据的应用潜力，请数据使用者在使用数据所产生的研究成果中（包括公开发表的论文、论著、数据产品和未公开发表的研究报告、数据产品等成果），明确注明数据来源和数据作者。对于转载（二次或多次发布）的数据，作者还须注明原始数据来源。",
+  "license_code": "1",
+  "share_type": "online",
+  "share_policy": "A",
+  "status": 6,
+  "time_coverage": {
+    "start": null,
+    "end": null,
+    "resolution": "Yearly",
+    "title_hint": "",
+    "note": "元数据未给出时间范围"
+  },
+  "spatial_coverage": {
+    "bbox": {
+      "west": 85.01,
+      "east": 85.48,
+      "south": 28.26,
+      "north": 29.0
+    },
+    "is_point": false,
+    "resolution": "<= 1m",
+    "crs": null,
+    "projection": "GCS_China_Geodetic_Coordinate_System_2000"
+  },
+  "keywords": [
+    "Debris flow",
+    "Natural Disaster",
+    "Jilong County",
+    "Human-nature Relationship",
+    "2022",
+    "泥石流",
+    "自然灾害",
+    "人地关系",
+    "吉隆县"
+  ],
+  "related_data": [
+    {
+      "id": "9ffe696c-ead6-4a3f-b3f0-684c1a889df0",
+      "title": "祁连山重点区域30m人类活动参数产品数据集（V1.0）"
+    },
+    {
+      "id": "848ac234-f69b-438f-9310-4830fb153374",
+      "title": "青藏高原1:100万行政边界数据（2017）"
+    },
+    {
+      "id": "eba7823e-674b-49f2-954a-ca9bc0ca3db2",
+      "title": "祁连山重点区域人类活动数据集 (2018)"
+    },
+    {
+      "id": "40a206e4-48b6-476b-a52f-ef95302798cb",
+      "title": "三极人口&GDP数据集（1970-2006）"
+    },
+    {
+      "id": "99bb0493-3fdd-4083-a67b-b6622a4f4db7",
+      "title": "祁连山区域30m人类活动参数产品数据集（V1.0）（2018）"
+    },
+    {
+      "id": "792d3a51-c36a-478c-b501-89fceaa7e870",
+      "title": "祁连山区域30m人类活动参数产品数据集（V1.0）（1985-2017）"
+    },
+    {
+      "id": "30d6b383-7349-40fd-9c13-8a3c6c02d7e4",
+      "title": "耦合模式比较计划第6阶段CNRM-CM6-1模式全球植被生产力月数据（1850-2014）"
+    },
+    {
+      "id": "0c79d76a-063c-482b-9683-42d331a65d3d",
+      "title": "青藏高原300米分辨率土壤侵蚀（水蚀）强度数据集（1992、2005、2015）"
+    },
+    {
+      "id": "345dcce4-d25b-4abb-a1cf-ed26ceca4f9b",
+      "title": "可可西里-土地覆盖及植被类型地面验证点数据集"
+    },
+    {
+      "id": "c0db835e-91db-440e-a088-2a586ab569f9",
+      "title": "黄河源区-土地覆盖及植被类型地面验证点数据集"
+    }
+  ],
+  "literature": [],
+  "citation_cn": "邹强. 西藏日喀则市吉隆县泥石流灾害区历史灾点数据[DS]. 国家青藏高原科学数据中心, 2026.",
+  "citation_en": "ZOU Qiang. Historical disaster point data of debris flow disaster area in Jilong County, Shigatse City, Xizang [Dataset]. National Tibetan Plateau Data Center, 2026.",
+  "local_mirror": {
+    "path": "05_辅助文档/题目附件/附件/（6）西藏日喀则市吉隆县泥石流灾害区历史灾点数据.zip",
+    "exists": true,
+    "size_bytes": 123842,
+    "sha256": "38addea9bf18e7c5cd05413901f5ea2921556aff6c4b74215e582e1fcb3469d7"
+  },
+  "download_status": "local_mirror_present",
+  "raw_files": [
+    "raw 目录下保留 detail JSON 与 GoogleJson 原始响应"
+  ],
+  "recorded_at": "2026-08-27 00:59:16",
+  "description_source": "TPDC metadataView/detail + metadataView/getGoogleJson",
+  "fetched_at": "2026-10-24T02:37:52+00:00",
+  "http": {
+    "detail_status": 200,
+    "google_status": 200,
+    "detail_raw": "data/raw/tpdc_06_disaster_points/20261024T024306Z_3d16ca57.json",
+    "google_raw": "data/raw/tpdc_06_disaster_points/20261024T024306Z_50ee6aea.json",
+    "detail_from_cache": true,
+    "google_from_cache": true
+  }
+}

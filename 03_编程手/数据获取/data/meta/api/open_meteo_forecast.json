@@ -1,0 +1,53 @@
+{
+  "source_id": "open_meteo_forecast",
+  "source_name": "Open-Meteo 天气预报（业务预报接口）",
+  "kind": "api_json",
+  "questions": [
+    "Q3"
+  ],
+  "notes": "用于演示“未来 72 h”预报接口；历史事件复盘不要把它当实测。",
+  "url": "https://api.open-meteo.com/v1/forecast",
+  "params": {
+    "latitude": 28.86,
+    "longitude": 85.29,
+    "hourly": "temperature_2m,relative_humidity_2m,precipitation,rain,soil_moisture_0_to_7cm,wind_speed_10m,wind_gusts_10m,shortwave_radiation",
+    "forecast_days": 3,
+    "timezone": "Asia/Shanghai"
+  },
+  "latitude": 28.857643,
+  "longitude": 85.26316,
+  "elevation_m": 4138.0,
+  "timezone": "Asia/Shanghai",
+  "timezone_abbreviation": "GMT+8",
+  "utc_offset_seconds": 28800,
+  "generationtime_ms": 0.3637075424194336,
+  "variables": [
+    "temperature_2m",
+    "relative_humidity_2m",
+    "precipitation",
+    "rain",
+    "soil_moisture_0_to_7cm",
+    "wind_speed_10m",
+    "wind_gusts_10m",
+    "shortwave_radiation"
+  ],
+  "units": {
+    "time": "iso8601",
+    "temperature_2m": "°C",
+    "relative_humidity_2m": "%",
+    "precipitation": "mm",
+    "rain": "mm",
+    "soil_moisture_0_to_7cm": "m³/m³",
+    "wind_speed_10m": "km/h",
+    "wind_gusts_10m": "km/h",
+    "shortwave_radiation": "W/m²"
+  },
+  "row_count": 72,
+  "time_start": "2026-10-24T00:00",
+  "time_end": "2026-10-26T23:00",
+  "parser": "open_meteo",
+  "caveat": "再分析/预报产品，不是站点实测；网格点海拔与站点海拔可能不同。",
+  "fetched_at": "2026-10-24T02:38:38+00:00",
+  "http_status": 200,
+  "raw_path": "data/raw/open_meteo_forecast/20261024T024306Z_9c7ca4b9.json"
+}

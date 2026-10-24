@@ -1,0 +1,2 @@
+# 核心运行时只依赖 lxml（用于 HTML 解析）；HTTP、JSON、CSV、测试均用标准库。
+lxml>=5.0

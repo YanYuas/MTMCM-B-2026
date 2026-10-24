@@ -1,0 +1,142 @@
+{
+  "source_id": "tpdc_03_glacier_rar",
+  "source_name": "TPDC-03 吉隆县 200 km 周围冰川及冰川表面高程变化数据集（2000–2020）",
+  "kind": "tpdc_dataset",
+  "questions": [
+    "Q2",
+    "Q4"
+  ],
+  "notes": "268 MB RAR，7z 可读；含 2000–2020 分时段 dhdt 分幅 TIFF。",
+  "metadata_id": "f94c33c4-f521-4247-80ec-55dfa2dd453a",
+  "landing_url": "https://www.tpdc.ac.cn/zh-hans/data/f94c33c4-f521-4247-80ec-55dfa2dd453a",
+  "title": "日喀则市吉隆县特大洪水——200km周围内的冰川及冰川表面高程变化数据集（2000—2020年）",
+  "title_en": "Great flood in Jilong County, Shigatse City - glacier and glacier surface elevation change dataset within 200 km (2000-2020)",
+  "doi": "10.11888/Cryos.tpdc.303615",
+  "doi_url": "https://doi.org/10.11888/Cryos.tpdc.303615",
+  "cstr": "18406.11.Cryos.tpdc.303615",
+  "authors": [
+    {
+      "name": "汪嬴政",
+      "name_en": "WANG Yingzheng",
+      "unit": "兰州大学",
+      "unit_en": "",
+      "email": "wangyz@itpcas.ac.cn",
+      "orcid": ""
+    }
+  ],
+  "publisher": "TPDC",
+  "date_published": "2026-09-04",
+  "year": "2026",
+  "description": "本数据集以2026年8月26日吉隆口岸冰岩崩源区所在冰川为中心，构建半径200 km区域范围，整理该区域冰川空间分布及2000—2020年冰川表面高程变化数据。\n数据主要包括从Randolph Glacier Inventory 6.0和7.0中提取的区域冰川边界，以及基于Hugonnet等（Accelerated global glacier mass loss in the early twenty-first century）发布的全球冰川高程变化产品筛选获得的2000—2005年、2005—2010年、2010—2015年和2015—2020年四个时期冰川表面高程变化率数据。各时段高程变化数据包括UTM投影下的高程变化率（dhdt_UTM）、地理坐标系下的高程变化率（dhdt_GCS）以及UTM投影下的高程变化率误差（dhdt_err_UTM）。\n本数据集可用于分析吉隆冰岩崩源区冰川长期减薄背景、开展源区与周边冰川变化对比，并为喜马拉雅山区冰川变化、冰岩崩及相关冰冻圈灾害研究提供基础数据支持。",
+  "instructions": "数据为GeoTIFF格式。例:文件基名为 N27E886 2888-01-81 2885-81-81 dhdt UTM45 UTM45.tif。其中， N27E886 表示编号为N27E086的网格瓦片，2888-81-012085-81-81 表示数据对应的时间范围，dhdt 表示冰川表面高程变化率， UTM45表示WGS 84/UTM 45N投影坐标系。",
+  "use_terms": "为尊重知识产权、保障数据作者的权益、扩展数据中心的服务、评估数据的应用潜力，请数据使用者在使用数据所产生的研究成果中（包括公开发表的论文、论著、数据产品和未公开发表的研究报告、数据产品等成果），明确注明数据来源和数据作者。对于转载（二次或多次发布）的数据，作者还须注明原始数据来源。",
+  "license_code": "1",
+  "share_type": "online",
+  "share_policy": "A",
+  "status": 6,
+  "time_coverage": {
+    "start": null,
+    "end": null,
+    "resolution": "Yearly",
+    "title_hint": "2000–2020",
+    "note": "元数据未给出时间范围"
+  },
+  "spatial_coverage": {
+    "bbox": {
+      "west": 83.471351,
+      "east": 87.549247,
+      "south": 26.488456,
+      "north": 30.097681
+    },
+    "is_point": false,
+    "resolution": "10m - 100m",
+    "crs": null,
+    "projection": null
+  },
+  "keywords": [
+    "Glacier elevation change",
+    "Debris flow",
+    "Natural Disaster",
+    "Flood",
+    "Glacier(Ice Sheet)",
+    "Jilong County",
+    "Human-nature Relationship",
+    "Cryosphere",
+    "2026",
+    "冰川高程变化",
+    "冰川（含冰盖）",
+    "泥石流",
+    "洪水",
+    "自然灾害",
+    "人地关系",
+    "冰冻圈",
+    "吉隆县"
+  ],
+  "related_data": [
+    {
+      "id": "9ffe696c-ead6-4a3f-b3f0-684c1a889df0",
+      "title": "祁连山重点区域30m人类活动参数产品数据集（V1.0）"
+    },
+    {
+      "id": "b9d8faa4-619c-4737-b6fb-3dbc496103ea",
+      "title": "祁连山地区日值0.05°×0.05°地表土壤水分数据（2017, SMHiRes, V1）"
+    },
+    {
+      "id": "b41802cb-1129-4ef8-9c07-a2574b732fd8",
+      "title": "祁连山地区冰川边界（2018）"
+    },
+    {
+      "id": "848ac234-f69b-438f-9310-4830fb153374",
+      "title": "青藏高原1:100万行政边界数据（2017）"
+    },
+    {
+      "id": "eba7823e-674b-49f2-954a-ca9bc0ca3db2",
+      "title": "祁连山重点区域人类活动数据集 (2018)"
+    },
+    {
+      "id": "40a206e4-48b6-476b-a52f-ef95302798cb",
+      "title": "三极人口&GDP数据集（1970-2006）"
+    },
+    {
+      "id": "99bb0493-3fdd-4083-a67b-b6622a4f4db7",
+      "title": "祁连山区域30m人类活动参数产品数据集（V1.0）（2018）"
+    },
+    {
+      "id": "d75b3089-256e-4ebf-a0ed-de73d6b06d10",
+      "title": "青藏高原枪勇冰川近2500年融化强度变化数据"
+    },
+    {
+      "id": "792d3a51-c36a-478c-b501-89fceaa7e870",
+      "title": "祁连山区域30m人类活动参数产品数据集（V1.0）（1985-2017）"
+    },
+    {
+      "id": "94d90e88-9e17-4f48-828d-b5837d2a3fe0",
+      "title": "长江源和黄河源水资源时空分布数据集（1998-2017）"
+    }
+  ],
+  "literature": [],
+  "citation_cn": "汪嬴政. 日喀则市吉隆县特大洪水——200km周围内的冰川及冰川表面高程变化数据集（2000—2020年）[DS]. 国家青藏高原科学数据中心, 2026. DOI: 10.11888/Cryos.tpdc.303615.",
+  "citation_en": "WANG Yingzheng. Great flood in Jilong County, Shigatse City - glacier and glacier surface elevation change dataset within 200 km (2000-2020) [Dataset]. National Tibetan Plateau Data Center, 2026. https://doi.org/10.11888/Cryos.tpdc.303615",
+  "local_mirror": {
+    "path": "05_辅助文档/题目附件/附件/（3）日喀则市吉隆县特大洪水——200km周围内的冰川及冰川表面高程变化数据集 (2000-2020).rar",
+    "exists": true,
+    "size_bytes": 268881071,
+    "sha256": "",
+    "sha256_note": "文件超过 64 MiB，未在元数据抓取阶段计算；可用 verify 单独核。"
+  },
+  "download_status": "local_mirror_present",
+  "raw_files": [
+    "raw 目录下保留 detail JSON 与 GoogleJson 原始响应"
+  ],
+  "recorded_at": "2026-09-03 14:21:40",
+  "description_source": "TPDC metadataView/detail + metadataView/getGoogleJson",
+  "fetched_at": "2026-10-24T02:37:12+00:00",
+  "http": {
+    "detail_status": 200,
+    "google_status": 200,
+    "detail_raw": "data/raw/tpdc_03_glacier_rar/20261024T024306Z_1ac13e59.json",
+    "google_raw": "data/raw/tpdc_03_glacier_rar/20261024T024306Z_eeeb3bfa.json",
+    "detail_from_cache": true,
+    "google_from_cache": true
+  }
+}

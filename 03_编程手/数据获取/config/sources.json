@@ -1,0 +1,236 @@
+{
+  "version": 1,
+  "user_agent": "MTMCM-DataCrawler/1.0 (+2026 MathorCup B; local academic use)",
+  "defaults": {
+    "timeout_sec": 30,
+    "retries": 3,
+    "min_interval_sec": 1.0,
+    "cache_ttl_sec": 86400,
+    "respect_robots": true,
+    "max_bytes": 52428800
+  },
+  "sources": [
+    {
+      "id": "tpdc_01_hourly",
+      "name": "TPDC-01 吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）",
+      "kind": "tpdc_dataset",
+      "metadata_id": "5b09afd1-d11b-4150-a291-50f0484dddf1",
+      "url": "https://www.tpdc.ac.cn/zh-hans/data/5b09afd1-d11b-4150-a291-50f0484dddf1",
+      "local_mirror": "05_辅助文档/题目附件/附件/（1）西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）.zip",
+      "questions": ["Q1", "Q3"],
+      "min_interval_sec": 0.8,
+      "cache_ttl_sec": 604800,
+      "notes": "MET/RADM/SOIL/FLUX 四类逐小时数据；元数据明确北京时间 UTC+8、缺测 9999.9、QC 码 0/1/2/4/8/9。站点约 28.86N/85.29E/4140m；getGoogleJson 的 28.26N 与 detail 不一致，以 detail 为准。"
+    },
+    {
+      "id": "tpdc_02_temp",
+      "name": "TPDC-02 2005–2025 年吉隆县及周边县市逐日平均气温数据",
+      "kind": "tpdc_dataset",
+      "metadata_id": "94d1bc8e-b912-413e-bd2b-851f2ff8f8f7",
+      "url": "https://www.tpdc.ac.cn/zh-hans/data/94d1bc8e-b912-413e-bd2b-851f2ff8f8f7",
+      "local_mirror": "05_辅助文档/题目附件/附件/（2）2005-2025年吉隆县及周边县市逐日平均气温数据.zip",
+      "questions": ["Q1", "Q3"],
+      "min_interval_sec": 0.8,
+      "cache_ttl_sec": 604800,
+      "notes": "长期气温背景；2025 年序列不完整，年度趋势结论需谨慎。"
+    },
+    {
+      "id": "tpdc_03_glacier_rar",
+      "name": "TPDC-03 吉隆县 200 km 周围冰川及冰川表面高程变化数据集（2000–2020）",
+      "kind": "tpdc_dataset",
+      "metadata_id": "f94c33c4-f521-4247-80ec-55dfa2dd453a",
+      "url": "https://www.tpdc.ac.cn/zh-hans/data/f94c33c4-f521-4247-80ec-55dfa2dd453a",
+      "local_mirror": "05_辅助文档/题目附件/附件/（3）日喀则市吉隆县特大洪水——200km周围内的冰川及冰川表面高程变化数据集 (2000-2020).rar",
+      "questions": ["Q2", "Q4"],
+      "min_interval_sec": 0.8,
+      "cache_ttl_sec": 604800,
+      "notes": "268 MB RAR，7z 可读；含 2000–2020 分时段 dhdt 分幅 TIFF。"
+    },
+    {
+      "id": "tpdc_04_glacier_nc",
+      "name": "TPDC-04 吉隆口岸山洪灾害—蓝塘里壤峰冰崩前冰川地形、冰厚及表面速度数据集",
+      "kind": "tpdc_dataset",
+      "metadata_id": "c2875b3e-7fd4-4b38-9814-fef64193d1a4",
+      "url": "https://www.tpdc.ac.cn/zh-hans/data/c2875b3e-7fd4-4b38-9814-fef64193d1a4",
+      "local_mirror": "05_辅助文档/题目附件/附件/（4）吉隆口岸山洪灾害-蓝塘里壤峰冰崩前冰川地形、冰厚及表面速度数据集.zip",
+      "questions": ["Q2", "Q4"],
+      "min_interval_sec": 0.8,
+      "cache_ttl_sec": 604800,
+      "notes": "30 m 网格；冰厚为估算，速度为 2014–2024 气候态。"
+    },
+    {
+      "id": "tpdc_05_landcover",
+      "name": "TPDC-05 吉隆县泥石流灾害区土地覆盖数据（2020–2023）",
+      "kind": "tpdc_dataset",
+      "metadata_id": "4e1e74fb-dcee-4ce4-8b07-ec3f3109eabe",
+      "url": "https://www.tpdc.ac.cn/zh-hans/data/4e1e74fb-dcee-4ce4-8b07-ec3f3109eabe",
+      "local_mirror": "05_辅助文档/题目附件/附件/（5）西藏日喀则市吉隆县泥石流灾害区土地覆盖数据（2020-2023）.zip",
+      "questions": ["Q2"],
+      "min_interval_sec": 0.8,
+      "cache_ttl_sec": 604800,
+      "notes": "四期 30 m 栅格；附件无类别图例，保留原始编码。"
+    },
+    {
+      "id": "tpdc_06_disaster_points",
+      "name": "TPDC-06 吉隆县泥石流灾害区历史灾点数据",
+      "kind": "tpdc_dataset",
+      "metadata_id": "db142594-2819-403b-8da0-5ebb2a0ca951",
+      "url": "https://www.tpdc.ac.cn/zh-hans/data/db142594-2819-403b-8da0-5ebb2a0ca951",
+      "local_mirror": "05_辅助文档/题目附件/附件/（6）西藏日喀则市吉隆县泥石流灾害区历史灾点数据.zip",
+      "questions": ["Q2"],
+      "min_interval_sec": 0.8,
+      "cache_ttl_sec": 604800,
+      "notes": "84 个沟域多边形；只有解译时间/影像时间，没有事件发生时间。"
+    },
+    {
+      "id": "tpdc_07_dem",
+      "name": "TPDC-07 2026-08-26 吉隆县泥石流灾害区 DEM 数据",
+      "kind": "tpdc_dataset",
+      "metadata_id": "88b5ab22-19a1-480f-bcdc-cec41776ab46",
+      "url": "https://www.tpdc.ac.cn/zh-hans/data/88b5ab22-19a1-480f-bcdc-cec41776ab46",
+      "local_mirror": "05_辅助文档/题目附件/附件/（7）2026年8月26日日喀则市吉隆县泥石流灾害区DEM数据.zip",
+      "questions": ["Q2", "Q4"],
+      "min_interval_sec": 0.8,
+      "cache_ttl_sec": 604800,
+      "notes": "约 30 m DEM；获取时点未在附件名中说明，不能预设为灾前地形。"
+    },
+    {
+      "id": "tpdc_08_population",
+      "name": "TPDC-08 吉隆县第七次人口普查数据",
+      "kind": "tpdc_dataset",
+      "metadata_id": "8662c472-43d6-4e92-bff8-e26923970642",
+      "url": "https://www.tpdc.ac.cn/zh-hans/data/8662c472-43d6-4e92-bff8-e26923970642",
+      "local_mirror": "05_辅助文档/题目附件/附件/（8）西藏日喀则市吉隆县泥石流灾害区吉隆县第七次人口普查数据.zip",
+      "questions": ["Q4"],
+      "min_interval_sec": 0.8,
+      "cache_ttl_sec": 604800,
+      "notes": "县级多边形，合计 17,536 人；不含居民点，不能直接细化局部暴露。"
+    },
+    {
+      "id": "mnr_debris_conditions",
+      "name": "自然资源部 地球科普：泥石流形成的基本条件",
+      "kind": "article",
+      "url": "https://www.mnr.gov.cn/zt/hd/dqr/43earthday/dqkp/201203/t20120316_2057013.html",
+      "parser": "article",
+      "selectors": {
+        "title": "//meta[@name='ArticleTitle']/@content",
+        "published": "//meta[@name='PubDate']/@content",
+        "content": "//div[contains(@class,'ky_article_center')]"
+      },
+      "questions": ["Q1", "Q2"],
+      "min_interval_sec": 2.0,
+      "cache_ttl_sec": 604800,
+      "notes": "官方背景页，用来支撑“地形—物质—水源”三条件，不作为观测数据。"
+    },
+    {
+      "id": "baike_debris_flow",
+      "name": "百度百科：泥石流灾害",
+      "kind": "article",
+      "url": "https://baike.baidu.com/item/%E6%B3%A5%E7%9F%B3%E6%B5%81%E7%81%BE%E5%AE%B3/9911941",
+      "parser": "article",
+      "selectors": {
+        "title": "//title/text()",
+        "content": "//div[contains(@class,'main-content')]"
+      },
+      "questions": ["背景"],
+      "allow_blocked": true,
+      "min_interval_sec": 3.0,
+      "cache_ttl_sec": 604800,
+      "notes": "百度安全验证 403；不绕过反爬，只保留引用链接并记录失败证据，正文背景以自然资源部页面为准。"
+    },
+    {
+      "id": "open_meteo_archive",
+      "name": "Open-Meteo 历史天气（ERA5 再分析）",
+      "kind": "api_json",
+      "parser": "open_meteo",
+      "url": "https://archive-api.open-meteo.com/v1/archive",
+      "params": {
+        "latitude": 28.86,
+        "longitude": 85.29,
+        "start_date": "2026-08-20",
+        "end_date": "2026-08-28",
+        "hourly": "temperature_2m,relative_humidity_2m,precipitation,rain,snow_depth,soil_moisture_0_to_7cm,soil_moisture_7_to_28cm,soil_temperature_0_to_7cm,wind_speed_10m,wind_gusts_10m,shortwave_radiation,et0_fao_evapotranspiration,freezing_level_height",
+        "timezone": "Asia/Shanghai"
+      },
+      "questions": ["Q1", "Q2", "Q3"],
+      "respect_robots": false,
+      "min_interval_sec": 1.0,
+      "cache_ttl_sec": 2592000,
+      "notes": "公开 API，按 API 条款使用；网格点海拔约 4138 m，不能替代站点实测。"
+    },
+    {
+      "id": "open_meteo_forecast",
+      "name": "Open-Meteo 天气预报（业务预报接口）",
+      "kind": "api_json",
+      "parser": "open_meteo",
+      "url": "https://api.open-meteo.com/v1/forecast",
+      "params": {
+        "latitude": 28.86,
+        "longitude": 85.29,
+        "hourly": "temperature_2m,relative_humidity_2m,precipitation,rain,soil_moisture_0_to_7cm,wind_speed_10m,wind_gusts_10m,shortwave_radiation",
+        "forecast_days": 3,
+        "timezone": "Asia/Shanghai"
+      },
+      "questions": ["Q3"],
+      "respect_robots": false,
+      "min_interval_sec": 1.0,
+      "cache_ttl_sec": 3600,
+      "notes": "用于演示“未来 72 h”预报接口；历史事件复盘不要把它当实测。"
+    },
+    {
+      "id": "nasa_power",
+      "name": "NASA POWER 逐小时气象（MERRA-2 / POWER）",
+      "kind": "api_json",
+      "parser": "nasa_power",
+      "url": "https://power.larc.nasa.gov/api/temporal/hourly/point",
+      "params": {
+        "parameters": "T2M,PRECTOTCORR,RH2M,WS2M,ALLSKY_SFC_SW_DWN,GWETTOP",
+        "community": "RE",
+        "longitude": 85.29,
+        "latitude": 28.86,
+        "start": "20260820",
+        "end": "20260828",
+        "format": "JSON"
+      },
+      "questions": ["Q1", "Q3"],
+      "respect_robots": false,
+      "min_interval_sec": 1.0,
+      "cache_ttl_sec": 604800,
+      "notes": "再分析交叉核对；API 返回的网格海拔约 4995 m，与站点 4140 m 不同，必须标注。"
+    },
+    {
+      "id": "copernicus_s2",
+      "name": "Copernicus Data Space：Sentinel-2 L1C/L2A 产品元数据",
+      "kind": "api_json",
+      "parser": "copernicus",
+      "url": "https://catalogue.dataspace.copernicus.eu/odata/v1/Products",
+      "params": {
+        "$filter": "Collection/Name eq 'SENTINEL-2' and ContentDate/Start gt 2026-08-20T00:00:00.000Z and ContentDate/Start lt 2026-08-30T00:00:00.000Z and OData.CSC.Intersects(area=geography'SRID=4326;POLYGON((84.9 28.1,85.7 28.1,85.7 29.1,84.9 29.1,84.9 28.1))')",
+        "$top": 30,
+        "$orderby": "ContentDate/Start asc"
+      },
+      "questions": ["Q2"],
+      "respect_robots": false,
+      "min_interval_sec": 1.0,
+      "cache_ttl_sec": 3600,
+      "notes": "公开元数据检索；空间过滤 bbox 84.9–85.7E, 28.1–29.1N，返回产品可能只覆盖边缘，使用前需按 GeoFootprint 与核心区求交。产品下载需要 Copernicus 账号/OAuth，本工具只取元数据并记录下载条件。"
+    },
+    {
+      "id": "copernicus_s1",
+      "name": "Copernicus Data Space：Sentinel-1 产品元数据",
+      "kind": "api_json",
+      "parser": "copernicus",
+      "url": "https://catalogue.dataspace.copernicus.eu/odata/v1/Products",
+      "params": {
+        "$filter": "Collection/Name eq 'SENTINEL-1' and ContentDate/Start gt 2026-08-20T00:00:00.000Z and ContentDate/Start lt 2026-08-30T00:00:00.000Z and OData.CSC.Intersects(area=geography'SRID=4326;POLYGON((84.9 28.1,85.7 28.1,85.7 29.1,84.9 29.1,84.9 28.1))')",
+        "$top": 30,
+        "$orderby": "ContentDate/Start asc"
+      },
+      "questions": ["Q2", "Q4"],
+      "respect_robots": false,
+      "min_interval_sec": 1.0,
+      "cache_ttl_sec": 3600,
+      "notes": "SAR 元数据；空间过滤 bbox 84.9–85.7E, 28.1–29.1N，返回产品可能只覆盖边缘。用于冰崩/泥石流灾后范围核查，下载需要账号。"
+    }
+  ]
+}

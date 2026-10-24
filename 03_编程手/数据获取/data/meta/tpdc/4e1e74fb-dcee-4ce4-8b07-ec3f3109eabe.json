@@ -1,0 +1,127 @@
+{
+  "source_id": "tpdc_05_landcover",
+  "source_name": "TPDC-05 吉隆县泥石流灾害区土地覆盖数据（2020–2023）",
+  "kind": "tpdc_dataset",
+  "questions": [
+    "Q2"
+  ],
+  "notes": "四期 30 m 栅格；附件无类别图例，保留原始编码。",
+  "metadata_id": "4e1e74fb-dcee-4ce4-8b07-ec3f3109eabe",
+  "landing_url": "https://www.tpdc.ac.cn/zh-hans/data/4e1e74fb-dcee-4ce4-8b07-ec3f3109eabe",
+  "title": "西藏日喀则市吉隆县泥石流灾害区土地覆盖数据（2020-2023）",
+  "title_en": "Land cover data of debris flow disaster areas in Jilong County, Shigatse City, Xizang (2020-2023)",
+  "doi": "10.1038/s41597-025-04759-6",
+  "doi_url": "https://doi.org/10.1038/s41597-025-04759-6",
+  "cstr": "",
+  "authors": [
+    {
+      "name": "李思雅",
+      "name_en": "LI Siya",
+      "unit": "中国科学院地理科学与资源研究所",
+      "unit_en": "",
+      "email": "lisiya0360@igsnrr.ac.cn",
+      "orcid": ""
+    }
+  ],
+  "publisher": "TPDC",
+  "date_published": "2026-08-27",
+  "year": "2026",
+  "description": "据央视新闻报道，8月26日10时30分许，因尼泊尔一侧发生泥石流灾害，造成西藏日喀则市吉隆县吉隆口岸重大人员伤亡、失联。为应对此次泥石流灾害，方便科研工作者分析灾害机理、评估灾损及提出防治措施，特共享灾害区2020-2023年土地覆盖数据数据。该数据利用李思雅等的Annual 30 m land cover dataset on the Tibetan Plateau from 1990 to 2023中的数据为数据源裁剪得出，空间分辨率为30米；可为分析受灾区土地覆盖、灾后应急救援等提供参考",
+  "instructions": "该数据集以tif格式给出，文件名称为“jilong_LUCD_yyyy”，其中yyyy代表年如jilong_LUCD_2020代表2020年吉隆县的土地覆盖状况。",
+  "use_terms": "为尊重知识产权、保障数据作者的权益、扩展数据中心的服务、评估数据的应用潜力，请数据使用者在使用数据所产生的研究成果中（包括公开发表的论文、论著、数据产品和未公开发表的研究报告、数据产品等成果），明确注明数据来源和数据作者。对于转载（二次或多次发布）的数据，作者还须注明原始数据来源。",
+  "license_code": "1",
+  "share_type": "online",
+  "share_policy": "A",
+  "status": 6,
+  "time_coverage": {
+    "start": null,
+    "end": null,
+    "resolution": "Yearly",
+    "title_hint": "2020–2023",
+    "note": "元数据未给出时间范围"
+  },
+  "spatial_coverage": {
+    "bbox": {
+      "west": 84.0,
+      "east": 87.0,
+      "south": 28.0,
+      "north": 30.0
+    },
+    "is_point": false,
+    "resolution": "10m - 100m",
+    "crs": null,
+    "projection": null
+  },
+  "keywords": [
+    "Others",
+    "Remote Sensing Technology",
+    "其他",
+    "遥感"
+  ],
+  "related_data": [
+    {
+      "id": "9ffe696c-ead6-4a3f-b3f0-684c1a889df0",
+      "title": "祁连山重点区域30m人类活动参数产品数据集（V1.0）"
+    },
+    {
+      "id": "b9d8faa4-619c-4737-b6fb-3dbc496103ea",
+      "title": "祁连山地区日值0.05°×0.05°地表土壤水分数据（2017, SMHiRes, V1）"
+    },
+    {
+      "id": "5d33db8a-373c-4cfa-8dc7-dc92ebf6d5c4",
+      "title": "祁连山综合观测网：祁连山植物多样性监测（植物调查数据-2018年）"
+    },
+    {
+      "id": "b117d43c-b826-4efc-a639-62ea334924df",
+      "title": "祁连山地区基于MODIS的逐日地表蒸散发数据（2018)（ETHi-merge V1）"
+    },
+    {
+      "id": "3ba144a8-23c8-4b3a-93e3-d335c0b75bbc",
+      "title": "祁连山重点区域土地覆盖/利用数据集（2018）"
+    },
+    {
+      "id": "9ecef56a-7fa6-4883-b6a8-9b79f72d10f4",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（四道桥超级站物候相机观测数据集-2018）"
+    },
+    {
+      "id": "4cc6a508-29f9-4560-93e9-0982618d4c01",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（四道桥叶面积指数-2018）"
+    },
+    {
+      "id": "ab6d60d2-0981-4510-9d94-7b68d00afb12",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（花寨子站涡动相关仪-2018）"
+    },
+    {
+      "id": "7d9442b0-8dfd-412c-af9b-8b62c77eaa38",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（大满超级站叶面积指数-2018）"
+    },
+    {
+      "id": "44007ddd-e898-447c-a84b-801d400b5119",
+      "title": "祁连山地区水体指数产品（2018）"
+    }
+  ],
+  "literature": [],
+  "citation_cn": "李思雅. 西藏日喀则市吉隆县泥石流灾害区土地覆盖数据（2020-2023）[DS]. 国家青藏高原科学数据中心, 2026. DOI: 10.1038/s41597-025-04759-6.",
+  "citation_en": "LI Siya. Land cover data of debris flow disaster areas in Jilong County, Shigatse City, Xizang (2020-2023) [Dataset]. National Tibetan Plateau Data Center, 2026. https://doi.org/10.1038/s41597-025-04759-6",
+  "local_mirror": {
+    "path": "05_辅助文档/题目附件/附件/（5）西藏日喀则市吉隆县泥石流灾害区土地覆盖数据（2020-2023）.zip",
+    "exists": true,
+    "size_bytes": 6612114,
+    "sha256": "a9d23370c61485068734c264b876b377934d8b7141f0cc96ca9a58d1e7f7bfdd"
+  },
+  "download_status": "local_mirror_present",
+  "raw_files": [
+    "raw 目录下保留 detail JSON 与 GoogleJson 原始响应"
+  ],
+  "recorded_at": "2026-08-27 00:22:04",
+  "description_source": "TPDC metadataView/detail + metadataView/getGoogleJson",
+  "fetched_at": "2026-10-24T02:37:34+00:00",
+  "http": {
+    "detail_status": 200,
+    "google_status": 200,
+    "detail_raw": "data/raw/tpdc_05_landcover/20261024T024306Z_ead4492a.json",
+    "google_raw": "data/raw/tpdc_05_landcover/20261024T024306Z_c9227965.json",
+    "detail_from_cache": true,
+    "google_from_cache": true
+  }
+}

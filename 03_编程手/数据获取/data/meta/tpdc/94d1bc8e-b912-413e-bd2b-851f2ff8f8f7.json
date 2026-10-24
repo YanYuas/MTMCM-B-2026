@@ -1,0 +1,135 @@
+{
+  "source_id": "tpdc_02_temp",
+  "source_name": "TPDC-02 2005–2025 年吉隆县及周边县市逐日平均气温数据",
+  "kind": "tpdc_dataset",
+  "questions": [
+    "Q1",
+    "Q3"
+  ],
+  "notes": "长期气温背景；2025 年序列不完整，年度趋势结论需谨慎。",
+  "metadata_id": "94d1bc8e-b912-413e-bd2b-851f2ff8f8f7",
+  "landing_url": "https://www.tpdc.ac.cn/zh-hans/data/94d1bc8e-b912-413e-bd2b-851f2ff8f8f7",
+  "title": "2005-2025年吉隆县及周边县市逐日平均气温数据",
+  "title_en": "Daily average temperature data of Jilong County and surrounding counties and cities from 2005 to 2025",
+  "doi": "10.24381/cds.e9c9c792",
+  "doi_url": "https://doi.org/10.24381/cds.e9c9c792",
+  "cstr": "",
+  "authors": [
+    {
+      "name": "Copernicus Climate Change Service",
+      "name_en": "Copernicus Climate Change Service",
+      "unit": "Copernicus Climate Change Service",
+      "unit_en": "",
+      "email": "copernicus-support@ecmwf.int",
+      "orcid": ""
+    }
+  ],
+  "publisher": "TPDC",
+  "date_published": "2026-08-27",
+  "year": "2026",
+  "description": "本数据集收录2005—2025年吉隆县、聂拉木县、萨嘎县、定日县和昂仁县5个县域的逐日2米气温数据，以Excel格式按年度组织，每年对应一个文件。表格第一列为日期，其余各列分别记录5个县域的气温值。该数据集可用于区域气候变化分析、县域间气温差异比较以及气温趋势评估，并可与降水、地形、植被和灾害记录结合，为吉隆口岸及周边地区的泥石流等山地灾害风险研究、生态环境评价、农业生产安排、基础设施规划和防灾减灾决策提供基础数据支持，具有良好的科研应用与区域管理前景。",
+  "instructions": "数据文件为Excel格式存储，文件命名：Daily_2m_Air_Temperature_yyyy.xlsx\n\n其中，Daily表示时间分辨率为逐日，2m_Air_Temperature表示数据要素为2米气温，yyyy表示数据所属年份。例如，Daily_2m_Air_Temperature_2005.xlsx表示2005年吉隆县及周边县域的逐日2米气温数据，Daily_2m_Air_Temperature_2024.xlsx表示2024年的相应数据。数据集包含2005—2025年共21个年度文件，其中2005—2024年为完整年度，2025年数据截至8月2日。\n数据文件可直接使用Microsoft Excel、WPS Office、LibreOffice Calc等电子表格软件打开，也可通过Python、R、MATLAB等数据分析软件批量读取。每个文件包含一个名为“2米气温”的工作表，第一行为字段名称，第一列“时间”采用“年-月-日”格式，其余各列依次为吉隆县、聂拉木县、萨嘎县、定日县和昂仁县的逐日2米气温值，温度单位为摄氏度（℃）。每一行代表一个日期，每个县域列中的数值表示该县域对应日期的2米气温。",
+  "use_terms": "为尊重知识产权、保障数据作者的权益、扩展数据中心的服务、评估数据的应用潜力，请数据使用者在使用数据所产生的研究成果中（包括公开发表的论文、论著、数据产品和未公开发表的研究报告、数据产品等成果），明确注明数据来源和数据作者。对于转载（二次或多次发布）的数据，作者还须注明原始数据来源。",
+  "license_code": "1",
+  "share_type": "online",
+  "share_policy": "A",
+  "status": 6,
+  "time_coverage": {
+    "start": "2005-01-01 02:58:37",
+    "end": "2025-08-05 02:58:37",
+    "resolution": "Daily",
+    "title_hint": "",
+    "note": ""
+  },
+  "spatial_coverage": {
+    "bbox": {
+      "west": 84.450983,
+      "east": 86.158269,
+      "south": 28.255499,
+      "north": 29.321711
+    },
+    "is_point": false,
+    "resolution": "1km - 10km",
+    "crs": null,
+    "projection": null
+  },
+  "keywords": [
+    "2m temperature",
+    "Temperature",
+    "Skin temperature",
+    "Jilong County",
+    "Atmosphere",
+    "2005-2025",
+    "2m气温",
+    "温度",
+    "表面温度",
+    "大气",
+    "吉隆县"
+  ],
+  "related_data": [
+    {
+      "id": "ab6d60d2-0981-4510-9d94-7b68d00afb12",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（花寨子站涡动相关仪-2018）"
+    },
+    {
+      "id": "e1f562c3-5cf9-443f-89f3-0353962b0c60",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（四道桥超级站气象要素梯度观测系统-2018）"
+    },
+    {
+      "id": "c247aa2c-af7d-40eb-b6f4-bceae57e9369",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（景阳岭站自动气象站-2018）"
+    },
+    {
+      "id": "d0b02dc9-4de5-46c4-bd8b-5aa5f23f3de5",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（荒漠站自动气象站-2018）"
+    },
+    {
+      "id": "d3571f89-2f66-4792-9860-887d9ba39fdc",
+      "title": "祁连山综合观测网：青海湖流域地表过程综合观测网（混合草原超级站涡动相关仪-2018）"
+    },
+    {
+      "id": "7532140a-74be-4fd7-9757-5f40bdffd0e7",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（黑河遥感站自动气象站-2018）"
+    },
+    {
+      "id": "f9d5a140-767d-44e8-b35d-b77ee319ad15",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（大满超级站大孔径闪烁仪-2018）"
+    },
+    {
+      "id": "c5a01e14-32fe-4aab-bc3a-f3f5d36cbdb8",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（大满超级站涡动相关仪-2018）"
+    },
+    {
+      "id": "b3d73026-48c7-4fcc-b4af-901dd57b264f",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（张掖湿地站涡动相关仪-2018）"
+    },
+    {
+      "id": "77c7bfd5-38d3-41e2-93ce-cb4d8c0d475a",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（荒漠站涡动相关仪-2018）"
+    }
+  ],
+  "literature": [],
+  "citation_cn": "Copernicus Climate Change Service. 2005-2025年吉隆县及周边县市逐日平均气温数据[DS]. 国家青藏高原科学数据中心, 2026. DOI: 10.24381/cds.e9c9c792.",
+  "citation_en": "Copernicus Climate Change Service. Daily average temperature data of Jilong County and surrounding counties and cities from 2005 to 2025 [Dataset]. National Tibetan Plateau Data Center, 2026. https://doi.org/10.24381/cds.e9c9c792",
+  "local_mirror": {
+    "path": "05_辅助文档/题目附件/附件/（2）2005-2025年吉隆县及周边县市逐日平均气温数据.zip",
+    "exists": true,
+    "size_bytes": 749460,
+    "sha256": "5802359b362ab95b97a8f232a00e860d8bf935b00b4498df27974d9cc3c4c6bc"
+  },
+  "download_status": "local_mirror_present",
+  "raw_files": [
+    "raw 目录下保留 detail JSON 与 GoogleJson 原始响应"
+  ],
+  "recorded_at": "2026-09-26 23:49:59",
+  "description_source": "TPDC metadataView/detail + metadataView/getGoogleJson",
+  "fetched_at": "2026-10-24T02:37:05+00:00",
+  "http": {
+    "detail_status": 200,
+    "google_status": 200,
+    "detail_raw": "data/raw/tpdc_02_temp/20261024T024306Z_c8a781bf.json",
+    "google_raw": "data/raw/tpdc_02_temp/20261024T024306Z_8f7f2aae.json",
+    "detail_from_cache": true,
+    "google_from_cache": true
+  }
+}

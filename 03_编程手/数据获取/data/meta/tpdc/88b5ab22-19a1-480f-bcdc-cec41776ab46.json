@@ -1,0 +1,134 @@
+{
+  "source_id": "tpdc_07_dem",
+  "source_name": "TPDC-07 2026-08-26 吉隆县泥石流灾害区 DEM 数据",
+  "kind": "tpdc_dataset",
+  "questions": [
+    "Q2",
+    "Q4"
+  ],
+  "notes": "约 30 m DEM；获取时点未在附件名中说明，不能预设为灾前地形。",
+  "metadata_id": "88b5ab22-19a1-480f-bcdc-cec41776ab46",
+  "landing_url": "https://www.tpdc.ac.cn/zh-hans/data/88b5ab22-19a1-480f-bcdc-cec41776ab46",
+  "title": "2026年8月26日日喀则市吉隆县泥石流灾害区DEM数据",
+  "title_en": "DEM data of debris flow disaster area in Jilong County, Shigatse City on August 26, 2026",
+  "doi": "",
+  "doi_url": "",
+  "cstr": "",
+  "authors": [
+    {
+      "name": "高分辨率对地观测系统甘肃数据与应用中心",
+      "name_en": "GDAC-HREOS",
+      "unit": "高分辨率对地观测系统甘肃数据与应用中心",
+      "unit_en": "Gansu Data and Application Center of the High-Resolution Earth Observation System",
+      "email": "westgfdc@lzb.ac.cn",
+      "orcid": ""
+    }
+  ],
+  "publisher": "TPDC",
+  "date_published": "2026-08-26",
+  "year": "2026",
+  "description": "2026年8月26日10时30分，因尼泊尔一侧发生泥石流灾害，造成西藏日喀则市吉隆县吉隆口岸重大人员伤亡、失联。为应对此次泥石流，方便科研工作者分析、特共享受灾区30m DEM数据。该数据集提供了受灾区的高精度数字高程模型，空间分辨率达到30米，能够精确反映地形地貌特征。这些高程数据对于分析受灾区与地形的关系、评估地质灾害风险具有重要价值，该数据可用于泥石流灾害链地形演化研究、次生灾害易发性评价与风险区划、应急救援通道规划、灾后重建选址等。",
+  "instructions": "该数据集以tif格式给出。",
+  "use_terms": "为尊重知识产权、保障数据作者的权益、扩展数据中心的服务、评估数据的应用潜力，请数据使用者在使用数据所产生的研究成果中（包括公开发表的论文、论著、数据产品和未公开发表的研究报告、数据产品等成果），明确注明数据来源和数据作者。对于转载（二次或多次发布）的数据，作者还须注明原始数据来源。",
+  "license_code": "1",
+  "share_type": "online",
+  "share_policy": "A",
+  "status": 6,
+  "time_coverage": {
+    "start": null,
+    "end": null,
+    "resolution": "Yearly",
+    "title_hint": "2026-08-26",
+    "note": "元数据未给出时间范围"
+  },
+  "spatial_coverage": {
+    "bbox": {
+      "west": 84.45,
+      "east": 86.16,
+      "south": 28.26,
+      "north": 29.32
+    },
+    "is_point": false,
+    "resolution": "10m - 100m",
+    "crs": null,
+    "projection": null
+  },
+  "keywords": [
+    "Digital elevation model",
+    "Topography",
+    "Jilong County",
+    "Terrestrial Surface",
+    "2026",
+    "DEM",
+    "地形",
+    "陆地表层",
+    "吉隆县",
+    "2026年"
+  ],
+  "related_data": [
+    {
+      "id": "5d33db8a-373c-4cfa-8dc7-dc92ebf6d5c4",
+      "title": "祁连山综合观测网：祁连山植物多样性监测（植物调查数据-2018年）"
+    },
+    {
+      "id": "b117d43c-b826-4efc-a639-62ea334924df",
+      "title": "祁连山地区基于MODIS的逐日地表蒸散发数据（2018)（ETHi-merge V1）"
+    },
+    {
+      "id": "3ba144a8-23c8-4b3a-93e3-d335c0b75bbc",
+      "title": "祁连山重点区域土地覆盖/利用数据集（2018）"
+    },
+    {
+      "id": "9ecef56a-7fa6-4883-b6a8-9b79f72d10f4",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（四道桥超级站物候相机观测数据集-2018）"
+    },
+    {
+      "id": "4cc6a508-29f9-4560-93e9-0982618d4c01",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（四道桥叶面积指数-2018）"
+    },
+    {
+      "id": "7d9442b0-8dfd-412c-af9b-8b62c77eaa38",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（大满超级站叶面积指数-2018）"
+    },
+    {
+      "id": "44007ddd-e898-447c-a84b-801d400b5119",
+      "title": "祁连山地区水体指数产品（2018）"
+    },
+    {
+      "id": "407b798b-7b59-4c8f-818b-b07e335bea8f",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（混合林站物候相机观测数据集-2018）"
+    },
+    {
+      "id": "e1f562c3-5cf9-443f-89f3-0353962b0c60",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（四道桥超级站气象要素梯度观测系统-2018）"
+    },
+    {
+      "id": "3bb0a20c-4f01-4a96-8c28-839db0ef904a",
+      "title": "祁连山地区30m ASTER-GDEM数据集（2018）"
+    }
+  ],
+  "literature": [],
+  "citation_cn": "高分辨率对地观测系统甘肃数据与应用中心. 2026年8月26日日喀则市吉隆县泥石流灾害区DEM数据[DS]. 国家青藏高原科学数据中心, 2026.",
+  "citation_en": "GDAC-HREOS. DEM data of debris flow disaster area in Jilong County, Shigatse City on August 26, 2026 [Dataset]. National Tibetan Plateau Data Center, 2026.",
+  "local_mirror": {
+    "path": "05_辅助文档/题目附件/附件/（7）2026年8月26日日喀则市吉隆县泥石流灾害区DEM数据.zip",
+    "exists": true,
+    "size_bytes": 10384298,
+    "sha256": "06b6cc274c680a9e611e63d6610d66dc97ad2d3fdd669fdbcd0556be0bba02a2"
+  },
+  "download_status": "local_mirror_present",
+  "raw_files": [
+    "raw 目录下保留 detail JSON 与 GoogleJson 原始响应"
+  ],
+  "recorded_at": "2026-08-26 19:39:27",
+  "description_source": "TPDC metadataView/detail + metadataView/getGoogleJson",
+  "fetched_at": "2026-10-24T02:38:12+00:00",
+  "http": {
+    "detail_status": 200,
+    "google_status": 200,
+    "detail_raw": "data/raw/tpdc_07_dem/20261024T024306Z_1d39b202.json",
+    "google_raw": "data/raw/tpdc_07_dem/20261024T024306Z_7173fdf6.json",
+    "detail_from_cache": true,
+    "google_from_cache": true
+  }
+}

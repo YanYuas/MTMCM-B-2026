@@ -1,0 +1,157 @@
+{
+  "source_id": "tpdc_04_glacier_nc",
+  "source_name": "TPDC-04 吉隆口岸山洪灾害—蓝塘里壤峰冰崩前冰川地形、冰厚及表面速度数据集",
+  "kind": "tpdc_dataset",
+  "questions": [
+    "Q2",
+    "Q4"
+  ],
+  "notes": "30 m 网格；冰厚为估算，速度为 2014–2024 气候态。",
+  "metadata_id": "c2875b3e-7fd4-4b38-9814-fef64193d1a4",
+  "landing_url": "https://www.tpdc.ac.cn/zh-hans/data/c2875b3e-7fd4-4b38-9814-fef64193d1a4",
+  "title": "吉隆口岸山洪灾害-蓝塘里壤峰冰崩前冰川地形、冰厚及表面速度数据集",
+  "title_en": "Jilong Port Mountain Flood Disaster - Landform, Ice Thickness, and Surface Velocity Dataset of Lantangli Ridge Glacier before Ice Collapse",
+  "doi": "10.11888/Cryos.tpdc.303606",
+  "doi_url": "https://doi.org/10.11888/Cryos.tpdc.303606",
+  "cstr": "18406.11.Cryos.tpdc.303606",
+  "authors": [
+    {
+      "name": "赵宏宇",
+      "name_en": "ZHAO Hongyu",
+      "unit": "西南石油大学",
+      "unit_en": "",
+      "email": "zhaohongyu@swpu.edu.cn",
+      "orcid": ""
+    },
+    {
+      "name": "张通",
+      "name_en": "ZHANG Tong",
+      "unit": "北京师范大学",
+      "unit_en": "Beijing Normal University",
+      "email": "tzhang@bnu.edu.cn",
+      "orcid": ""
+    }
+  ],
+  "publisher": "TPDC",
+  "date_published": "2026-08-31",
+  "year": "2026",
+  "description": "2026年8月26日10时30分，因尼泊尔一侧发生泥石流灾害，造成西藏日喀则市吉隆县吉隆口岸重大人员伤亡、失联。为支撑2026年8月吉隆县泥石流灾害区地表形态、沟谷结构、河道及堆积体等信息判读，整理形成该厚度、流速和DEM数据。该数据为冰川模拟使用的静态地形与动力学驱动数据，采用 NetCDF 格式，空间分辨率为30 m。数据包含30 m数字高程模型（DEM）、地形坡度、冰厚度以及ITS_LIVE冰川表面速度数据重采样后的水平速度分量，可用于冰川地形分析、冰厚度分布分析、冰川流速计算和冰川动力学模型驱动。",
+  "instructions": "数据为NetCDF格式，可用Python、ArcGIS等软件读取。",
+  "use_terms": "为尊重知识产权、保障数据作者的权益、扩展数据中心的服务、评估数据的应用潜力，请数据使用者在使用数据所产生的研究成果中（包括公开发表的论文、论著、数据产品和未公开发表的研究报告、数据产品等成果），明确注明数据来源和数据作者。对于转载（二次或多次发布）的数据，作者还须注明原始数据来源。",
+  "license_code": "1",
+  "share_type": "online",
+  "share_policy": "A",
+  "status": 6,
+  "time_coverage": {
+    "start": null,
+    "end": null,
+    "resolution": "Null",
+    "title_hint": "",
+    "note": "元数据未给出时间范围"
+  },
+  "spatial_coverage": {
+    "bbox": {
+      "west": 85.505265,
+      "east": 85.550125,
+      "south": 28.269098,
+      "north": 28.306935
+    },
+    "is_point": false,
+    "resolution": "10m - 100m",
+    "crs": null,
+    "projection": null
+  },
+  "keywords": [
+    "Glacier thickness",
+    "Glacier topography",
+    "Digital elevation model",
+    "Topography",
+    "Slope",
+    "Debris flow",
+    "Natural Disaster",
+    "Glacier(Ice Sheet)",
+    "Jilong County",
+    "Terrestrial Surface",
+    "Human-nature Relationship",
+    "Cryosphere",
+    "2026",
+    "DEM",
+    "冰川厚度",
+    "冰川地形",
+    "冰川（含冰盖）",
+    "地形",
+    "坡度",
+    "泥石流",
+    "自然灾害",
+    "人地关系",
+    "冰冻圈",
+    "陆地表层",
+    "吉隆县"
+  ],
+  "related_data": [
+    {
+      "id": "9ffe696c-ead6-4a3f-b3f0-684c1a889df0",
+      "title": "祁连山重点区域30m人类活动参数产品数据集（V1.0）"
+    },
+    {
+      "id": "b9d8faa4-619c-4737-b6fb-3dbc496103ea",
+      "title": "祁连山地区日值0.05°×0.05°地表土壤水分数据（2017, SMHiRes, V1）"
+    },
+    {
+      "id": "5d33db8a-373c-4cfa-8dc7-dc92ebf6d5c4",
+      "title": "祁连山综合观测网：祁连山植物多样性监测（植物调查数据-2018年）"
+    },
+    {
+      "id": "b117d43c-b826-4efc-a639-62ea334924df",
+      "title": "祁连山地区基于MODIS的逐日地表蒸散发数据（2018)（ETHi-merge V1）"
+    },
+    {
+      "id": "3ba144a8-23c8-4b3a-93e3-d335c0b75bbc",
+      "title": "祁连山重点区域土地覆盖/利用数据集（2018）"
+    },
+    {
+      "id": "9ecef56a-7fa6-4883-b6a8-9b79f72d10f4",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（四道桥超级站物候相机观测数据集-2018）"
+    },
+    {
+      "id": "4cc6a508-29f9-4560-93e9-0982618d4c01",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（四道桥叶面积指数-2018）"
+    },
+    {
+      "id": "7d9442b0-8dfd-412c-af9b-8b62c77eaa38",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（大满超级站叶面积指数-2018）"
+    },
+    {
+      "id": "44007ddd-e898-447c-a84b-801d400b5119",
+      "title": "祁连山地区水体指数产品（2018）"
+    },
+    {
+      "id": "407b798b-7b59-4c8f-818b-b07e335bea8f",
+      "title": "祁连山综合观测网：黑河流域地表过程综合观测网（混合林站物候相机观测数据集-2018）"
+    }
+  ],
+  "literature": [],
+  "citation_cn": "赵宏宇，张通. 吉隆口岸山洪灾害-蓝塘里壤峰冰崩前冰川地形、冰厚及表面速度数据集[DS]. 国家青藏高原科学数据中心, 2026. DOI: 10.11888/Cryos.tpdc.303606.",
+  "citation_en": "ZHAO Hongyu, ZHANG Tong. Jilong Port Mountain Flood Disaster - Landform, Ice Thickness, and Surface Velocity Dataset of Lantangli Ridge Glacier before Ice Collapse [Dataset]. National Tibetan Plateau Data Center, 2026. https://doi.org/10.11888/Cryos.tpdc.303606",
+  "local_mirror": {
+    "path": "05_辅助文档/题目附件/附件/（4）吉隆口岸山洪灾害-蓝塘里壤峰冰崩前冰川地形、冰厚及表面速度数据集.zip",
+    "exists": true,
+    "size_bytes": 319529,
+    "sha256": "fffd408711bba9c23b1409eef4aa09deec120a3e1fd97600bcbd5868c92d3c13"
+  },
+  "download_status": "local_mirror_present",
+  "raw_files": [
+    "raw 目录下保留 detail JSON 与 GoogleJson 原始响应"
+  ],
+  "recorded_at": "2026-08-31 15:38:11",
+  "description_source": "TPDC metadataView/detail + metadataView/getGoogleJson",
+  "fetched_at": "2026-10-24T02:37:26+00:00",
+  "http": {
+    "detail_status": 200,
+    "google_status": 200,
+    "detail_raw": "data/raw/tpdc_04_glacier_nc/20261024T024306Z_359dda96.json",
+    "google_raw": "data/raw/tpdc_04_glacier_nc/20261024T024306Z_8eded21a.json",
+    "detail_from_cache": true,
+    "google_from_cache": true
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "source_id": "tpdc_08_population",
+  "source_name": "TPDC-08 吉隆县第七次人口普查数据",
+  "kind": "tpdc_dataset",
+  "questions": [
+    "Q4"
+  ],
+  "notes": "县级多边形，合计 17,536 人；不含居民点，不能直接细化局部暴露。",
+  "metadata_id": "8662c472-43d6-4e92-bff8-e26923970642",
+  "landing_url": "https://www.tpdc.ac.cn/zh-hans/data/8662c472-43d6-4e92-bff8-e26923970642",
+  "title": "西藏日喀则市吉隆县泥石流灾害区吉隆县第七次人口普查数据",
+  "title_en": "Data from the Seventh Population Census of Jilong County, Jilong County, Shigatse City, Xizang",
+  "doi": "",
+  "doi_url": "",
+  "cstr": "",
+  "authors": [
+    {
+      "name": "国家统计局",
+      "name_en": "National-Bureau-of-Statics-of-China",
+      "unit": "国家统计局",
+      "unit_en": "National Bureau of Statics of China",
+      "email": "info@gj.stats.cn",
+      "orcid": ""
+    },
+    {
+      "name": "吉隆县统计局",
+      "name_en": "",
+      "unit": "吉隆县统计局",
+      "unit_en": "",
+      "email": "jlxrmzfbgs@126.com",
+      "orcid": ""
+    }
+  ],
+  "publisher": "TPDC",
+  "date_published": "2026-08-27",
+  "year": "2026",
+  "description": "2026年8月26日10时30分，因尼泊尔一侧发生泥石流灾害，造成西藏日喀则市吉隆县吉隆口岸重大人员伤亡、失联。为应对此次泥石流，方便科研工作者分析、特共享受灾区西藏日喀则市吉隆县第七次人口普查数据。该数据集以吉隆县行政区为基础，提供了第七次全国人口普查相关人口属性信息，包括常住人口总量、男女人口、性别比、非汉族人口比例、城镇人口、乡村人口、户数、户人口规模及家庭代际结构等内容，并带有空间边界信息，可与地形、遥感、道路、灾害点位等数据进行叠加分析。该数据对于评估受灾区域人口暴露度、研判应急救援与转移安置需求、分析灾害影响范围内人口分布特征具有重要价值，可用于泥石流灾害人口风险评估、应急救援资源配置、避险安置点规划、灾后恢复重建选址、公共服务设施布局优化及区域防灾减灾能力评估等研究。",
+  "instructions": "该数据集以shp格式给出。",
+  "use_terms": "为尊重知识产权、保障数据作者的权益、扩展数据中心的服务、评估数据的应用潜力，请数据使用者在使用数据所产生的研究成果中（包括公开发表的论文、论著、数据产品和未公开发表的研究报告、数据产品等成果），明确注明数据来源和数据作者。对于转载（二次或多次发布）的数据，作者还须注明原始数据来源。",
+  "license_code": "1",
+  "share_type": "online",
+  "share_policy": "A",
+  "status": 6,
+  "time_coverage": {
+    "start": null,
+    "end": null,
+    "resolution": "Yearly",
+    "title_hint": "",
+    "note": "元数据未给出时间范围"
+  },
+  "spatial_coverage": {
+    "bbox": {
+      "west": 84.45,
+      "east": 86.16,
+      "south": 28.26,
+      "north": 29.32
+    },
+    "is_point": false,
+    "resolution": "Null",
+    "crs": null,
+    "projection": null
+  },
+  "keywords": [
+    "Population",
+    "Social and Economic",
+    "proportion of urban population",
+    "Jilong County",
+    "Human-nature Relationship",
+    "2020",
+    "人口",
+    "城镇人口比重",
+    "社会经济",
+    "人地关系",
+    "吉隆县"
+  ],
+  "related_data": [
+    {
+      "id": "9ffe696c-ead6-4a3f-b3f0-684c1a889df0",
+      "title": "祁连山重点区域30m人类活动参数产品数据集（V1.0）"
+    },
+    {
+      "id": "848ac234-f69b-438f-9310-4830fb153374",
+      "title": "青藏高原1:100万行政边界数据（2017）"
+    },
+    {
+      "id": "eba7823e-674b-49f2-954a-ca9bc0ca3db2",
+      "title": "祁连山重点区域人类活动数据集 (2018)"
+    },
+    {
+      "id": "40a206e4-48b6-476b-a52f-ef95302798cb",
+      "title": "三极人口&GDP数据集（1970-2006）"
+    },
+    {
+      "id": "99bb0493-3fdd-4083-a67b-b6622a4f4db7",
+      "title": "祁连山区域30m人类活动参数产品数据集（V1.0）（2018）"
+    },
+    {
+      "id": "5b839f53-0925-49b2-9b16-8a5c7784c79e",
+      "title": "三极地区通量30分钟数据（2000-2016）"
+    },
+    {
+      "id": "792d3a51-c36a-478c-b501-89fceaa7e870",
+      "title": "祁连山区域30m人类活动参数产品数据集（V1.0）（1985-2017）"
+    },
+    {
+      "id": "30d6b383-7349-40fd-9c13-8a3c6c02d7e4",
+      "title": "耦合模式比较计划第6阶段CNRM-CM6-1模式全球植被生产力月数据（1850-2014）"
+    },
+    {
+      "id": "0c79d76a-063c-482b-9683-42d331a65d3d",
+      "title": "青藏高原300米分辨率土壤侵蚀（水蚀）强度数据集（1992、2005、2015）"
+    },
+    {
+      "id": "345dcce4-d25b-4abb-a1cf-ed26ceca4f9b",
+      "title": "可可西里-土地覆盖及植被类型地面验证点数据集"
+    }
+  ],
+  "literature": [],
+  "citation_cn": "国家统计局，吉隆县统计局. 西藏日喀则市吉隆县泥石流灾害区吉隆县第七次人口普查数据[DS]. 国家青藏高原科学数据中心, 2026.",
+  "citation_en": "National-Bureau-of-Statics-of-China. Data from the Seventh Population Census of Jilong County, Jilong County, Shigatse City, Xizang [Dataset]. National Tibetan Plateau Data Center, 2026.",
+  "local_mirror": {
+    "path": "05_辅助文档/题目附件/附件/（8）西藏日喀则市吉隆县泥石流灾害区吉隆县第七次人口普查数据.zip",
+    "exists": true,
+    "size_bytes": 42636,
+    "sha256": "21c2a1c4485bbfdecb05a4d09063cbc644a2dfb3804797da18c89575dbd680e7"
+  },
+  "download_status": "local_mirror_present",
+  "raw_files": [
+    "raw 目录下保留 detail JSON 与 GoogleJson 原始响应"
+  ],
+  "recorded_at": "2026-08-27 02:58:41",
+  "description_source": "TPDC metadataView/detail + metadataView/getGoogleJson",
+  "fetched_at": "2026-10-24T02:38:20+00:00",
+  "http": {
+    "detail_status": 200,
+    "google_status": 200,
+    "detail_raw": "data/raw/tpdc_08_population/20261024T024306Z_083cb5cc.json",
+    "google_raw": "data/raw/tpdc_08_population/20261024T024306Z_3100ae49.json",
+    "detail_from_cache": true,
+    "google_from_cache": true
+  }
+}

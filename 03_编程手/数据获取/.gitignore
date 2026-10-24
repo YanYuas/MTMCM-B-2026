@@ -1,0 +1,20 @@
+# 本工具产生的数据、缓存、日志不入库；配置和代码入库。
+data/raw/*
+data/cache/*
+data/tables/*
+data/runs/*
+data/manifest.jsonl
+data/meta/errors/*
+logs/*
+!data/raw/.gitkeep
+!data/cache/.gitkeep
+!data/tables/.gitkeep
+!data/reports/.gitkeep
+!data/runs/.gitkeep
+!data/meta/errors/.gitkeep
+!logs/.gitkeep
+
+__pycache__/
+*.pyc
+.venv/
+tmpjjptl13k/

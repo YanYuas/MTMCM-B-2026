@@ -1,0 +1,23 @@
+{
+  "source_id": "copernicus_s2",
+  "source_name": "Copernicus Data Space：Sentinel-2 L1C/L2A 产品元数据",
+  "kind": "api_json",
+  "questions": [
+    "Q2"
+  ],
+  "notes": "公开元数据检索；空间过滤 bbox 84.9–85.7E, 28.1–29.1N，返回产品可能只覆盖边缘，使用前需按 GeoFootprint 与核心区求交。产品下载需要 Copernicus 账号/OAuth，本工具只取元数据并记录下载条件。",
+  "url": "https://catalogue.dataspace.copernicus.eu/odata/v1/Products",
+  "params": {
+    "$filter": "Collection/Name eq 'SENTINEL-2' and ContentDate/Start gt 2026-08-20T00:00:00.000Z and ContentDate/Start lt 2026-08-30T00:00:00.000Z and OData.CSC.Intersects(area=geography'SRID=4326;POLYGON((84.9 28.1,85.7 28.1,85.7 29.1,84.9 29.1,84.9 28.1))')",
+    "$top": 30,
+    "$orderby": "ContentDate/Start asc"
+  },
+  "row_count": 30,
+  "time_start": "2026-08-22T04:56:51.024000Z",
+  "time_end": "2026-08-29T04:47:01.025000Z",
+  "parser": "copernicus",
+  "download_note": "本工具只取公开元数据；产品下载需要 Copernicus Data Space 账号/OAuth，不代填凭据。",
+  "fetched_at": "2026-10-24T02:39:13+00:00",
+  "http_status": 200,
+  "raw_path": "data/raw/copernicus_s2/20261024T024306Z_1b29469c.json"
+}
