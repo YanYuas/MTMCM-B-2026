@@ -1,0 +1,36 @@
+﻿id,input,expected,actual,tol,pass,note
+V1,"I=[0.2,0.5,1.2,1.5], thr=1.0",2,2,0.0,True,0-based; 第3个整点
+V2a,"[1..5], q=0.025",1.1,1.1,1e-09,True,
+V2b,"[1..5], q=0.975",4.9,4.9,1e-09,True,
+V3,"impact=10:00, warn=08:00",2.0,2.0,1e-09,True,小时
+V4a,"[1,2,3,4,inf], p_inf",0.2,0.19999999999999996,1e-09,True,
+V4b,"[1,2,3,4,inf], lower",1.075,1.075,1e-09,True,有限样本 q0.025
+V4c,"[1,2,3,4,inf], upper",,,0.0,True,p_inf>0.025 -> inf
+V5,95/100,0.95,0.95,1e-09,True,
+V5ci,Wilson 95% CI,"[0.8882, 0.9785]","[0.8882, 0.9785]",0.001,True,参考值
+V6,"CDF 0.4/0.7/0.92, p_warn=0.9",2,2,0.0,True,t0=2 首次达标
+V7,"rain=inf, ice=10.5, glof=inf",10.5,10.5,1e-09,True,
+V8,"D_arrival=20, buffer=5",25.0,25.0,1e-09,True,km
+V9,"Var_driver=0.8, Var_total=1.0",0.8,0.8,1e-09,True,
+V10a,"scores=[1..5], alpha=.05",5.0,5.0,1e-09,True,
+V10b,conformal level,1.2,1.2,1e-09,True,ceil(6*0.95)/5
+V11,"P=[1,2,3], k=.9",5.61,5.609999999999999,1e-09,True,
+V12,"q2.5=1.1, q97.5=4.9",3.8,3.8000000000000003,1e-09,True,
+A1,object keys,7,7,0.0,True,对象字段齐全
+A2,local event count,2,2,0.0,True,84 多边形不计入
+A3,forecast_start > event_time,True,True,0.0,True,历史不用 forecast
+A4a,dry 2026-like,,,0.0,True,T_rain=inf
+A4b,P1h=12 at t=3,3,3,0.0,True,P1h/10=1.2
+A5,min branch,ice,ice,0.0,True,分支先触发
+A6a,3/5 inf,0.6,0.6,1e-09,True,
+A6b,finite lower,1.025,1.025,1e-09,True,
+A6c,upper,,,0.0,True,inf
+A7a,[0..4] q2.5,0.1,0.1,1e-09,True,
+A7b,[0..4] q97.5,3.9,3.9,1e-09,True,
+A8a,T_warn,2,2,0.0,True,
+A8b,L=5-2,3,3,1e-09,True,
+A9,three coverage columns,3,3,0.0,True,不混写
+A10a,interval low,3.0,3.0,1e-09,True,
+A10b,"Y=10 in [3,13]",True,True,0.0,True,
+A11,three spatial fields,3,3,0.0,True,km
+A12,no forbidden wording,True,True,0.0,True,
