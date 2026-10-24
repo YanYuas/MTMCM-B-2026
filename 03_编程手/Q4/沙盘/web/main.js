@@ -11,6 +11,8 @@ const state = {
   sites: [],
   q3: null,
   q3branch: null,
+  drivers: null,
+  provenance: null,
   time: 0,
   duration: 1800,
   playing: false,
@@ -74,7 +76,7 @@ init();
 
 async function init() {
   try {
-    const [manifest, channel, sites, q3, q3branch, glacier, q4] = await Promise.all([
+    const [manifest, channel, sites, q3, q3branch, glacier, q4, drivers, provenance] = await Promise.all([
       fetchJSON('./data/manifest.json'),
       fetchJSON('./data/channel.json'),
       fetchJSON('./data/sites.json'),
@@ -82,6 +84,8 @@ async function init() {
       fetchJSON('./data/q3_branch.json').catch(() => null),
       fetchJSON('./data/glacier_points.json'),
       fetchJSON('./data/q4_frames.json').catch(() => null),
+      fetchJSON('./data/drivers.json').catch(() => null),
+      fetchJSON('./data/provenance.json').catch(() => null),
     ]);
     state.manifest = manifest;
     state.channel = channel;
@@ -90,6 +94,8 @@ async function init() {
     state.q3branch = q3branch;
     state.glacierPoints = glacier;
     state.q4 = q4;
+    state.drivers = drivers;
+    state.provenance = provenance;
 
     const [terrainBuf, slopeBuf] = await Promise.all([
       fetchBin('./data/terrain.bin'),
@@ -105,6 +111,8 @@ async function init() {
 
     buildScene(heights, slopes);
     buildUI();
+    drawRainChart();
+    renderProvenance();
     updateQ3Panel();
     setScenario('2026', false);
     const qs = new URLSearchParams(location.search);
@@ -222,6 +230,19 @@ function buildScene(heights, slopes) {
   geo.setIndex(new THREE.BufferAttribute(indices, 1));
   geo.computeVertexNormals();
   const mat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.96, metalness: 0.02, side: THREE.DoubleSide });
+  mat.onBeforeCompile = (shader) => {
+    shader.vertexShader = shader.vertexShader
+      .replace('#include <common>', '#include <common>\nvarying float vWorldY;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvWorldY = (modelMatrix * vec4(transformed, 1.0)).y;');
+    shader.fragmentShader = shader.fragmentShader
+      .replace('#include <common>', '#include <common>\nvarying float vWorldY;')
+      .replace('#include <dithering_fragment>', `#include <dithering_fragment>
+        float contourW = fwidth(vWorldY) * 1.35;
+        float contourD = abs(fract(vWorldY / 0.44) - 0.5);
+        if (contourD < contourW) gl_FragColor.rgb *= 0.82;
+      `);
+  };
+  mat.customProgramCacheKey = () => 'terrain-contour-v1';
   const terrain = new THREE.Mesh(geo, mat);
   terrain.receiveShadow = false;
   scene.add(terrain);
@@ -463,6 +484,56 @@ function updateScaleCompass() {
   $('compass').querySelector('.needle').style.transform = `rotate(${angle}rad)`;
 }
 
+function drawRainChart() {
+  const cv = $('rain-chart');
+  if (!cv || !state.drivers?.drivers) return;
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = 'rgba(4,8,12,.55)'; ctx.fillRect(0, 0, W, H);
+  const ds = state.drivers.drivers;
+  const names = Object.keys(ds);
+  const colors = { station: '#6fe7ff', era5: '#ffc46b', nasa: '#ff8a3d', chirps: '#74e2a0' };
+  const labels = { station: '站点', era5: 'ERA5', nasa: 'NASA', chirps: 'CHIRPS' };
+  let maxY = 1, maxN = 1;
+  for (const k of names) {
+    maxY = Math.max(maxY, ...(ds[k].cum_mm || [0]));
+    maxN = Math.max(maxN, (ds[k].cum_mm || []).length);
+  }
+  ctx.strokeStyle = 'rgba(120,190,230,.18)';
+  ctx.beginPath(); ctx.moveTo(6, H - 6); ctx.lineTo(W - 6, H - 6); ctx.stroke();
+  for (const k of names) {
+    const arr = ds[k].cum_mm || [];
+    if (!arr.length) continue;
+    ctx.strokeStyle = colors[k] || '#fff';
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    arr.forEach((v, i) => {
+      const x = 6 + (i / Math.max(1, arr.length - 1)) * (W - 12);
+      const y = H - 6 - (v / maxY) * (H - 14);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+  }
+  ctx.fillStyle = 'rgba(220,232,242,.6)'; ctx.font = '9px Consolas, monospace';
+  ctx.fillText(`累计降水 0–${maxY.toFixed(1)} 毫米`, 8, 11);
+  $('rain-legend').innerHTML = names.map(k => `<span><i style="background:${colors[k]}"></i>${labels[k]}</span>`).join('');
+}
+
+function renderProvenance() {
+  const el = $('provenance');
+  if (!el || !state.provenance) return;
+  const p = state.provenance;
+  const list = (arr) => (arr || []).map(x => `<p>· ${escapeHtml(x)}</p>`).join('');
+  el.innerHTML = `
+    <b>附件数据</b>${list(p.attachment)}
+    <b>外采数据</b>${list(p.external)}
+    <b>模型输出</b>${list(p.model)}
+    <b>人口</b><p>合计 ${escapeHtml(String(p.population?.['合计'] || 'NA'))}；人口数 ${escapeHtml(String(p.population?.['人口数'] || 'NA'))}；城镇 ${escapeHtml(String(p.population?.urban || 'NA'))}；乡村 ${escapeHtml(String(p.population?.rural || 'NA'))}</p>
+    <p>${escapeHtml(p.population?.note || '')}</p>
+  `;
+}
+
 function buildUI() {
   $('btn-play').onclick = () => togglePlay();
   $('btn-speed').onclick = () => {
@@ -517,7 +588,7 @@ function buildUI() {
   $('use-q4').onchange = (e) => {
     state.useQ4 = e.target.checked && !!state.q4 && state.scenario === '2026';
     $('scenario-note').textContent = state.useQ4
-      ? '2026-08-26 10:30；Q4 60 m 基线帧（S5，μ=0.05）；3D 地形为 30 m DEM。'
+      ? '2026-08-26 10:30；Q4 60 米基线帧（情景 S5，摩擦系数 0.05）；3D 地形为 30 米 DEM。'
       : '2026-08-26 10:30；快速情景预览；滑杆生效，不是 Q4 验证结果。';
     updateStatusStrip();
     updateHazard();
@@ -542,7 +613,7 @@ function updateStatusStrip() {
   if (state.scenario === '2025') {
     el.textContent = '2025 GLOF · 条件情景 · 非预报 · 垂直夸大 2.2×';
   } else if (state.useQ4 && state.q4) {
-    el.textContent = 'Q4 S5 60 m · μ=0.05 · 未通过 2026 量级 · 垂直夸大 2.2×';
+    el.textContent = 'Q4 情景 S5 · 60 米 · 摩擦系数 0.05 · 未通过 2026 量级 · 垂直夸大 2.2×';
   } else {
     el.textContent = '快速预览 · 非 Q4 验证 · 垂直夸大 2.2×';
   }
@@ -567,7 +638,7 @@ function setScenario(id, announce = true) {
     $('use-q4').checked = state.useQ4;
     $('use-q4').disabled = !state.q4;
     $('scenario-note').textContent = state.useQ4
-      ? '2026-08-26 10:30；Q4 60 m 基线帧（S5，μ=0.05）；3D 地形为 30 m DEM。'
+      ? '2026-08-26 10:30；Q4 60 米基线帧（情景 S5，摩擦系数 0.05）；3D 地形为 30 米 DEM。'
       : '2026-08-26 10:30；快速情景预览；关闭 Q4 帧后滑杆生效。';
     state.duration = 1800;
   } else {
@@ -594,6 +665,10 @@ function setScenario(id, announce = true) {
   if (announce) toast(id === '2026' ? '已切到 2026 冰崩链情景' : '已切到 2025 GLOF 情景');
 }
 
+function branchChinese(b) {
+  return ({ ice: '冰崩', glof: '冰湖溃决', rain: '降雨', earthquake: '地震' })[String(b)] || String(b);
+}
+
 function updateQ3Panel() {
   const el = $('q3-panel');
   if (!state.q3) { el.textContent = '无 Q3 数据'; return; }
@@ -607,11 +682,11 @@ function updateQ3Panel() {
   const fmt = (v, d = 2) => (v === null || v === undefined || Number.isNaN(Number(v))) ? 'NA' : Number(v).toFixed(d);
   el.innerHTML = `
     <div class="row"><span>事件</span><b>${escapeHtml(String(caseRow?.event_time_bjt || event))}</b></div>
-    <div class="row"><span>主导分支</span><b>${escapeHtml(String(dominant?.branch || caseRow?.dominant_branch || 'NA'))} · ${dominant ? (dominant.p * 100).toFixed(1) : 'NA'}%</b></div>
-    <div class="row"><span>分支条件区间</span><b>${fmt(dominant?.q025, 1)}–${fmt(dominant?.q975, 1)} h</b></div>
-    <div class="row"><span>P(rain first)</span><b>${rain ? (rain.p * 100).toFixed(2) : 'NA'}%</b></div>
-    <div class="row"><span>T_warn</span><b class="warn">${escapeHtml(String(main?.T_warn_bjt || '无预警'))}</b></div>
-    <div class="row"><span>lead 中位</span><b class="warn">${fmt(main?.lead_median_h, 2)} h</b></div>
+    <div class="row"><span>主导分支</span><b>${escapeHtml(branchChinese(dominant?.branch || caseRow?.dominant_branch || 'NA'))} · ${dominant ? (dominant.p * 100).toFixed(1) : 'NA'}%</b></div>
+    <div class="row"><span>分支条件区间</span><b>${fmt(dominant?.q025, 1)}–${fmt(dominant?.q975, 1)} 小时</b></div>
+    <div class="row"><span>降雨先触发比例</span><b>${rain ? (rain.p * 100).toFixed(2) : 'NA'}%</b></div>
+    <div class="row"><span>预警发布时刻</span><b class="warn">${escapeHtml(String(main?.T_warn_bjt || '无预警'))}</b></div>
+    <div class="row"><span>预警提前量中位</span><b class="warn">${fmt(main?.lead_median_h, 2)} 小时</b></div>
     <p class="hint">主结果用“主导分支条件区间”，不展示混合区间；Q3 是预测区间，不是概率。</p>
   `;
 }
@@ -698,9 +773,10 @@ function updateHazard() {
   const pos = state.hazardGeo.attributes.position.array;
   const col = state.hazardGeo.attributes.color.array;
   const c = new THREE.Color();
-  const low = new THREE.Color('#2b6fdb');
-  const high = new THREE.Color('#ffd166');
+  const low = new THREE.Color('#1e5fd0');
+  const high = new THREE.Color('#ff5a36');
   let maxDepth = 0, sumDepth = 0, count = 0;
+  let maxVel = 0, impactKm = 0;
   let minY = Infinity, maxY = -Infinity;
 
   for (let i = 0; i < sampled.length; i++) {
@@ -712,7 +788,7 @@ function updateHazard() {
       if (useQ4) {
         depth = q4Value(q4Frame.h, d);
         vel = q4Value(q4Frame.u, d);
-        width = Math.min(0.38, Math.max(0.12, 0.08 + 0.008 * d));
+        width = Math.min(0.55, Math.max(0.16, 0.12 + depth * 0.03 + 0.002 * d));
         if (depth <= 0) depth = 0;
       } else {
         const rel = d / Math.max(0.001, frontKm);
@@ -722,6 +798,8 @@ function updateHazard() {
       }
       if (depth > 0) {
         maxDepth = Math.max(maxDepth, depth);
+        maxVel = Math.max(maxVel, vel);
+        if (depth >= 0.5) impactKm = Math.max(impactKm, d);
         sumDepth += depth; count++;
       }
     }
@@ -737,7 +815,7 @@ function updateHazard() {
     pos[a * 3] = dx + px * half; pos[a * 3 + 1] = y; pos[a * 3 + 2] = dz + pz * half;
     pos[b * 3] = dx - px * half; pos[b * 3 + 1] = y; pos[b * 3 + 2] = dz - pz * half;
     minY = Math.min(minY, y); maxY = Math.max(maxY, y);
-    const q = THREE.MathUtils.clamp(vel / Math.max(1, vfront), 0, 1);
+    const q = THREE.MathUtils.clamp(useQ4 ? depth / Math.max(1, maxDepth) : vel / Math.max(1, vfront), 0, 1);
     c.copy(low).lerp(high, on ? 0.25 + 0.75 * q : 0);
     col[a * 3] = c.r; col[a * 3 + 1] = c.g; col[a * 3 + 2] = c.b;
     col[b * 3] = c.r; col[b * 3 + 1] = c.g; col[b * 3 + 2] = c.b;
@@ -786,16 +864,16 @@ function updateHazard() {
     let tx = next.x - prev.x, tz = next.z - prev.z;
     const tl = Math.hypot(tx, tz) || 1; tx /= tl; tz /= tl;
     const rel = p.d_km / Math.max(0.001, frontKm);
-    const depth = Math.max(0.05, h0 * Math.exp(-p.d_km / 10) * (1 - 0.55 * Math.min(1, rel)));
-    const vel = vfront * Math.exp(-p.d_km / 14);
-    const w = 0.22;
-    const h = 0.3 + depth / 1000 * 6.0;
+    const depth = useQ4 ? q4Value(q4Frame.h, p.d_km) : Math.max(0.05, h0 * Math.exp(-p.d_km / 10) * (1 - 0.55 * Math.min(1, rel)));
+    const vel = useQ4 ? q4Value(q4Frame.u, p.d_km) : vfront * Math.exp(-p.d_km / 14);
+    const w = useQ4 ? Math.min(0.58, Math.max(0.18, 0.12 + depth * 0.03)) : 0.22;
+    const h = useQ4 ? 0.06 + Math.min(0.22, depth * 0.025) : 0.3 + depth / 1000 * 6.0;
     mesh.visible = true;
-    mesh.position.set(p.x, Math.max(baseY(p.y), terrainYAt(p.x, p.z)) + h / 2 + 0.08, p.z);
+    mesh.position.set(p.x, Math.max(baseY(p.y), terrainYAt(p.x, p.z)) + h / 2 + 0.04, p.z);
     mesh.rotation.y = Math.atan2(tx, tz);
     mesh.scale.set(w, h, 0.3);
-    mesh.material.color.copy(low).lerp(high, THREE.MathUtils.clamp(vel / Math.max(1, vfront), 0, 1));
-    mesh.material.opacity = 0.86;
+    mesh.material.color.copy(low).lerp(high, THREE.MathUtils.clamp(useQ4 ? depth / Math.max(1, maxDepth) : vel / Math.max(1, vfront), 0, 1));
+    mesh.material.opacity = 0.9;
   }
   grp.visible = state.hazard.visible !== false;
 
@@ -809,14 +887,17 @@ function updateHazard() {
     state.frontMarker.visible = false;
   }
 
-  state.stats = { frontKm, maxDepth, sumDepth, count, h0, vfront, t };
+  state.stats = { frontKm, maxDepth, maxVel, impactKm, sumDepth, count, h0, vfront, t };
+  const qPeak = 0.5 * 1825 * 1.5 * maxVel * maxVel / 1000;
   $('stats').innerHTML = `
-    <span>锋面 <b>${frontKm.toFixed(1)} km</b></span>
-    <span>数据 <b>${useQ4 ? 'Q4 60m' : '情景预览'}</b></span>
-    <span>最大水深 <b>${maxDepth.toFixed(1)} m</b></span>
-    <span>平均水深 <b>${(count ? sumDepth / count : 0).toFixed(1)} m</b></span>
-    <span>锋面速度 <b>${vfront.toFixed(1)} m/s</b></span>
-    <span>初始水深 <b>${h0.toFixed(1)} m</b></span>
+    <span>锋面 <b>${frontKm.toFixed(1)} 千米</b></span>
+    <span>数据 <b>${useQ4 ? 'Q4 60 米帧' : '情景预览'}</b></span>
+    <span>最大水深 <b>${maxDepth.toFixed(1)} 米</b></span>
+    <span>平均水深 <b>${(count ? sumDepth / count : 0).toFixed(1)} 米</b></span>
+    <span>最大流速 <b>${maxVel.toFixed(1)} 米/秒</b></span>
+    <span>峰值动压 <b>${qPeak.toFixed(0)} 千帕</b></span>
+    <span>影响距离 <b>${impactKm.toFixed(1)} 千米</b></span>
+    <span>锋面速度 <b>${vfront.toFixed(1)} 米/秒</b></span>
     <span>已历时 <b>${clock(state.time)}</b></span>
   `;
   drawProfile(sampled, frontIndex, h0, frontKm, q4Frame, useQ4);

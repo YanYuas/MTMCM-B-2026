@@ -85,8 +85,16 @@ input[type="range"] { width: 100%; accent-color: var(--cyan); }
 #right-panel {
   position: fixed; top: 72px; right: 14px; width: 248px; z-index: 9;
   display: flex; flex-direction: column; gap: 10px;
+  max-height: calc(100vh - 240px); overflow: auto; padding-bottom: 6px;
 }
 #right-panel .card { padding: 10px 11px; }
+#rain-chart { width: 100%; height: 70px; border: 1px solid var(--line); border-radius: 6px; background: rgba(4,8,12,.55); }
+.rain-legend { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 5px; color: var(--muted); font-size: 10px; }
+.rain-legend i { display: inline-block; width: 7px; height: 7px; border-radius: 2px; margin-right: 3px; }
+details.card summary { cursor: pointer; color: var(--cyan); font-size: 11px; outline: none; }
+#provenance { margin-top: 8px; font-size: 10px; color: var(--muted); }
+#provenance b { color: var(--text); display: block; margin: 6px 0 2px; }
+#provenance p { margin: 2px 0; }
 .legend-row { display: flex; align-items: center; gap: 8px; margin: 7px 0 3px; color: var(--muted); font-size: 11px; }
 .legend-row > span { width: 28px; flex: none; }
 .ramp { height: 8px; border-radius: 4px; flex: 1; border: 1px solid rgba(255,255,255,.12); }

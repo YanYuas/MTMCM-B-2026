@@ -92,6 +92,51 @@ q3 = {
 }
 (WEB / "data" / "q3.json").write_text(json.dumps(clean_json(q3), ensure_ascii=False, indent=2), encoding="utf-8")
 
+# 外采驱动（Q3 驱动长表）与数据来源说明
+drivers = pd.read_csv(BASE / "03_编程手" / "Q3" / "实验结果" / "q3_drivers.csv")
+drivers = drivers[drivers["year"] == 2026]
+drv_obj = {"event": 2026, "window_start": str(drivers["timestamp_bjt"].min()), "window_end": str(drivers["timestamp_bjt"].max()), "drivers": {}}
+for d in ["station", "era5", "nasa", "chirps"]:
+    sub = drivers[drivers["driver"] == d].sort_values("timestamp_bjt")
+    if len(sub) == 0:
+        continue
+    drv_obj["drivers"][d] = {
+        "time": sub["timestamp_bjt"].tolist(),
+        "precip_mm_h": [round(float(v), 4) for v in sub["precip_mm_h"]],
+        "cum_mm": [round(float(v), 3) for v in sub["precip_mm_h"].fillna(0).cumsum()],
+        "api72_mm": [round(float(v), 3) if pd.notna(v) else None for v in sub["api72_mm"]],
+        "note": "CHIRPS 为日值均匀展示，不是小时观测" if d == "chirps" else "外采/站点驱动",
+    }
+(WEB / "data" / "drivers.json").write_text(json.dumps(clean_json(drv_obj), ensure_ascii=False, indent=2), encoding="utf-8")
+
+pop = json.loads((BASE / "03_编程手" / "数据获取" / "data" / "processed" / "tpdc08_population" / "summary.json").read_text(encoding="utf-8"))
+s1 = pd.read_csv(BASE / "03_编程手" / "数据获取" / "data" / "tables" / "copernicus_s1.csv")
+s2 = pd.read_csv(BASE / "03_编程手" / "数据获取" / "data" / "tables" / "copernicus_s2.csv")
+prov = {
+    "attachment": [
+        "TPDC-01 站点小时气象/土壤（24 CSV）",
+        "TPDC-02 温度（21 XLSX）",
+        "TPDC-03 冰川变化（168 TIFF/4 时段）",
+        "TPDC-04 冰川厚度/速度（10 变量）",
+        "TPDC-05 土地覆盖（2023，编码 1–10 无图例）",
+        "TPDC-06 历史沟域（84 多边形/23 在 DEM 内）",
+        "TPDC-07 DEM/沟道（30 m）",
+        "TPDC-08 吉隆县人口普查（县级）",
+    ],
+    "external": [
+        "Open-Meteo archive（2026-08-20→08-28，216 h）",
+        "NASA POWER（2026-08-20→08-28，216 h，LST）",
+        "CHIRPS v2.0 日值（事件窗口，0.05°）",
+        f"Copernicus S1 元数据 {len(s1)} 景（仅 bbox，无影像）",
+        f"Copernicus S2 元数据 {len(s2)} 景（仅 bbox，无影像）",
+        "事件目录（官方/新闻；2 本地 + 1 区域 GLOF + 1 地震）",
+    ],
+    "model": ["Q2 WOE 相对易发性", "Q3 A+C 触发/预警集合", "Q4 2D HLL/Voellmy 首轮"],
+    "population": {"合计": pop.get("合计"), "人口数": pop.get("人口数"), "urban": pop.get("urban"), "rural": pop.get("rural"), "households": pop.get("households"), "note": "县级；不能精确到个人/居民点"},
+    "copernicus": {"s1": len(s1), "s2": len(s2), "note": "只取元数据，未下载影像；不能当灾后范围真值"},
+}
+(WEB / "data" / "provenance.json").write_text(json.dumps(clean_json(prov), ensure_ascii=False, indent=2), encoding="utf-8")
+
 meta = {
     "generated_at": pd.Timestamp.now().isoformat(timespec="seconds"),
     "dem_shape": [int(rows), int(cols)],
