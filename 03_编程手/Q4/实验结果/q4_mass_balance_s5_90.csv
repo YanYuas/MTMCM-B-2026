@@ -1,0 +1,2 @@
+﻿scenario,V0,C_v,mu,xi,grid_m,mass0,mass_flow,mass_dep,outflow,mass_err,steps,h0,source_cells
+s5_90,300000.0,0.45,0.05,300.0,90,300000.0,6248.49944366113,293751.5005563388,0.0,1.940255363782247e-16,906,6.172839506172839,6
