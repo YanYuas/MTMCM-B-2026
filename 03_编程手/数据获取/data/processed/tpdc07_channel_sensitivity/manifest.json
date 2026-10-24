@@ -1,0 +1,47 @@
+{
+  "dataset": "TPDC-07 主流路阈值/填洼敏感性",
+  "generated_at": "2026-10-24T11:57:48",
+  "runs": 9,
+  "successful_runs": 9,
+  "thresholds": [
+    500,
+    1000,
+    2000
+  ],
+  "fill_modes": [
+    "none",
+    "epsilon_1e-4",
+    "epsilon_1e-3"
+  ],
+  "length_km_min": 2.058,
+  "length_km_max": 50.059,
+  "gradient_pct_min": 8.045,
+  "gradient_pct_max": 11.187,
+  "outlet_boundary_count": 9,
+  "recommended": "epsilon_1e-4_thr1000",
+  "notes": [
+    "阈值 500/1000/2000 cells；填洼模式 none/epsilon_1e-4/epsilon_1e-3",
+    "none 模式的汇流可能停在内部 sink，outlet_boundary=False",
+    "结果只反映 D8/阈值选择，不是唯一真实沟道"
+  ],
+  "source_files": [
+    "data/processed/tpdc07_dem/dem_core_30m.tif"
+  ],
+  "outputs": [
+    {
+      "path": "data/processed/tpdc07_channel_sensitivity/main_channel_sensitivity_runs.csv",
+      "bytes": 1528,
+      "sha256": "b8e334b191809150f5d002ef597aba8fe7f0bde356ee4aaa6ca26723edb5ec0b"
+    },
+    {
+      "path": "data/processed/tpdc07_channel_sensitivity/main_channel_sensitivity.geojson",
+      "bytes": 692867,
+      "sha256": "838e7e7cdbc691418f686cd2d1c560b3060df8ca784610015dea18d804262b39"
+    },
+    {
+      "path": "data/processed/tpdc07_channel_sensitivity/summary.json",
+      "bytes": 708,
+      "sha256": "a4652ac9f351f44cd13d40195243e92240a0a23a95d7fe2c20d92bcc9dfb703a"
+    }
+  ]
+}

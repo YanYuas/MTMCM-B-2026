@@ -300,7 +300,7 @@ def build_report(config: Config, store: Store, manifest: Manifest) -> tuple[Path
     lines.append("python -m mtmcm_data fetch all --refresh")
     lines.append("python -m mtmcm_data download all")
     lines.append("python -m mtmcm_data existing")
-    lines.append("python -m mtmcm_data process --batch 1")
+    lines.append("python -m mtmcm_data process --batch all")
     lines.append("python -m mtmcm_data report")
     lines.append("python -m mtmcm_data audit")
     lines.append("python -m mtmcm_data validate")

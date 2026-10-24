@@ -1,0 +1,27 @@
+{
+  "dataset": "TPDC-07 主流路阈值/填洼敏感性",
+  "generated_at": "2026-10-24T11:57:48",
+  "runs": 9,
+  "successful_runs": 9,
+  "thresholds": [
+    500,
+    1000,
+    2000
+  ],
+  "fill_modes": [
+    "none",
+    "epsilon_1e-4",
+    "epsilon_1e-3"
+  ],
+  "length_km_min": 2.058,
+  "length_km_max": 50.059,
+  "gradient_pct_min": 8.045,
+  "gradient_pct_max": 11.187,
+  "outlet_boundary_count": 9,
+  "recommended": "epsilon_1e-4_thr1000",
+  "notes": [
+    "阈值 500/1000/2000 cells；填洼模式 none/epsilon_1e-4/epsilon_1e-3",
+    "none 模式的汇流可能停在内部 sink，outlet_boundary=False",
+    "结果只反映 D8/阈值选择，不是唯一真实沟道"
+  ]
+}

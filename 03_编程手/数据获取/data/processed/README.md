@@ -1,6 +1,6 @@
 # data/processed 基线
 
-> 由 `python -m mtmcm_data process --batch 1/2/3/4/all` 生成；原始附件只读。
+> 由 `python -m mtmcm_data process --batch 1-6/all` 生成；原始附件只读。
 
 ## 第一批（batch 1）
 
@@ -35,13 +35,28 @@
 - `spatial_baseline/tpdc06_gully_id_mask.tif`：沟域 ID 栅格（1–84，0=outside）；
 - `spatial_baseline/summary.json`：in_dem 数量、总像元、平均坡度等。
 
+## 第五批（batch 5）
+
+- `tpdc07_channel_sensitivity/main_channel_sensitivity_runs.csv`：3 个阈值 × 3 种填洼模式的 9 次主流路；
+- `tpdc07_channel_sensitivity/main_channel_sensitivity.geojson`：各次主流路 LineString；
+- `tpdc07_channel_sensitivity/summary.json`：长度/比降范围与推荐参数。
+
+## 第六批（batch 6）
+
+- `q2_susceptibility/q2_susceptibility_score.tif`：WOE 相对易发性分数；
+- `q2_susceptibility/q2_susceptibility_class.tif`：1–5 分级（背景 20/40/60/80 分位）；
+- `q2_susceptibility/q2_woe_bins.csv`：坡度/高程/汇流/土地覆盖的分箱 WOE；
+- `q2_susceptibility/q2_gully_scores.csv`：84 个沟域的均分与背景百分位；
+- `q2_susceptibility/summary.json`：全局/空间块 AUC、沟域百分位。
+
 ## 关键约束
 
 - TPDC-01 的 `9999.9`/`QC=8` 已标缺失，未补零；
 - TPDC-02 的 2025 只有 214 天，年度趋势需排除或标注；
 - TPDC-06 的 `解译Time`/`影像Time` 不是事件发生时间；84 个沟域不是 84 次事件；
 - TPDC-05 的 0 是 nodata，不是类别；1–10 无官方图例；
-- TPDC-07 的 D8 未填洼，sink 单元会终止汇流；坡度按中心纬度近似米制间距；
+- batch 2 的 D8 未填洼；batch 3 主流路用填洼+epsilon D8，两者不能混用；
+- batch 6 的 WOE 是相对易发性，不是概率；空间块 AUC 较弱，不能外推；
 - 原始附件只读；派生层可由脚本重建。
 
 ## 复现

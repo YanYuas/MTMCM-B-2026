@@ -1,16 +1,43 @@
 {
-  "batch": "all",
-  "generated_at": "2026-10-24T11:53:38",
+  "batch": "6",
+  "generated_at": "2026-10-24T11:59:56",
   "datasets": [
+    "Q2 空间易发性基线（WOE）",
     "TPDC-06 历史沟域 × DEM/坡度/汇流/土地覆盖",
     "TPDC-01 逐小时综合观测",
     "TPDC-02 逐日平均气温",
     "TPDC-05 土地覆盖（2023）",
     "TPDC-06 历史灾点（沟域多边形）",
     "TPDC-07 主流路/纵剖面",
+    "TPDC-07 主流路阈值/填洼敏感性",
     "TPDC-07 DEM 派生地形（核心沟谷）"
   ],
   "outputs": [
+    {
+      "path": "data/processed/q2_susceptibility/q2_susceptibility_score.tif",
+      "bytes": 4636190,
+      "sha256": "c2a4df43d52d329ec8155b182d129e98caa321631fd7c27f5a8851bb90b196ac"
+    },
+    {
+      "path": "data/processed/q2_susceptibility/q2_susceptibility_class.tif",
+      "bytes": 236628,
+      "sha256": "a3e5ae58e39d57fd754597d7a3e7222e297e61942f0bcbb70d90e55f31bcc6b1"
+    },
+    {
+      "path": "data/processed/q2_susceptibility/q2_woe_bins.csv",
+      "bytes": 3282,
+      "sha256": "376d65091f57965c13243fafd2cea00790d61c0ecc4b075e1f1ef3eaeb368939"
+    },
+    {
+      "path": "data/processed/q2_susceptibility/q2_gully_scores.csv",
+      "bytes": 5729,
+      "sha256": "bed82ccb69259b66ab4f8183ce7869e056dbb18f138cd79924efac44b8c0402d"
+    },
+    {
+      "path": "data/processed/q2_susceptibility/summary.json",
+      "bytes": 1631,
+      "sha256": "bcd38af4bc24f519e2075a014ebbe3efd45bed8866aabba2ef5f49c336ec17e8"
+    },
     {
       "path": "data/processed/spatial_baseline/tpdc06_gully_overlay_stats.csv",
       "bytes": 13925,
@@ -115,6 +142,21 @@
       "path": "data/processed/tpdc07_channel/main_channel_summary.json",
       "bytes": 1205,
       "sha256": "3bad62fcf15d6ca9426826c6b189e59cfaed847c72b80c98391afd3cfbee5597"
+    },
+    {
+      "path": "data/processed/tpdc07_channel_sensitivity/main_channel_sensitivity_runs.csv",
+      "bytes": 1528,
+      "sha256": "b8e334b191809150f5d002ef597aba8fe7f0bde356ee4aaa6ca26723edb5ec0b"
+    },
+    {
+      "path": "data/processed/tpdc07_channel_sensitivity/main_channel_sensitivity.geojson",
+      "bytes": 692867,
+      "sha256": "838e7e7cdbc691418f686cd2d1c560b3060df8ca784610015dea18d804262b39"
+    },
+    {
+      "path": "data/processed/tpdc07_channel_sensitivity/summary.json",
+      "bytes": 708,
+      "sha256": "a4652ac9f351f44cd13d40195243e92240a0a23a95d7fe2c20d92bcc9dfb703a"
     },
     {
       "path": "data/processed/tpdc07_dem/dem_core_30m.tif",

@@ -1,0 +1,58 @@
+{
+  "dataset": "Q2 空间易发性基线（WOE）",
+  "generated_at": "2026-10-24T11:59:56",
+  "presence_cells": 407821,
+  "background_cells": 1676947,
+  "gullies_total": 84,
+  "gullies_in_dem": 23,
+  "covariates": [
+    "slope_deg",
+    "elevation_m",
+    "log1p_accum",
+    "landcover"
+  ],
+  "accum_source": "filled_d8",
+  "auc_global_pixel": 0.7472,
+  "auc_spatial_blocks": [
+    {
+      "block": "r0c0",
+      "test_presence": 248023,
+      "test_background": 273169,
+      "auc": 0.5278856265859885
+    },
+    {
+      "block": "r0c1",
+      "test_presence": 0,
+      "test_background": 521192,
+      "auc": null
+    },
+    {
+      "block": "r1c0",
+      "test_presence": 159798,
+      "test_background": 361394,
+      "auc": 0.649638207265752
+    },
+    {
+      "block": "r1c1",
+      "test_presence": 0,
+      "test_background": 521192,
+      "auc": null
+    }
+  ],
+  "median_gully_percentile": 0.8154,
+  "min_gully_percentile": 0.6158,
+  "max_gully_percentile": 0.8764,
+  "class_breaks": [
+    -2.673,
+    -1.2356,
+    -0.4931,
+    1.0284
+  ],
+  "notes": [
+    "标签是 23 个与 DEM 相交的登记沟域多边形，不是 23 次事件；没有事件时间",
+    "WOE 分数是相对易发性，不是发生概率；不能据此算 95% 覆盖率",
+    "AUC_global_pixel 受空间自相关影响偏乐观；优先看 2×2 空间块 AUC",
+    "土地覆盖 0=nodata 作为单独类别参与 WOE，解释时要谨慎；1–10 无官方图例",
+    "坡度/高程/汇流使用固定分位分箱；分箱在全数据上确定，块验证仍有轻微信息泄漏"
+  ]
+}

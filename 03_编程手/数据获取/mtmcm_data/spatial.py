@@ -91,6 +91,213 @@ def _fill_sinks(dem: Any, *, epsilon: float = 1e-4) -> tuple[Any, int]:
     return filled, int((filled > dem).sum())
 
 
+def _trace_channel(
+    dem: Any,
+    filled: Any,
+    direction: Any,
+    accumulation: Any,
+    threshold: int,
+    *,
+    dx_m: float,
+    dy_m: float,
+    west: float,
+    north: float,
+    sx: float,
+    sy: float,
+) -> dict[str, Any] | None:
+    rows, cols = dem.shape
+    receiver = _receiver(direction.astype("uint8")).ravel()
+    channel = accumulation >= threshold
+    channel_cells = np.flatnonzero(channel.ravel())
+    if channel_cells.size == 0:
+        return None
+    upstream: dict[int, list[int]] = {}
+    for index in channel_cells:
+        target = int(receiver[index])
+        if target != index and channel.ravel()[target]:
+            upstream.setdefault(target, []).append(int(index))
+    boundary = np.zeros((rows, cols), dtype=bool)
+    boundary[0, :] = boundary[-1, :] = boundary[:, 0] = boundary[:, -1] = True
+    candidates = np.flatnonzero((channel & boundary).ravel())
+    if candidates.size:
+        outlet = int(candidates[np.argmax(accumulation.ravel()[candidates])])
+        outlet_boundary = True
+    else:
+        outlet = int(channel_cells[np.argmax(accumulation.ravel()[channel_cells])])
+        outlet_boundary = False
+    path = [outlet]
+    current = outlet
+    while current in upstream:
+        cand = upstream[current]
+        current = max(cand, key=lambda i: accumulation.ravel()[i])
+        path.append(current)
+        if len(path) > 100_000:
+            break
+    path.reverse()
+    if len(path) < 2:
+        return None
+    asc = np.asarray(path)
+    rr, cc = np.unravel_index(asc, (rows, cols))
+    lon = west + (cc + 0.5) * sx
+    lat = north - (rr + 0.5) * sy
+    z = dem.astype("float64").ravel()[asc]
+    distance = np.zeros(len(asc), dtype="float64")
+    if len(asc) > 1:
+        dr = np.diff(rr).astype("float64")
+        dc = np.diff(cc).astype("float64")
+        distance[1:] = np.cumsum(np.hypot(dc * dx_m, dr * dy_m))
+    length_m = float(distance[-1]) if len(distance) else 0.0
+    drop_m = float(z[0] - z[-1])
+    return {
+        "path_cells": len(asc),
+        "length_km": round(length_m / 1000, 3),
+        "drop_m": round(drop_m, 2),
+        "gradient_pct": round(drop_m / length_m * 100, 3) if length_m else None,
+        "gradient_deg": round(math.degrees(math.atan2(drop_m, length_m)), 3) if length_m else None,
+        "outlet_boundary": outlet_boundary,
+        "source": {
+            "lon": round(float(lon[0]), 7),
+            "lat": round(float(lat[0]), 7),
+            "elevation_m": round(float(z[0]), 2),
+            "flow_accum_cells": int(accumulation.ravel()[asc[0]]),
+        },
+        "outlet": {
+            "lon": round(float(lon[-1]), 7),
+            "lat": round(float(lat[-1]), 7),
+            "elevation_m": round(float(z[-1]), 2),
+            "flow_accum_cells": int(accumulation.ravel()[asc[-1]]),
+        },
+        "coordinates": [[round(float(x), 7), round(float(y), 7)] for x, y in zip(lon, lat)],
+    }
+
+
+def process_channel_sensitivity(store: Store) -> dict[str, Any]:
+    out = store.data_dir / "processed" / "tpdc07_channel_sensitivity"
+    out.mkdir(parents=True, exist_ok=True)
+    dem, tags = _load_tiff(store.data_dir / "processed" / "tpdc07_dem" / "dem_core_30m.tif")
+    channel_manifest = json.loads(
+        (store.data_dir / "processed" / "tpdc07_dem" / "manifest.json").read_text(encoding="utf-8")
+    )
+    dx_m = float(channel_manifest["pixel_size_m"][0])
+    dy_m = float(channel_manifest["pixel_size_m"][1])
+    west, north, sx, sy = _grid(tags, dem.shape)
+
+    modes = [("none", None), ("epsilon_1e-4", 1e-4), ("epsilon_1e-3", 1e-3)]
+    thresholds = [500, 1000, 2000]
+    rows: list[dict[str, Any]] = []
+    features: list[dict[str, Any]] = []
+    for mode, epsilon in modes:
+        if epsilon is None:
+            filled = dem.astype("float64")
+            filled_cells = 0
+        else:
+            filled, filled_cells = _fill_sinks(dem, epsilon=epsilon)
+        direction, accumulation, sinks = _d8_accumulation(filled, dx_m, dy_m)
+        for threshold in thresholds:
+            result = _trace_channel(
+                dem,
+                filled,
+                direction,
+                accumulation,
+                threshold,
+                dx_m=dx_m,
+                dy_m=dy_m,
+                west=west,
+                north=north,
+                sx=sx,
+                sy=sy,
+            )
+            run_id = f"{mode}_thr{threshold}"
+            if result is None:
+                rows.append(
+                    {
+                        "run_id": run_id,
+                        "fill_mode": mode,
+                        "epsilon": epsilon,
+                        "threshold_cells": threshold,
+                        "status": "no_channel",
+                        "filled_cells": filled_cells,
+                        "sink_cells": sinks,
+                    }
+                )
+                continue
+            rows.append(
+                {
+                    "run_id": run_id,
+                    "fill_mode": mode,
+                    "epsilon": epsilon,
+                    "threshold_cells": threshold,
+                    "status": "ok",
+                    "filled_cells": filled_cells,
+                    "sink_cells": sinks,
+                    **{k: result[k] for k in ("path_cells", "length_km", "drop_m", "gradient_pct", "gradient_deg", "outlet_boundary")},
+                    "source_lon": result["source"]["lon"],
+                    "source_lat": result["source"]["lat"],
+                    "source_elev_m": result["source"]["elevation_m"],
+                    "outlet_lon": result["outlet"]["lon"],
+                    "outlet_lat": result["outlet"]["lat"],
+                    "outlet_elev_m": result["outlet"]["elevation_m"],
+                }
+            )
+            features.append(
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "run_id": run_id,
+                        "fill_mode": mode,
+                        "epsilon": epsilon,
+                        "threshold_cells": threshold,
+                        "length_km": result["length_km"],
+                        "gradient_pct": result["gradient_pct"],
+                        "outlet_boundary": result["outlet_boundary"],
+                    },
+                    "geometry": {"type": "LineString", "coordinates": result["coordinates"]},
+                }
+            )
+    import pandas as pd
+
+    csv_path = out / "main_channel_sensitivity_runs.csv"
+    pd.DataFrame(rows).to_csv(csv_path, index=False, encoding="utf-8-sig")
+    geojson_path = out / "main_channel_sensitivity.geojson"
+    _write_json(
+        geojson_path,
+        {"type": "FeatureCollection", "name": "主沟道阈值/填洼敏感性", "features": features},
+    )
+    ok = [r for r in rows if r["status"] == "ok"]
+    summary = {
+        "dataset": "TPDC-07 主流路阈值/填洼敏感性",
+        "generated_at": datetime.now().isoformat(timespec="seconds"),
+        "runs": len(rows),
+        "successful_runs": len(ok),
+        "thresholds": thresholds,
+        "fill_modes": [m for m, _ in modes],
+        "length_km_min": min((r["length_km"] for r in ok), default=None),
+        "length_km_max": max((r["length_km"] for r in ok), default=None),
+        "gradient_pct_min": min((r["gradient_pct"] for r in ok), default=None),
+        "gradient_pct_max": max((r["gradient_pct"] for r in ok), default=None),
+        "outlet_boundary_count": sum(1 for r in ok if r["outlet_boundary"]),
+        "recommended": "epsilon_1e-4_thr1000",
+        "notes": [
+            "阈值 500/1000/2000 cells；填洼模式 none/epsilon_1e-4/epsilon_1e-3",
+            "none 模式的汇流可能停在内部 sink，outlet_boundary=False",
+            "结果只反映 D8/阈值选择，不是唯一真实沟道",
+        ],
+    }
+    summary_path = out / "summary.json"
+    _write_json(summary_path, summary)
+    manifest = {
+        **summary,
+        "source_files": [store.rel(store.data_dir / "processed" / "tpdc07_dem" / "dem_core_30m.tif")],
+        "outputs": [
+            {"path": store.rel(csv_path), "bytes": csv_path.stat().st_size, "sha256": _sha256(csv_path)},
+            {"path": store.rel(geojson_path), "bytes": geojson_path.stat().st_size, "sha256": _sha256(geojson_path)},
+            {"path": store.rel(summary_path), "bytes": summary_path.stat().st_size, "sha256": _sha256(summary_path)},
+        ],
+    }
+    _write_json(out / "manifest.json", manifest)
+    return manifest
+
+
 def process_main_channel(store: Store) -> dict[str, Any]:
     out = store.data_dir / "processed" / "tpdc07_channel"
     out.mkdir(parents=True, exist_ok=True)

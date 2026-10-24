@@ -326,9 +326,9 @@ POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
 
 报告还给出 7 步治理流水线（登记冻结→格式审计→时空基准→缺失/异常→质量标记→派生层→冻结交接）和“先内后外”的外部补充准入条件。
 
-### 7.5 processed 基线（`process --batch 1/2/3/4/all`）
+### 7.5 processed 基线（`process --batch 1-6/all`）
 
-`--batch 1` 气象/灾点长表；`--batch 2` 土地覆盖/DEM 派生；`--batch 3` 主流路纵剖面；`--batch 4` 历史沟域空间叠加；`--batch all` 全部。只做已有数据的“可建模基线”，不掺外部数据。
+`--batch 1` 气象/灾点长表；`--batch 2` 土地覆盖/DEM 派生；`--batch 3` 主流路纵剖面；`--batch 4` 历史沟域空间叠加；`--batch 5` 主流路阈值/填洼敏感性；`--batch 6` Q2 WOE 易发性基线；`--batch all` 全部。只做已有数据的“可建模基线”，不掺外部数据。
 
 **第一批（TPDC-01/02/06）**
 
@@ -366,7 +366,25 @@ POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
 | `spatial_baseline/` | `tpdc06_gully_id_mask.tif`：沟域 ID 栅格（1–84） | 27.5 KB |
 | `spatial_baseline/` | `summary.json` | DEM 内 408,718 像元；平均坡度 34.04°；沟道像元 **7,574**（填洼 D8） |
 
-关键约束：TPDC-01 的 `9999.9`/`QC=8` 已标缺失、不补零；TPDC-02 的 2025 只有 214 天；TPDC-06 的 `解译Time`/`影像Time` 不是事件发生时间；TPDC-05 的 0 是 nodata，不是类别；TPDC-07 的 D8 未填洼（4,888 个 sink），坡度按中心纬度近似米制间距，沟道阈值 1,000 cells；主流路/叠加结果都是**空间登记**，不是事件概率。
+**第五批（主流路敏感性）**
+
+| 目录 | 内容 | 关键值 |
+|---|---|---|
+| `tpdc07_channel_sensitivity/` | `main_channel_sensitivity_runs.csv`：3 阈值 × 3 填洼模式 | **9/9 成功**；填洼后长度 49.57–50.06 km，比降 8.05–8.13% |
+| `tpdc07_channel_sensitivity/` | `main_channel_sensitivity.geojson` | 9 条 LineString |
+| `tpdc07_channel_sensitivity/` | `summary.json` | 推荐 `epsilon_1e-4 + 1000 cells` |
+
+**第六批（Q2 WOE 易发性）**
+
+| 目录 | 内容 | 关键值 |
+|---|---|---|
+| `q2_susceptibility/` | `q2_susceptibility_score.tif`：WOE 相对分数 | 全局像素 AUC **0.747** |
+| `q2_susceptibility/` | `q2_susceptibility_class.tif`：1–5 分级 | 背景 20/40/60/80 分位 |
+| `q2_susceptibility/` | `q2_woe_bins.csv`：坡度/高程/汇流/土地覆盖分箱 WOE | 4 个协变量 |
+| `q2_susceptibility/` | `q2_gully_scores.csv` | 23/84 在 DEM 内；沟域均分中位百分位 **0.815** |
+| `q2_susceptibility/` | `summary.json` | 2×2 空间块 AUC 仅 **0.528 / 0.650**（两块无正样本） |
+
+关键约束：TPDC-01 的 `9999.9`/`QC=8` 已标缺失、不补零；TPDC-02 的 2025 只有 214 天；TPDC-06 的 `解译Time`/`影像Time` 不是事件发生时间；TPDC-05 的 0 是 nodata，不是类别；batch 2 的 D8 未填洼（4,888 sinks），batch 3/5 主流路用填洼+epsilon D8，两者不能混用；batch 6 的 WOE 是**相对易发性，不是概率**，空间块 AUC 弱，23 个沟域不是 23 次事件。
 
 ---
 
