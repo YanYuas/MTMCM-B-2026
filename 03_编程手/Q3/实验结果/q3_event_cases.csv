@@ -1,0 +1,3 @@
+﻿event,event_time_bjt,I_rain_station,T_rain_station_h,T_ice_h_scenario,T_glof_h_scenario,T_trigger_q025_h,T_trigger_median_h,T_trigger_q975_h,p_inf,dominant_branch,note
+2026,2026-08-26 10:30:00,0,,finite (detect−τ),∞,27.0,70.90956474130518,72.39748750093372,0.0,ice,case consistency only; not event-level coverage
+2025,2025-07-08 05:00:00,0,,∞,finite (detect−τ),66.72429161261793,69.86563374941005,71.85137221681622,0.0,glof,case consistency only; not event-level coverage

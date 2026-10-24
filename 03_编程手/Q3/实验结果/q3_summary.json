@@ -1,0 +1,169 @@
+{
+  "N": 2000,
+  "events": {
+    "2026": {
+      "event_time": "2026-08-26 10:30:00",
+      "T_trigger": {
+        "p_inf": 0.0,
+        "lower": 27.0,
+        "upper": 72.39748750093372,
+        "median": 70.90956474130518,
+        "n_finite": 2000,
+        "n_total": 2000
+      },
+      "T_impact": {
+        "p_inf": 0.0,
+        "lower": 27.85907652658606,
+        "upper": 74.77995572493775,
+        "median": 72.64823503625658,
+        "n_finite": 2000,
+        "n_total": 2000
+      },
+      "p_inf": 0.0,
+      "branch_counts": {
+        "ice": 1921,
+        "rain": 79
+      },
+      "fixed_driver_controls": {
+        "station": {
+          "T_rain_h": null,
+          "max_I": 0.0,
+          "active_n": 0
+        },
+        "chirps": {
+          "T_rain_h": null,
+          "max_I": 0.9635857142857143,
+          "active_n": 73
+        },
+        "era5": {
+          "T_rain_h": null,
+          "max_I": 0.9458857142857142,
+          "active_n": 6
+        },
+        "nasa": {
+          "T_rain_h": null,
+          "max_I": 0.95405,
+          "active_n": 18
+        }
+      }
+    },
+    "2025": {
+      "event_time": "2025-07-08 05:00:00",
+      "T_trigger": {
+        "p_inf": 0.0,
+        "lower": 66.72429161261793,
+        "upper": 71.85137221681622,
+        "median": 69.86563374941005,
+        "n_finite": 2000,
+        "n_total": 2000
+      },
+      "T_impact": {
+        "p_inf": 0.0,
+        "lower": 68.01984006125085,
+        "upper": 74.27372585098483,
+        "median": 71.65286898749513,
+        "n_finite": 2000,
+        "n_total": 2000
+      },
+      "p_inf": 0.0,
+      "branch_counts": {
+        "glof": 1980,
+        "rain": 20
+      },
+      "fixed_driver_controls": {
+        "station": {
+          "T_rain_h": null,
+          "max_I": 0.0,
+          "active_n": 0
+        },
+        "chirps": {
+          "T_rain_h": null,
+          "max_I": 0.558037857142857,
+          "active_n": 19
+        }
+      }
+    }
+  },
+  "drivers": {
+    "2026": {
+      "station": {
+        "T_rain_h": null,
+        "max_I": 0.0,
+        "active_n": 0
+      },
+      "chirps": {
+        "T_rain_h": null,
+        "max_I": 0.9635857142857143,
+        "active_n": 73
+      },
+      "era5": {
+        "T_rain_h": null,
+        "max_I": 0.9458857142857142,
+        "active_n": 6
+      },
+      "nasa": {
+        "T_rain_h": null,
+        "max_I": 0.95405,
+        "active_n": 18
+      }
+    },
+    "2025": {
+      "station": {
+        "T_rain_h": null,
+        "max_I": 0.0,
+        "active_n": 0
+      },
+      "chirps": {
+        "T_rain_h": null,
+        "max_I": 0.558037857142857,
+        "active_n": 19
+      }
+    }
+  },
+  "proxy": [
+    {
+      "target": "precip_24h_next",
+      "cal_n": 32042,
+      "test_n": 8712,
+      "alpha": 0.05,
+      "q_conf": 5.4,
+      "coverage": 0.9319329660238751,
+      "width": 10.8,
+      "wilson_low": 0.9264516217391837,
+      "wilson_high": 0.9370335661864709,
+      "note": "split conformal; calibration 2021-2024, test 2025; persistence forecast"
+    },
+    {
+      "target": "temp_6h_next_mean",
+      "cal_n": 32270,
+      "test_n": 8760,
+      "alpha": 0.05,
+      "q_conf": 8.281183317839071,
+      "coverage": 0.9472602739726027,
+      "width": 16.562366635678142,
+      "wilson_low": 0.9423805676351591,
+      "wilson_high": 0.9517478846901812,
+      "note": "split conformal; calibration 2021-2024, test 2025; persistence forecast"
+    }
+  ],
+  "spatial": [
+    {
+      "metric": "D_arrival_km",
+      "q025": 20.74070383493994,
+      "median": 35.465591168738314,
+      "q975": 49.25301523473943
+    },
+    {
+      "metric": "D_impact_km",
+      "q025": 5.880233213005491,
+      "median": 17.739718091754156,
+      "q975": 29.468446825825385
+    },
+    {
+      "metric": "R_warn_km",
+      "q025": 25.74070383493994,
+      "median": 40.465591168738314,
+      "q975": 54.25301523473943
+    }
+  ]
+}

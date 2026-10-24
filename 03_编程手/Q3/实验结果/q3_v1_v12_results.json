@@ -1,0 +1,339 @@
+{
+  "n_checks": 36,
+  "n_pass": 36,
+  "all_pass": true,
+  "v_checks": [
+    {
+      "id": "V1",
+      "input": "I=[0.2,0.5,1.2,1.5], thr=1.0",
+      "expected": 2,
+      "actual": 2,
+      "tol": 0.0,
+      "pass": true,
+      "note": "0-based; 第3个整点"
+    },
+    {
+      "id": "V2a",
+      "input": "[1..5], q=0.025",
+      "expected": 1.1,
+      "actual": 1.1,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "V2b",
+      "input": "[1..5], q=0.975",
+      "expected": 4.9,
+      "actual": 4.9,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "V3",
+      "input": "impact=10:00, warn=08:00",
+      "expected": 2.0,
+      "actual": 2.0,
+      "tol": 1e-09,
+      "pass": true,
+      "note": "小时"
+    },
+    {
+      "id": "V4a",
+      "input": "[1,2,3,4,inf], p_inf",
+      "expected": 0.2,
+      "actual": 0.19999999999999996,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "V4b",
+      "input": "[1,2,3,4,inf], lower",
+      "expected": 1.075,
+      "actual": 1.075,
+      "tol": 1e-09,
+      "pass": true,
+      "note": "有限样本 q0.025"
+    },
+    {
+      "id": "V4c",
+      "input": "[1,2,3,4,inf], upper",
+      "expected": null,
+      "actual": null,
+      "tol": 0.0,
+      "pass": true,
+      "note": "p_inf>0.025 -> inf"
+    },
+    {
+      "id": "V5",
+      "input": "95/100",
+      "expected": 0.95,
+      "actual": 0.95,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "V5ci",
+      "input": "Wilson 95% CI",
+      "expected": [
+        0.8882,
+        0.9785
+      ],
+      "actual": [
+        0.8882,
+        0.9785
+      ],
+      "tol": 0.001,
+      "pass": true,
+      "note": "参考值"
+    },
+    {
+      "id": "V6",
+      "input": "CDF 0.4/0.7/0.92, p_warn=0.9",
+      "expected": 2,
+      "actual": 2,
+      "tol": 0.0,
+      "pass": true,
+      "note": "t0=2 首次达标"
+    },
+    {
+      "id": "V7",
+      "input": "rain=inf, ice=10.5, glof=inf",
+      "expected": 10.5,
+      "actual": 10.5,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "V8",
+      "input": "D_arrival=20, buffer=5",
+      "expected": 25.0,
+      "actual": 25.0,
+      "tol": 1e-09,
+      "pass": true,
+      "note": "km"
+    },
+    {
+      "id": "V9",
+      "input": "Var_driver=0.8, Var_total=1.0",
+      "expected": 0.8,
+      "actual": 0.8,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "V10a",
+      "input": "scores=[1..5], alpha=.05",
+      "expected": 5.0,
+      "actual": 5.0,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "V10b",
+      "input": "conformal level",
+      "expected": 1.2,
+      "actual": 1.2,
+      "tol": 1e-09,
+      "pass": true,
+      "note": "ceil(6*0.95)/5"
+    },
+    {
+      "id": "V11",
+      "input": "P=[1,2,3], k=.9",
+      "expected": 5.61,
+      "actual": 5.609999999999999,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "V12",
+      "input": "q2.5=1.1, q97.5=4.9",
+      "expected": 3.8,
+      "actual": 3.8000000000000003,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    }
+  ],
+  "a_checks": [
+    {
+      "id": "A1",
+      "input": "object keys",
+      "expected": 7,
+      "actual": 7,
+      "tol": 0.0,
+      "pass": true,
+      "note": "对象字段齐全"
+    },
+    {
+      "id": "A2",
+      "input": "local event count",
+      "expected": 2,
+      "actual": 2,
+      "tol": 0.0,
+      "pass": true,
+      "note": "84 多边形不计入"
+    },
+    {
+      "id": "A3",
+      "input": "forecast_start > event_time",
+      "expected": true,
+      "actual": true,
+      "tol": 0.0,
+      "pass": true,
+      "note": "历史不用 forecast"
+    },
+    {
+      "id": "A4a",
+      "input": "dry 2026-like",
+      "expected": null,
+      "actual": null,
+      "tol": 0.0,
+      "pass": true,
+      "note": "T_rain=inf"
+    },
+    {
+      "id": "A4b",
+      "input": "P1h=12 at t=3",
+      "expected": 3,
+      "actual": 3,
+      "tol": 0.0,
+      "pass": true,
+      "note": "P1h/10=1.2"
+    },
+    {
+      "id": "A4c",
+      "input": "wet soil, no water",
+      "expected": null,
+      "actual": null,
+      "tol": 0.0,
+      "pass": true,
+      "note": "W_active=0; 不触发"
+    },
+    {
+      "id": "A5",
+      "input": "min branch",
+      "expected": "ice",
+      "actual": "ice",
+      "tol": 0.0,
+      "pass": true,
+      "note": "分支先触发"
+    },
+    {
+      "id": "A6a",
+      "input": "3/5 inf",
+      "expected": 0.6,
+      "actual": 0.6,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "A6b",
+      "input": "finite lower",
+      "expected": 1.025,
+      "actual": 1.025,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "A6c",
+      "input": "upper",
+      "expected": null,
+      "actual": null,
+      "tol": 0.0,
+      "pass": true,
+      "note": "inf"
+    },
+    {
+      "id": "A7a",
+      "input": "[0..4] q2.5",
+      "expected": 0.1,
+      "actual": 0.1,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "A7b",
+      "input": "[0..4] q97.5",
+      "expected": 3.9,
+      "actual": 3.9,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "A8a",
+      "input": "T_warn",
+      "expected": 2,
+      "actual": 2,
+      "tol": 0.0,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "A8b",
+      "input": "L=5-2",
+      "expected": 3,
+      "actual": 3,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "A9",
+      "input": "three coverage columns",
+      "expected": 3,
+      "actual": 3,
+      "tol": 0.0,
+      "pass": true,
+      "note": "不混写"
+    },
+    {
+      "id": "A10a",
+      "input": "interval low",
+      "expected": 3.0,
+      "actual": 3.0,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "A10b",
+      "input": "Y=10 in [3,13]",
+      "expected": true,
+      "actual": true,
+      "tol": 0.0,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "A11",
+      "input": "three spatial fields",
+      "expected": 3,
+      "actual": 3,
+      "tol": 0.0,
+      "pass": true,
+      "note": "km"
+    },
+    {
+      "id": "A12",
+      "input": "no forbidden wording",
+      "expected": true,
+      "actual": true,
+      "tol": 0.0,
+      "pass": true,
+      "note": ""
+    }
+  ]
+}
