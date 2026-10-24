@@ -1,0 +1,5 @@
+﻿event_id,date,I_rain,I_ice,I_glof,I_trig,S,H,note
+E20260826,2026-08-26,0,1,0,1,NA,NA,source outside 23 gully units; case consistency only
+E20250708,2025-07-08,0,0,1,1,NA,NA,GLOF; no ice-lake inventory; qualitative branch
+E20020523,2002-05-23,0,0,1,1,NA,NA,regional analogue; not local frequency
+E20150425,2015-04-25,0,0,0,0,NA,NA,"earthquake precondition, not debris-flow trigger"

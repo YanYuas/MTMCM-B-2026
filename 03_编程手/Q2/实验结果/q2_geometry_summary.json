@@ -1,0 +1,25 @@
+{
+  "gullies": 23,
+  "dem_shape": [
+    1148,
+    1816
+  ],
+  "pixel_m": [
+    27.2,
+    30.71
+  ],
+  "glacier_cells_on_dem": 7688,
+  "utm_bbox": [
+    322414.7,
+    372260.3,
+    3125108.5,
+    3161046.6
+  ],
+  "notes": [
+    "几何统计在 DEM 原生 EPSG:4326 网格上做，面积按中心纬度近似米制像元",
+    "G5 L_ch 用 channel_mask 像元数×像元边长近似；G6 drop 用沟域内沟道像元 max-min 高程，均为工程近似",
+    "G7 用 chamfer 距离（像元单位）乘平均像元边长；不是精确测地距离",
+    "G8 用 TPDC-04 glacier_mask 经 UTM45N 正变换最近邻采样到 DEM 网格",
+    "土地覆盖 0=nodata；lc_majority 只在 >0 中取众数，不代表官方类别名"
+  ]
+}

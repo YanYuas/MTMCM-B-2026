@@ -1,0 +1,121 @@
+{
+  "global_auc": 0.747,
+  "blocks_2x2": [
+    {
+      "scheme": "2x2",
+      "block": "r0c0",
+      "test_presence": 248023,
+      "test_background": 273169,
+      "auc": 0.5275,
+      "pr_auc": 0.5002
+    },
+    {
+      "scheme": "2x2",
+      "block": "r0c1",
+      "test_presence": 0,
+      "test_background": 521192,
+      "auc": null,
+      "pr_auc": null
+    },
+    {
+      "scheme": "2x2",
+      "block": "r1c0",
+      "test_presence": 159798,
+      "test_background": 361394,
+      "auc": 0.6493,
+      "pr_auc": 0.4267
+    },
+    {
+      "scheme": "2x2",
+      "block": "r1c1",
+      "test_presence": 0,
+      "test_background": 521192,
+      "auc": null,
+      "pr_auc": null
+    }
+  ],
+  "blocks_3x3": [
+    {
+      "scheme": "3x3",
+      "block": "r0c0",
+      "test_presence": 144393,
+      "test_background": 86717,
+      "auc": 0.3896,
+      "pr_auc": 0.5487
+    },
+    {
+      "scheme": "3x3",
+      "block": "r0c1",
+      "test_presence": 4389,
+      "test_background": 226721,
+      "auc": 0.6356,
+      "pr_auc": 0.0301
+    },
+    {
+      "scheme": "3x3",
+      "block": "r0c2",
+      "test_presence": 0,
+      "test_background": 231492,
+      "auc": null,
+      "pr_auc": null
+    },
+    {
+      "scheme": "3x3",
+      "block": "r1c0",
+      "test_presence": 126898,
+      "test_background": 104817,
+      "auc": 0.4895,
+      "pr_auc": 0.5792
+    },
+    {
+      "scheme": "3x3",
+      "block": "r1c1",
+      "test_presence": 59300,
+      "test_background": 172415,
+      "auc": 0.6542,
+      "pr_auc": 0.3445
+    },
+    {
+      "scheme": "3x3",
+      "block": "r1c2",
+      "test_presence": 0,
+      "test_background": 232098,
+      "auc": null,
+      "pr_auc": null
+    },
+    {
+      "scheme": "3x3",
+      "block": "r2c0",
+      "test_presence": 67454,
+      "test_background": 164261,
+      "auc": 0.7107,
+      "pr_auc": 0.4725
+    },
+    {
+      "scheme": "3x3",
+      "block": "r2c1",
+      "test_presence": 5387,
+      "test_background": 226328,
+      "auc": 0.8798,
+      "pr_auc": 0.0959
+    },
+    {
+      "scheme": "3x3",
+      "block": "r2c2",
+      "test_presence": 0,
+      "test_background": 232098,
+      "auc": null,
+      "pr_auc": null
+    }
+  ],
+  "loo_folds_valid": 23,
+  "loo_auc_mean": 0.7766,
+  "loo_auc_std": 0.0953,
+  "loo_pr_auc_mean": 0.0307,
+  "notes": [
+    "WOE 复现沿用数据窗口的 4 协变量/5 分位/landcover 编码；分箱全局确定，轻微泄漏，和基线口径一致",
+    "LOO 2 km buffer 用 4x 粗网格 MaxFilter 近似；不是精确测地缓冲",
+    "3x3 部分块无正例；只报告有正例块",
+    "主指标看空间块/LOO，不看 global_auc"
+  ]
+}

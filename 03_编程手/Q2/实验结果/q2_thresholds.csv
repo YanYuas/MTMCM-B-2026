@@ -1,0 +1,19 @@
+﻿type,key,value,unit,note
+m_cr,beta30_phi35_c0_z2_r05,0.3509,-,"c=0, gamma_sat=20, z=2, r=0.5"
+I-D,D=1h,10.0,mm/h,"a=10,b=0.5"
+I-D,D=3h,5.7735,mm/h,"a=10,b=0.5"
+I-D,D=6h,4.0825,mm/h,"a=10,b=0.5"
+I-D,D=12h,2.8868,mm/h,"a=10,b=0.5"
+I-D,D=24h,2.0412,mm/h,"a=10,b=0.5"
+I-D,D=48h,1.4434,mm/h,"a=10,b=0.5"
+I-D,D=72h,1.1785,mm/h,"a=10,b=0.5"
+ice_screen,cells,20010.0,cells,TPDC-04 30 m
+ice_screen,z_ge_5000,11792.0,cells,TPDC-04 30 m
+ice_screen,slope_ge_25,15033.0,cells,TPDC-04 30 m
+ice_screen,thickness_ge_20,6490.0,cells,TPDC-04 30 m
+ice_screen,velocity_ge_5,2709.0,cells,TPDC-04 30 m
+ice_screen,all_four,556.0,cells,TPDC-04 30 m
+ice_threshold,z0,5000.0,m/deg/m/(m/yr),C 情景
+ice_threshold,beta0,25.0,m/deg/m/(m/yr),C 情景
+ice_threshold,H0,20.0,m/deg/m/(m/yr),C 情景
+ice_threshold,v0,5.0,m/deg/m/(m/yr),C 情景

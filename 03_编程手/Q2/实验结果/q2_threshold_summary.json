@@ -1,0 +1,118 @@
+{
+  "mcr_rows": 243,
+  "mcr_range": [
+    -2.289,
+    3.7857
+  ],
+  "mcr_default": {
+    "beta_30_phi35_c0_z2_r05": 0.3509
+  },
+  "id_curve": [
+    {
+      "D_h": 1,
+      "a": 10,
+      "b": 0.5,
+      "I_c_mm_h": 10.0
+    },
+    {
+      "D_h": 3,
+      "a": 10,
+      "b": 0.5,
+      "I_c_mm_h": 5.7735
+    },
+    {
+      "D_h": 6,
+      "a": 10,
+      "b": 0.5,
+      "I_c_mm_h": 4.0825
+    },
+    {
+      "D_h": 12,
+      "a": 10,
+      "b": 0.5,
+      "I_c_mm_h": 2.8868
+    },
+    {
+      "D_h": 24,
+      "a": 10,
+      "b": 0.5,
+      "I_c_mm_h": 2.0412
+    },
+    {
+      "D_h": 48,
+      "a": 10,
+      "b": 0.5,
+      "I_c_mm_h": 1.4434
+    },
+    {
+      "D_h": 72,
+      "a": 10,
+      "b": 0.5,
+      "I_c_mm_h": 1.1785
+    }
+  ],
+  "ice_screen": {
+    "cells": 20010,
+    "z_ge_5000": 11792,
+    "slope_ge_25": 15033,
+    "thickness_ge_20": 6490,
+    "velocity_ge_5": 2709,
+    "all_four": 556,
+    "z_max": 6458.1,
+    "slope_max": 78.5,
+    "thickness_max": 154.0,
+    "velocity_max": 55.8
+  },
+  "cases": [
+    {
+      "event_id": "E20260826",
+      "date": "2026-08-26",
+      "I_rain": 0,
+      "I_ice": 1,
+      "I_glof": 0,
+      "I_trig": 1,
+      "S": "NA",
+      "H": "NA",
+      "note": "source outside 23 gully units; case consistency only"
+    },
+    {
+      "event_id": "E20250708",
+      "date": "2025-07-08",
+      "I_rain": 0,
+      "I_ice": 0,
+      "I_glof": 1,
+      "I_trig": 1,
+      "S": "NA",
+      "H": "NA",
+      "note": "GLOF; no ice-lake inventory; qualitative branch"
+    },
+    {
+      "event_id": "E20020523",
+      "date": "2002-05-23",
+      "I_rain": 0,
+      "I_ice": 0,
+      "I_glof": 1,
+      "I_trig": 1,
+      "S": "NA",
+      "H": "NA",
+      "note": "regional analogue; not local frequency"
+    },
+    {
+      "event_id": "E20150425",
+      "date": "2015-04-25",
+      "I_rain": 0,
+      "I_ice": 0,
+      "I_glof": 0,
+      "I_trig": 0,
+      "S": "NA",
+      "H": "NA",
+      "note": "earthquake precondition, not debris-flow trigger"
+    }
+  ],
+  "notes": [
+    "m_cr/I-D/冰崩筛选均为 C 类情景参数；不是标定值",
+    "冰崩筛选用 TPDC-04 30 m 像元，all_four=满足 z/slope/H/v 四条件的像元数",
+    "2026/2025 事件源区不在 23 个登记沟域内，S/H 记 NA；只做触发分支一致性",
+    "2002 嘉龙错是区域类比，不计入吉隆频率"
+  ]
+}
