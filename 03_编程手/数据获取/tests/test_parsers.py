@@ -9,6 +9,7 @@ from pathlib import Path
 
 from mtmcm_data import audit
 from mtmcm_data.config import Source, load_config
+from mtmcm_data.governance import load_governance
 from mtmcm_data.ziputil import expand_zip_names
 from mtmcm_data.http import build_url
 from mtmcm_data.manifest import Manifest, ManifestEntry, new_run_id
@@ -223,6 +224,23 @@ class ConfigAndManifestTests(unittest.TestCase):
         self.assertEqual(config.get("tpdc_01_hourly").metadata_id, "5b09afd1-d11b-4150-a291-50f0484dddf1")
         self.assertEqual(config.get("copernicus_s2").study_area["west"], 85.15)
         self.assertEqual(config.get("baike_debris_flow").manual_snapshot, "data/manual/baike_debris_flow.html")
+
+    def test_governance_covers_all_sources(self):
+        config = load_config()
+        governance = load_governance()
+        for source in config.sources:
+            self.assertIn(source.id, governance)
+            entry = governance[source.id]
+            self.assertTrue(entry.role)
+            self.assertTrue(entry.temporal)
+            self.assertTrue(entry.spatial)
+            self.assertTrue(entry.license)
+            self.assertTrue(entry.can)
+            self.assertTrue(entry.cannot)
+            self.assertTrue(entry.quality_flags)
+            self.assertTrue(entry.uncertainty)
+            self.assertTrue(entry.leakage_risk)
+            self.assertTrue(entry.precision_risk)
         self.assertTrue(config.get("baike_debris_flow").enabled)
         self.assertTrue(config.get("baike_debris_flow").allow_blocked)
 

@@ -134,9 +134,44 @@ def _validate_api(source: Source, meta: dict[str, Any], checks: list[Check]) -> 
 
 
 def validate_all(config: Config, store: Store, manifest: Manifest) -> list[Check]:
+    from .governance import load_governance
+
     latest = manifest.latest_by_source()
     checks: list[Check] = []
+    try:
+        governance = load_governance()
+    except Exception as exc:  # noqa: BLE001
+        governance = {}
+        checks.append(Check("__governance__", "治理配置", "WARN", f"读取失败: {exc}"))
     for source in config.sources:
+        if source.id not in governance:
+            checks.append(Check(source.id, "治理配置", "WARN", "config/governance.json 缺少该来源"))
+        else:
+            entry = governance[source.id]
+            missing = [
+                name
+                for name, value in (
+                    ("role", entry.role),
+                    ("temporal", entry.temporal),
+                    ("spatial", entry.spatial),
+                    ("license", entry.license),
+                    ("can", entry.can),
+                    ("cannot", entry.cannot),
+                    ("quality_flags", entry.quality_flags),
+                    ("uncertainty", entry.uncertainty),
+                    ("leakage_risk", entry.leakage_risk),
+                    ("precision_risk", entry.precision_risk),
+                )
+                if not value
+            ]
+            checks.append(
+                Check(
+                    source.id,
+                    "治理配置",
+                    "OK" if not missing else "WARN",
+                    "字段齐全" if not missing else f"缺少: {', '.join(missing)}",
+                )
+            )
         entry = latest.get(source.id)
         if not entry:
             checks.append(Check(source.id, "抓取记录", "FAIL", "manifest 中没有记录"))

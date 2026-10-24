@@ -831,6 +831,19 @@ def cmd_validate(args: argparse.Namespace) -> int:
     return 1 if failed else 0
 
 
+def cmd_governance(args: argparse.Namespace) -> int:
+    from .governance import build_governance_report
+
+    config = load_config()
+    store = Store()
+    manifest = Manifest(store.data_dir / "manifest.jsonl")
+    md_path, csv_path, card_dir, governance = build_governance_report(config, store, manifest)
+    print(f"数据治理报告：{store.rel(md_path)}")
+    print(f"治理表格：{store.rel(csv_path)}")
+    print(f"数据卡：{store.rel(card_dir)}（{len(governance)} 个来源）")
+    return 0
+
+
 def cmd_verify(args: argparse.Namespace) -> int:
     config = load_config()
     store = Store()
@@ -918,6 +931,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_validate = sub.add_parser("validate", help="按来源逐项核验抓取质量")
     p_validate.set_defaults(func=cmd_validate)
+
+    p_governance = sub.add_parser("governance", help="生成多源数据治理报告与数据卡")
+    p_governance.set_defaults(func=cmd_governance)
 
     p_verify = sub.add_parser("verify", help="核验 manifest、raw 文件和本地附件")
     p_verify.set_defaults(func=cmd_verify)

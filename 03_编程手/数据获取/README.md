@@ -49,7 +49,10 @@ python -m mtmcm_data audit
 # 6) 按来源逐项核验抓取质量
 python -m mtmcm_data validate
 
-# 7) 核验 raw 文件与本地附件
+# 7) 生成数据治理报告与数据卡
+python -m mtmcm_data governance
+
+# 8) 核验 raw 文件与本地附件
 python -m mtmcm_data verify
 ```
 
@@ -162,14 +165,17 @@ GET  /view/metadataView/getGoogleJson?metadataId=<uuid>
 │   │   ├── source_audit.csv     # 同上的机读版
 │   │   ├── validation.md        # 逐来源质量核验（FAIL/WARN/BLOCKED）
 │   │   ├── validation.csv
+│   │   ├── data_governance.md   # 数据来源角色/质量/不确定性传导
+│   │   ├── data_governance.csv
 │   │   └── event_window_audit.md
+│   ├── data_cards/<id>.md       # 每来源一张数据卡（角色/边界/质量/风险）
 │   ├── runs/<run_id>.json       # 每次运行的汇总
 │   └── manifest.jsonl           # 一行一个请求的审计清单
 ├── logs/crawl.log
 └── README.md
 ```
 
-`data/` 的入库策略：**元数据（`meta/`）和审计报告（`reports/`）入库**，作为可复核证据；**原始响应（`raw/`）、缓存（`cache/`）、数据表（`tables/`）、TPDC 下载 ZIP（`tpdc_files/`）、人工快照、运行日志不入库**，可用 `fetch`/`download` 一键重建。见本目录 `.gitignore`。
+`data/` 的入库策略：**元数据（`meta/`）、审计/治理报告（`reports/`）和数据卡（`data_cards/`）入库**，作为可复核证据；**原始响应（`raw/`）、缓存（`cache/`）、数据表（`tables/`）、TPDC 下载 ZIP（`tpdc_files/`）、人工快照、运行日志不入库**，可用 `fetch`/`download` 一键重建。见本目录 `.gitignore`。
 
 ---
 
@@ -272,6 +278,23 @@ POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
 
 > 质量核验不是“抓到了就算”，而是逐项检查：元数据字段、本地附件、时间/空间范围、正文长度、API 行数、研究区相交、产品类型。详细结果见 `data/reports/validation.md`。
 
+### 7.3 数据治理报告（`governance` 命令）
+
+按《DS 关于数据治理的建议》落地：**爬虫是采集手段，数据治理才是论文贡献**。`governance` 生成：
+
+- `data/reports/data_governance.md`
+  - 数据来源与角色表（来源、角色、时间/空间分辨率、许可、对应问题、状态、访问日期）；
+  - 治理流程图（Mermaid：采集→去重→坐标/单位→时空对齐→缺失/QC→质量标记→快照→模型）；
+  - 质量评估表（完整率、时间戳基准、空间分辨率、代表性/质量标记、参与建模、不确定性用途）；
+  - 四问证据链；
+  - **质量不确定性如何进入四问**（Q1 排序不确定性、Q2 空间外推边界、Q3 时间区间条件、Q4 情景包络）；
+  - 风险检查（时间泄漏、虚假精度）；
+  - 可复现性附录。
+- `data/data_cards/<source_id>.md`：每来源一张数据卡（能支持/不能支持/质量标记/风险/复现）。
+- `config/governance.json`：治理配置，新增来源时必须补条目；`validate` 会检查。
+
+> 关键写法：不要把“爬了很多数据”当亮点；要写“可追溯的多源数据治理 + 质量不确定性传导 + 关键缺口补齐”。
+
 ---
 
 ## 8. 和四问的对应
@@ -319,6 +342,7 @@ python -m unittest discover -s tests -v
 - **ERA5/CDS**：需要 API key，未默认启用；如需要，可加一个 `cds` parser，从环境变量读 key。
 - **地图/暴露**：OSM/Overpass、WorldPop 等还没纳入；Q4 需要建筑/道路/居民点时可再加。
 - **时区**：TPDC 为 UTC+8；NASA POWER 为 LST；Open-Meteo 显式 `Asia/Shanghai`。跨源合并前必须统一时间轴。
+- **治理配置**：新增来源必须同时补 `config/governance.json`（角色、能/不能、质量标记、不确定性、风险），否则 `validate` 报 WARN。
 
 ---
 
