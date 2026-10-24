@@ -15,6 +15,7 @@ const state = {
   playing: false,
   speed: 1,
   scenario: '2026',
+  useQ4: true,
   params: { V0: 3.0e5, mu: 0.15, xi: 300, sourceArea: 5.0e4 },
   frames: [],
   scene: null,
@@ -47,18 +48,20 @@ init();
 
 async function init() {
   try {
-    const [manifest, channel, sites, q3, glacier] = await Promise.all([
+    const [manifest, channel, sites, q3, glacier, q4] = await Promise.all([
       fetchJSON('./data/manifest.json'),
       fetchJSON('./data/channel.json'),
       fetchJSON('./data/sites.json'),
       fetchJSON('./data/q3.json'),
       fetchJSON('./data/glacier_points.json'),
+      fetchJSON('./data/q4_frames.json').catch(() => null),
     ]);
     state.manifest = manifest;
     state.channel = channel;
     state.sites = sites;
     state.q3 = q3;
     state.glacierPoints = glacier;
+    state.q4 = q4;
 
     const [terrainBuf, slopeBuf] = await Promise.all([
       fetchBin('./data/terrain.bin'),
@@ -417,18 +420,28 @@ function buildUI() {
     }
   };
   $('v0').oninput = (e) => {
+    switchToPreview();
     state.params.V0 = Number(e.target.value) * 1e5;
     $('v0-out').textContent = `${(state.params.V0 / 1e5).toFixed(1)}e5 m³`;
     updateHazard();
   };
   $('mu').oninput = (e) => {
+    switchToPreview();
     state.params.mu = Number(e.target.value);
     $('mu-out').textContent = state.params.mu.toFixed(2);
     updateHazard();
   };
   $('xi').oninput = (e) => {
+    switchToPreview();
     state.params.xi = Number(e.target.value);
     $('xi-out').textContent = `${state.params.xi}`;
+    updateHazard();
+  };
+  $('use-q4').onchange = (e) => {
+    state.useQ4 = e.target.checked && !!state.q4 && state.scenario === '2026';
+    $('scenario-note').textContent = state.useQ4
+      ? '2026-08-26 10:30；Q4 60 m 基线帧（S5，μ=0.05）；3D 地形为 30 m DEM。'
+      : '2026-08-26 10:30；快速情景预览；滑杆生效，不是 Q4 验证结果。';
     updateHazard();
   };
   for (const [id, key] of [['layer-hazard', 'hazard'], ['layer-channel', 'channel'], ['layer-glacier', 'glacier'], ['layer-warning', 'warning']]) {
@@ -445,14 +458,30 @@ function buildUI() {
   state.profileCtx = $('profile').getContext('2d');
 }
 
-function setScenario(id, announce = true) {
-  state.scenario = id;
+function switchToPreview() {
+  if (!state.useQ4) return;
+  state.useQ4 = false;
+  const box = $('use-q4');
+  if (box) box.checked = false;
+  $('scenario-note').textContent = '2026-08-26 10:30；快速情景预览；滑杆生效，不是 Q4 验证结果。';
+}
+
+function setScenario(id, announce = true) {  state.scenario = id;
   document.querySelectorAll('#scenario-seg button').forEach(b => b.classList.toggle('active', b.dataset.scenario === id));
   if (id === '2026') {
-    state.params = { V0: 3.0e5, mu: 0.15, xi: 300, sourceArea: 5.0e4 };
-    $('scenario-note').textContent = '2026-08-26 10:30；冰崩—碎屑流—泥石流—山洪链；站点 72 h 0 mm。';
+    const m = state.q4?.meta || {};
+    state.params = { V0: Number(m.V0) || 3.0e5, mu: Number.isFinite(Number(m.mu)) ? Number(m.mu) : 0.05, xi: Number(m.xi) || 300, sourceArea: 5.0e4 };
+    state.useQ4 = !!state.q4;
+    $('use-q4').checked = state.useQ4;
+    $('use-q4').disabled = !state.q4;
+    $('scenario-note').textContent = state.useQ4
+      ? '2026-08-26 10:30；Q4 60 m 基线帧（S5，μ=0.05）；3D 地形为 30 m DEM。'
+      : '2026-08-26 10:30；快速情景预览；关闭 Q4 帧后滑杆生效。';
     state.duration = 1800;
   } else {
+    state.useQ4 = false;
+    $('use-q4').checked = false;
+    $('use-q4').disabled = true;
     state.params = { V0: 5.0e5, mu: 0.22, xi: 260, sourceArea: 5.0e4 };
     $('scenario-note').textContent = '2025-07-08 05:00；冰湖溃决（GLOF）；仅作条件情景。';
     state.duration = 1800;
@@ -529,18 +558,47 @@ function clock(s) {
   return `${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
 }
 
+function q4FrameAt(t) {
+  if (!state.q4 || !state.q4.frames?.length) return null;
+  const fs = state.q4.frames;
+  let best = fs[0];
+  let bestD = Infinity;
+  for (const f of fs) {
+    const d = Math.abs(f.t - t);
+    if (d < bestD) { bestD = d; best = f; }
+  }
+  return best;
+}
+
+function q4Value(arr, d) {
+  const s = state.q4.s_km;
+  if (!s || !arr) return 0;
+  let lo = 0, hi = s.length - 1;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (s[mid] < d) lo = mid + 1; else hi = mid;
+  }
+  if (lo === 0) return arr[0] || 0;
+  const x0 = s[lo - 1], x1 = s[lo];
+  const y0 = arr[lo - 1] || 0, y1 = arr[lo] || 0;
+  const f = x1 > x0 ? (d - x0) / (x1 - x0) : 0;
+  return Math.max(0, y0 + f * (y1 - y0));
+}
+
 function updateHazard() {
   const sampled = state.channel.sampled;
   if (!sampled) return;
   const L = state.channel.meta.length_km;
-  const h0 = state.params.V0 / state.params.sourceArea;
+  const q4Frame = state.scenario === '2026' && state.useQ4 ? q4FrameAt(state.time) : null;
+  const useQ4 = !!q4Frame;
+  const h0 = useQ4 ? Math.max(...q4Frame.h) : state.params.V0 / state.params.sourceArea;
   const meanSlope = 8.0;
   let vfront = 18 + 4 * Math.sqrt(Math.max(1, h0));
   vfront *= 1 / (1 + 2 * state.params.mu);
   vfront *= Math.pow(300 / state.params.xi, 0.12);
   const acc = 0.06 * (meanSlope / 8.0);
   const t = state.time;
-  const frontKm = Math.min(L, (vfront * t + 0.5 * acc * t * t) / 1000);
+  const frontKm = useQ4 ? q4Frame.front_km : Math.min(L, (vfront * t + 0.5 * acc * t * t) / 1000);
   const frontIndex = Math.min(sampled.length - 1, Math.floor((frontKm / L) * (sampled.length - 1)));
 
   const pos = state.hazardGeo.attributes.position.array;
@@ -554,15 +612,24 @@ function updateHazard() {
   for (let i = 0; i < sampled.length; i++) {
     const p = sampled[i];
     const d = p.d_km;
-    const on = i <= frontIndex;
+    const on = d <= frontKm + 1e-9;
     let depth = 0, vel = 0, width = 0;
     if (on) {
-      const rel = d / Math.max(0.001, frontKm);
-      depth = Math.max(0.05, h0 * Math.exp(-d / 10) * (1 - 0.55 * Math.min(1, rel)));
-      vel = vfront * Math.exp(-d / 14);
-      width = Math.min(0.38, Math.max(0.12, 0.08 + 0.008 * d));
-      maxDepth = Math.max(maxDepth, depth);
-      sumDepth += depth; count++;
+      if (useQ4) {
+        depth = q4Value(q4Frame.h, d);
+        vel = q4Value(q4Frame.u, d);
+        width = Math.min(0.38, Math.max(0.12, 0.08 + 0.008 * d));
+        if (depth <= 0) depth = 0;
+      } else {
+        const rel = d / Math.max(0.001, frontKm);
+        depth = Math.max(0.05, h0 * Math.exp(-d / 10) * (1 - 0.55 * Math.min(1, rel)));
+        vel = vfront * Math.exp(-d / 14);
+        width = Math.min(0.38, Math.max(0.12, 0.08 + 0.008 * d));
+      }
+      if (depth > 0) {
+        maxDepth = Math.max(maxDepth, depth);
+        sumDepth += depth; count++;
+      }
     }
     const terrainY = Math.max(baseY(p.y), terrainYAt(p.x, p.z));
     const y = terrainY + (on ? 0.12 + Math.max(0.04, depth / 1000 * 10.0) : 0.06);
@@ -651,16 +718,17 @@ function updateHazard() {
   state.stats = { frontKm, maxDepth, sumDepth, count, h0, vfront, t };
   $('stats').innerHTML = `
     <span>锋面 <b>${frontKm.toFixed(1)} km</b></span>
+    <span>数据 <b>${useQ4 ? 'Q4 60m' : '情景预览'}</b></span>
     <span>最大水深 <b>${maxDepth.toFixed(1)} m</b></span>
     <span>平均水深 <b>${(count ? sumDepth / count : 0).toFixed(1)} m</b></span>
     <span>锋面速度 <b>${vfront.toFixed(1)} m/s</b></span>
     <span>初始水深 <b>${h0.toFixed(1)} m</b></span>
     <span>已历时 <b>${clock(state.time)}</b></span>
   `;
-  drawProfile(sampled, frontIndex, h0, frontKm);
+  drawProfile(sampled, frontIndex, h0, frontKm, q4Frame, useQ4);
 }
 
-function drawProfile(sampled, frontIndex, h0, frontKm) {
+function drawProfile(sampled, frontIndex, h0, frontKm, q4Frame = null, useQ4 = false) {
   const ctx = state.profileCtx;
   const W = $('profile').width, H = $('profile').height;
   ctx.clearRect(0, 0, W, H);
@@ -676,7 +744,9 @@ function drawProfile(sampled, frontIndex, h0, frontKm) {
   for (let i = 0; i <= frontIndex; i++) {
     const p = sampled[i];
     const rel = p.d_km / Math.max(0.001, frontKm);
-    const depth = Math.max(0.05, h0 * Math.exp(-p.d_km / 10) * (1 - 0.55 * Math.min(1, rel)));
+    const depth = useQ4
+      ? q4Value(q4Frame.h, p.d_km)
+      : Math.max(0.05, h0 * Math.exp(-p.d_km / 10) * (1 - 0.55 * Math.min(1, rel)));
     if (i === 0) ctx.moveTo(x(p.d_km), y(depth)); else ctx.lineTo(x(p.d_km), y(depth));
   }
   ctx.stroke();

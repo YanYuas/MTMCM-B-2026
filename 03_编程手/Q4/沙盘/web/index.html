@@ -26,7 +26,7 @@
   <header id="topbar">
     <div class="brand">
       <strong>吉隆沟 · 3D 推演沙盘</strong>
-      <span>v0.1 · 地形/沟道/冰川/Q3 预警 · 情景预览</span>
+      <span>v0.2 · 地形/沟道/冰川/Q3 预警/Q4 60m 帧</span>
     </div>
     <div class="top-actions">
       <button id="btn-cinema" class="ghost">电影巡航</button>
@@ -43,6 +43,7 @@
         <button data-scenario="2025">2025 GLOF</button>
       </div>
       <p class="hint" id="scenario-note">2026-08-26 10:30；冰崩—碎屑流—泥石流—山洪链。</p>
+      <label class="check"><input type="checkbox" id="use-q4" checked /> 使用 Q4 60 m 基线帧（关闭后滑杆为快速预览）</label>
     </section>
 
     <section class="card">
@@ -53,7 +54,7 @@
       <input id="mu" type="range" min="0.05" max="0.35" step="0.01" value="0.15" />
       <label>Voellmy ξ <output id="xi-out">300</output></label>
       <input id="xi" type="range" min="100" max="600" step="10" value="300" />
-      <p class="hint">v0.1 是快速情景预览，用于交互/画面；尚未接 Q4 HLL/Voellmy 求解器，不能当验证结果。</p>
+      <p class="hint">Q4 60 m 帧为 S5 情景（μ=0.05）；关闭 Q4 帧后滑杆为快速预览。两者都不是 2026 官方复现。</p>
     </section>
 
     <section class="card">
