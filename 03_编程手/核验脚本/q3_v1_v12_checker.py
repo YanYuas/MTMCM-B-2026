@@ -64,10 +64,15 @@ def warning_time(cdf_rows, h_warn=6.0, p_warn=0.9):
     return None
 
 
-def rain_trigger(p1h, api, vwc, m_cr=0.35, phi=0.40, a=10.0, api_c=80.0):
+def rain_trigger(p1h, api, vwc, m_cr=0.35, phi=0.40, a=10.0, api_c=80.0,
+                 p_min=0.1, api_min=5.0):
     out = []
     for i in range(len(p1h)):
         m = min(max(vwc[i] / phi, 0.0), 1.0)
+        active = (p1h[i] >= p_min) or (api[i] >= api_min)
+        if not active:
+            out.append(0.0)
+            continue
         i_rain = max(p1h[i] / a, api[i] / api_c, m / m_cr)
         out.append(i_rain)
     return out
@@ -160,6 +165,10 @@ def main():
     p1[3] = 12.0
     i1 = rain_trigger(p1, [0.0] * 24, v0)
     add("A4b", "P1h=12 at t=3", 3, first_passage(i1, 1.0), 0, "P1h/10=1.2")
+    # A4c 湿土但无水源：门控必须把 I_rain 压到 0，避免“湿土=触发”
+    wet = [0.135] * 24
+    i2 = rain_trigger([0.0] * 24, [0.0] * 24, wet)
+    add("A4c", "wet soil, no water", None, first_passage(i2, 1.0), 0, "W_active=0; 不触发")
 
     # A5 competing branches
     branches = {"rain": float("inf"), "ice": 10.5, "glof": float("inf")}

@@ -1,0 +1,180 @@
+{
+  "2026": {
+    "label": "2026-08-26 冰崩链",
+    "event_time": "2026-08-26 10:30",
+    "window_start": "2026-08-23 10:00:00",
+    "window_end": "2026-08-26 10:00:00",
+    "rows": 73,
+    "drivers": {
+      "station": {
+        "available": true,
+        "precip": {
+          "n": 73,
+          "sum": 0.0,
+          "max": 0.0
+        },
+        "api72": {
+          "n": 73,
+          "sum": 1.0382636992450278,
+          "max": 0.1048414274966156
+        },
+        "max_I": {
+          "n": 73,
+          "sum": 0.0,
+          "max": 0.0
+        },
+        "active_n": 0
+      },
+      "era5": {
+        "available": true,
+        "precip": {
+          "n": 73,
+          "sum": 0.7,
+          "max": 0.2
+        },
+        "api72": {
+          "n": 73,
+          "sum": 6.888446645995931,
+          "max": 0.48535554693866645
+        },
+        "max_I": {
+          "n": 73,
+          "sum": 5.580492857142858,
+          "max": 0.9458857142857142
+        },
+        "active_n": 6
+      },
+      "nasa_lst": {
+        "available": true,
+        "precip": {
+          "n": 73,
+          "sum": 8.5,
+          "max": 0.91
+        },
+        "api72": {
+          "n": 73,
+          "sum": 121.81337999273755,
+          "max": 4.637563759588841
+        },
+        "max_I": {
+          "n": 73,
+          "sum": 16.778042857142857,
+          "max": 0.95405
+        },
+        "active_n": 18
+      },
+      "chirps_uniform": {
+        "available": true,
+        "precip": {
+          "n": 73,
+          "sum": 24.28066666666666,
+          "max": 0.4545416666666667
+        },
+        "api72": {
+          "n": 73,
+          "sum": 219.39754138757115,
+          "max": 4.24890037121891
+        },
+        "max_I": {
+          "n": 73,
+          "sum": 67.63394285714284,
+          "max": 0.9635857142857143
+        },
+        "active_n": 73
+      }
+    },
+    "notes": [
+      "站点/ERA5 为 Asia/Shanghai；NASA 原始为 LST，另给按经度差对齐列",
+      "CHIRPS 为日值；uniform 仅展示，不是小时观测",
+      "窗口末 10:00，事件 10:30；小时数据不能给分钟级触发"
+    ]
+  },
+  "2025": {
+    "label": "2025-07-08 GLOF",
+    "event_time": "2025-07-08 05:00",
+    "window_start": "2025-07-05 05:00:00",
+    "window_end": "2025-07-08 05:00:00",
+    "rows": 73,
+    "drivers": {
+      "station": {
+        "available": true,
+        "precip": {
+          "n": 73,
+          "sum": 0.0,
+          "max": 0.0
+        },
+        "api72": {
+          "n": 73,
+          "sum": 13.570064074763305,
+          "max": 1.3680705350123596
+        },
+        "max_I": {
+          "n": 73,
+          "sum": 0.0,
+          "max": 0.0
+        },
+        "active_n": 0
+      },
+      "era5": {
+        "available": false,
+        "precip": {
+          "n": 0,
+          "sum": null,
+          "max": null
+        },
+        "api72": {
+          "n": 0,
+          "sum": null,
+          "max": null
+        },
+        "max_I": {
+          "n": 0,
+          "sum": null,
+          "max": null
+        }
+      },
+      "nasa_lst": {
+        "available": false,
+        "precip": {
+          "n": 0,
+          "sum": null,
+          "max": null
+        },
+        "api72": {
+          "n": 0,
+          "sum": null,
+          "max": null
+        },
+        "max_I": {
+          "n": 0,
+          "sum": null,
+          "max": null
+        }
+      },
+      "chirps_uniform": {
+        "available": true,
+        "precip": {
+          "n": 73,
+          "sum": 9.348791666666667,
+          "max": 0.49204166666666665
+        },
+        "api72": {
+          "n": 73,
+          "sum": 93.35815397729803,
+          "max": 4.255741336083319
+        },
+        "max_I": {
+          "n": 73,
+          "sum": 10.559901428571429,
+          "max": 0.558037857142857
+        },
+        "active_n": 19
+      }
+    },
+    "notes": [
+      "2025 只有站点 + CHIRPS；ERA5/NASA 无 2025 表，显式 NA",
+      "CHIRPS 为日值；uniform 仅展示",
+      "事件 05:00；窗口包含事件整点"
+    ]
+  }
+}

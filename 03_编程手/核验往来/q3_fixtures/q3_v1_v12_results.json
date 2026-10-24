@@ -1,6 +1,6 @@
 {
-  "n_checks": 35,
-  "n_pass": 35,
+  "n_checks": 36,
+  "n_pass": 36,
   "all_pass": true,
   "v_checks": [
     {
@@ -208,6 +208,15 @@
       "tol": 0.0,
       "pass": true,
       "note": "P1h/10=1.2"
+    },
+    {
+      "id": "A4c",
+      "input": "wet soil, no water",
+      "expected": null,
+      "actual": null,
+      "tol": 0.0,
+      "pass": true,
+      "note": "W_active=0; 不触发"
     },
     {
       "id": "A5",

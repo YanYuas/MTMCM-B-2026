@@ -21,6 +21,7 @@ A2,local event count,2,2,0.0,True,84 多边形不计入
 A3,forecast_start > event_time,True,True,0.0,True,历史不用 forecast
 A4a,dry 2026-like,,,0.0,True,T_rain=inf
 A4b,P1h=12 at t=3,3,3,0.0,True,P1h/10=1.2
+A4c,"wet soil, no water",,,0.0,True,W_active=0; 不触发
 A5,min branch,ice,ice,0.0,True,分支先触发
 A6a,3/5 inf,0.6,0.6,1e-09,True,
 A6b,finite lower,1.025,1.025,1e-09,True,
