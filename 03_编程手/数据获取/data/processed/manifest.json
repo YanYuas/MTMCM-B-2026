@@ -1,16 +1,18 @@
 {
-  "batch": "1",
-  "generated_at": "2026-10-24T11:36:45",
+  "batch": "all",
+  "generated_at": "2026-10-24T11:41:41",
   "datasets": [
     "TPDC-01 逐小时综合观测",
     "TPDC-02 逐日平均气温",
-    "TPDC-06 历史灾点（沟域多边形）"
+    "TPDC-05 土地覆盖（2023）",
+    "TPDC-06 历史灾点（沟域多边形）",
+    "TPDC-07 DEM 派生地形（核心沟谷）"
   ],
   "outputs": [
     {
       "path": "data/processed/tpdc01_hourly/tpdc01_key_vars_long.csv.gz",
       "bytes": 3612052,
-      "sha256": "3d3d437c74a1cd60772cac5a4b1c8751493cbf7500092265650e272eb6ab451f"
+      "sha256": "e5d956d1d97b9f5052f11c44d78bb8ddc27354a58abe07d91104a6b1e1d61bd5"
     },
     {
       "path": "data/processed/tpdc01_hourly/tpdc01_missing_by_variable.csv",
@@ -25,17 +27,32 @@
     {
       "path": "data/processed/tpdc02_temp/tpdc02_temp_long.csv.gz",
       "bytes": 479100,
-      "sha256": "e7759ca3c3a09cfdb3d1f1b70dfd56c41a7540b7a39d29d150b7006f2675351a"
+      "sha256": "091112395efdcee569a8f35a5e3b4f2edb112eabb3b8d1ac4a5af044b18b14bf"
     },
     {
       "path": "data/processed/tpdc02_temp/tpdc02_temp_wide.csv.gz",
       "bytes": 342530,
-      "sha256": "bcd52d4173b1894e3c11754ae47443d05a4f05695c6d0e0b2df39bac8f5f56ee"
+      "sha256": "ced61f4f98027196eb2153b67a6dee7aa02969fa887a7078f2716ec3f4284ef0"
     },
     {
       "path": "data/processed/tpdc02_temp/tpdc02_coverage_by_county.csv",
       "bytes": 345,
       "sha256": "d57022b5d9fce87114a51af4b6a55698d275c68df0c5687f2b246a82ca7b4ff1"
+    },
+    {
+      "path": "data/processed/tpdc05_landcover/jilong_LUCD_2023.tif",
+      "bytes": 1682146,
+      "sha256": "a05c317d19f16b4b9bf44dcf0b7908f34878b341aba8d112d43054d807ac7afc"
+    },
+    {
+      "path": "data/processed/tpdc05_landcover/jilong_LUCD_2023_nodata_mask.tif",
+      "bytes": 314756,
+      "sha256": "b436632d414772cbe068406225f108a76bfbdf20351d878388eb68f45cf03971"
+    },
+    {
+      "path": "data/processed/tpdc05_landcover/tpdc05_class_counts_2023.csv",
+      "bytes": 687,
+      "sha256": "171d8fb76c4b6e95a7b529900940af59090c66bcc09d4bd6a7321076cef1dac5"
     },
     {
       "path": "data/processed/tpdc06_points/tpdc06_points.geojson",
@@ -46,10 +63,40 @@
       "path": "data/processed/tpdc06_points/tpdc06_fields.csv",
       "bytes": 1161,
       "sha256": "8d7368f7e369b09d7d1f32bcb8015b7ad53a927864c2eb9a6be45d2017c045aa"
+    },
+    {
+      "path": "data/processed/tpdc07_dem/dem_core_30m.tif",
+      "bytes": 8437119,
+      "sha256": "7b9e8e53282b2e91d5302e616840c802eda80a963ce0777ddc6da2b65c6db9af"
+    },
+    {
+      "path": "data/processed/tpdc07_dem/slope_deg.tif",
+      "bytes": 9378058,
+      "sha256": "d1e71f911cc004b4d41cbc4c4919b7be3dcccb048a7ca39396ac0719f488a327"
+    },
+    {
+      "path": "data/processed/tpdc07_dem/flow_accumulation_cells.tif",
+      "bytes": 2179504,
+      "sha256": "a2037a9fc3d3d137e76edd760a75413707a7bb594d6898388f0e6077283e4d42"
+    },
+    {
+      "path": "data/processed/tpdc07_dem/flow_direction_d8.tif",
+      "bytes": 456172,
+      "sha256": "1b3b4d0b2c8492c4da67762c4bf081003fa9bef5f4af82c29c6e8a511e7282c7"
+    },
+    {
+      "path": "data/processed/tpdc07_dem/channel_mask_acc1000.tif",
+      "bytes": 30524,
+      "sha256": "c4d2f144d6e020623daae779746ee8bc3820696f4d2f645e6495b080826ae9c0"
+    },
+    {
+      "path": "data/processed/tpdc07_dem/tpdc07_terrain_stats.csv",
+      "bytes": 612,
+      "sha256": "2e41137a7df4fd6a3c7026c4ed2303676eecbcae54b526592e923f6f4bc28582"
     }
   ],
   "notes": [
-    "原始附件只读；processed 层可由 python -m mtmcm_data process --batch 1 重建",
+    "原始附件只读；processed 层可由 python -m mtmcm_data process --batch 1/2/all 重建",
     "缺失值不补零；QC=8 标记缺失；解译/影像时间不是事件时间"
   ]
 }

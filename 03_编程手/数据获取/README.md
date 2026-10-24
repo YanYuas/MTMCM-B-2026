@@ -37,8 +37,8 @@ python -m mtmcm_data list
 # 2) 先审计赛题已有 8 组附件（先内后外）
 python -m mtmcm_data existing
 
-# 3) 生成第一批 processed 基线（TPDC-01/02/06）
-python -m mtmcm_data process --batch 1
+# 3) 生成 processed 基线（第一批+第二批）
+python -m mtmcm_data process --batch all
 
 # 4) 抓全部元数据（首次会建缓存；--refresh 强制重抓）
 python -m mtmcm_data fetch all
@@ -326,9 +326,11 @@ POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
 
 报告还给出 7 步治理流水线（登记冻结→格式审计→时空基准→缺失/异常→质量标记→派生层→冻结交接）和“先内后外”的外部补充准入条件。
 
-### 7.5 第一批 processed 基线（`process --batch 1`）
+### 7.5 processed 基线（`process --batch 1/2/all`）
 
-`python -m mtmcm_data process --batch 1` 生成 `data/processed/`，只做已有数据的“可建模基线”，不掺外部数据：
+`python -m mtmcm_data process --batch 1` 生成第一批；`--batch 2` 生成第二批；`--batch all` 两批一起。只做已有数据的“可建模基线”，不掺外部数据。
+
+**第一批（TPDC-01/02/06）**
 
 | 目录 | 内容 | 规模 |
 |---|---|---|
@@ -336,9 +338,18 @@ POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
 | `tpdc01_hourly/` | `tpdc01_missing_by_variable.csv` + `tpdc01_variable_dictionary.csv` | 11 行缺测汇总 + 变量字典 |
 | `tpdc02_temp/` | 长表 + 宽表（日期×县） | 37,595 行 / 7,519 行 |
 | `tpdc06_points/` | `tpdc06_points.geojson`：84 个沟域多边形 + 属性；`tpdc06_fields.csv` | 84 features / 33 字段 |
-| 每目录 | `manifest.json`：源文件 sha256、变换规则、输出 sha256 | — |
 
-关键约束：TPDC-01 的 `9999.9`/`QC=8` 已标缺失、不补零；TPDC-02 的 2025 只有 214 天；TPDC-06 的 `解译Time`/`影像Time` 不是事件发生时间。第二批（TPDC-05 土地覆盖、TPDC-07 DEM 派生层）尚未生成。
+**第二批（TPDC-05/07）**
+
+| 目录 | 内容 | 规模 |
+|---|---|---|
+| `tpdc05_landcover/` | `jilong_LUCD_2023.tif`（LZW 重写，nodata=0） | 1.6 MB |
+| `tpdc05_landcover/` | `jilong_LUCD_2023_nodata_mask.tif`（1=nodata，0=有效） | 0.3 MB |
+| `tpdc05_landcover/` | `tpdc05_class_counts_2023.csv`（0=nodata，1–10 原编码） | 11 类 |
+| `tpdc07_dem/` | `dem_core_30m.tif`、`slope_deg.tif`、`flow_accumulation_cells.tif`、`flow_direction_d8.tif`、`channel_mask_acc1000.tif` | DEM 8.0 MB / 坡度 8.9 MB / 汇流 2.1 MB |
+| `tpdc07_dem/` | `tpdc07_terrain_stats.csv` | 地形/沟道统计 |
+
+关键约束：TPDC-01 的 `9999.9`/`QC=8` 已标缺失、不补零；TPDC-02 的 2025 只有 214 天；TPDC-06 的 `解译Time`/`影像Time` 不是事件发生时间；TPDC-05 的 0 是 nodata，不是类别；TPDC-07 的 D8 未填洼（4,888 个 sink），坡度按中心纬度近似米制间距，沟道阈值 1,000 cells。
 
 ---
 

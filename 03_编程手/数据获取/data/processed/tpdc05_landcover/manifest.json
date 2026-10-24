@@ -1,0 +1,47 @@
+{
+  "dataset": "TPDC-05 土地覆盖（2023）",
+  "source_zip": "C:/Users/21722/Desktop/妈妈杯秋季赛/MTMCM比赛协作/05_辅助文档/题目附件/附件/（5）西藏日喀则市吉隆县泥石流灾害区土地覆盖数据（2020-2023）.zip",
+  "source_sha256": "a9d23370c61485068734c264b876b377934d8b7141f0cc96ca9a58d1e7f7bfdd",
+  "generated_at": "2026-10-24T11:41:39",
+  "year": 2023,
+  "shape": [
+    3957,
+    6336
+  ],
+  "crs": "EPSG:4326",
+  "bbox": {
+    "west": 84.45097918618985,
+    "north": 29.32181935741689,
+    "east": 86.15849687824424,
+    "south": 28.255429283638605
+  },
+  "pixel_size_deg": [
+    0.0002694945852358567,
+    0.00026949458523585663
+  ],
+  "nodata": 0,
+  "class_count": 11,
+  "valid_pixels": 11203175,
+  "rules": [
+    "0 为 nodata，不当作土地覆盖类别",
+    "1–10 保留原始编码；附件无官方图例",
+    "掩膜：1=nodata，0=有效"
+  ],
+  "outputs": [
+    {
+      "path": "data/processed/tpdc05_landcover/jilong_LUCD_2023.tif",
+      "bytes": 1682146,
+      "sha256": "a05c317d19f16b4b9bf44dcf0b7908f34878b341aba8d112d43054d807ac7afc"
+    },
+    {
+      "path": "data/processed/tpdc05_landcover/jilong_LUCD_2023_nodata_mask.tif",
+      "bytes": 314756,
+      "sha256": "b436632d414772cbe068406225f108a76bfbdf20351d878388eb68f45cf03971"
+    },
+    {
+      "path": "data/processed/tpdc05_landcover/tpdc05_class_counts_2023.csv",
+      "bytes": 687,
+      "sha256": "171d8fb76c4b6e95a7b529900940af59090c66bcc09d4bd6a7321076cef1dac5"
+    }
+  ]
+}

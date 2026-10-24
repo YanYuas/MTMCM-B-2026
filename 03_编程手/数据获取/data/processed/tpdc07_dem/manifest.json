@@ -1,0 +1,78 @@
+{
+  "dataset": "TPDC-07 DEM 派生地形（核心沟谷）",
+  "source_zip": "C:/Users/21722/Desktop/妈妈杯秋季赛/MTMCM比赛协作/05_辅助文档/题目附件/附件/（7）2026年8月26日日喀则市吉隆县泥石流灾害区DEM数据.zip",
+  "source_sha256": "06b6cc274c680a9e611e63d6610d66dc97ad2d3fdd669fdbcd0556be0bba02a2",
+  "generated_at": "2026-10-24T11:41:41",
+  "shape": [
+    1148,
+    1816
+  ],
+  "crs": "EPSG:4326",
+  "bbox": {
+    "west": 85.18975577464204,
+    "north": 28.564382284579324,
+    "east": 85.69414381661034,
+    "south": 28.24553450979829
+  },
+  "pixel_size_deg": [
+    0.0002777467191455384,
+    0.00027774196409497727
+  ],
+  "pixel_size_m": [
+    27.2,
+    30.71
+  ],
+  "nodata": -32767.0,
+  "sink_cells": 4888,
+  "channel_threshold_cells": 1000,
+  "d8_codes": {
+    "1": "N",
+    "2": "S",
+    "3": "W",
+    "4": "E",
+    "5": "NW",
+    "6": "NE",
+    "7": "SW",
+    "8": "SE",
+    "0": "sink/undefined"
+  },
+  "rules": [
+    "DEM 已是核心沟谷范围，未再裁剪",
+    "坡度用 np.gradient（米制间距，中心纬度近似）",
+    "D8 未填洼；sink 单元 accumulation 终止，统计中报告 sink 数",
+    "channel_mask = flow_accumulation >= 1000 cells；阈值可调",
+    "原始 DEM 只读，派生层可重建"
+  ],
+  "outputs": [
+    {
+      "path": "data/processed/tpdc07_dem/dem_core_30m.tif",
+      "bytes": 8437119,
+      "sha256": "7b9e8e53282b2e91d5302e616840c802eda80a963ce0777ddc6da2b65c6db9af"
+    },
+    {
+      "path": "data/processed/tpdc07_dem/slope_deg.tif",
+      "bytes": 9378058,
+      "sha256": "d1e71f911cc004b4d41cbc4c4919b7be3dcccb048a7ca39396ac0719f488a327"
+    },
+    {
+      "path": "data/processed/tpdc07_dem/flow_accumulation_cells.tif",
+      "bytes": 2179504,
+      "sha256": "a2037a9fc3d3d137e76edd760a75413707a7bb594d6898388f0e6077283e4d42"
+    },
+    {
+      "path": "data/processed/tpdc07_dem/flow_direction_d8.tif",
+      "bytes": 456172,
+      "sha256": "1b3b4d0b2c8492c4da67762c4bf081003fa9bef5f4af82c29c6e8a511e7282c7"
+    },
+    {
+      "path": "data/processed/tpdc07_dem/channel_mask_acc1000.tif",
+      "bytes": 30524,
+      "sha256": "c4d2f144d6e020623daae779746ee8bc3820696f4d2f645e6495b080826ae9c0"
+    },
+    {
+      "path": "data/processed/tpdc07_dem/tpdc07_terrain_stats.csv",
+      "bytes": 612,
+      "sha256": "2e41137a7df4fd6a3c7026c4ed2303676eecbcae54b526592e923f6f4bc28582"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+﻿metric,value,note
+dem_min_m,1620.91,有效像元
+dem_max_m,7254.48,有效像元
+dem_mean_m,4538.39,有效像元
+slope_mean_deg,30.907,全图
+slope_max_deg,84.328,全图
+flow_accum_max_cells,24164.0,未填洼 D8
+flow_accum_p99_cells,837.0,未填洼 D8
+sink_cells,4888.0,D8 无下游的单元；未填洼
+channel_threshold_cells,1000.0,channel_mask = accum >= 阈值
+channel_cells,17277.0,channel_mask=1
+channel_slope_mean_deg,17.496,沟道像元坡度均值
+channel_slope_median_deg,15.451,沟道像元坡度中位数
+pixel_dx_m,27.2,按中心纬度估算
+pixel_dy_m,30.71,按中心纬度估算

@@ -1,6 +1,6 @@
 # B 题数据来源审计报告
 
-> 生成时间：2026-10-24T11:37:04+08:00
+> 生成时间：2026-10-24T11:41:43+08:00
 > 工具：`03_编程手/数据获取`（`python -m mtmcm_data fetch all && python -m mtmcm_data report`）
 > 配套数据治理：`data/reports/data_governance.md`（角色/质量/不确定性传导）与 `data/data_cards/`。
 > 原则：每个来源都保留 URL、抓取时间、HTTP 状态和 sha256；失败也留痕，不绕过登录/反爬。

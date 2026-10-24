@@ -22,3 +22,6 @@ __pycache__/
 *.pyc
 .venv/
 tmpjjptl13k/
+
+# 根仓库 .gitignore 默认忽略 *.tif；processed 基线里的 GeoTIFF 需要入库。
+!data/processed/**/*.tif
