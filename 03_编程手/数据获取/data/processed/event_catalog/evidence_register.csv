@@ -3,5 +3,7 @@
 2026 事件不是降雨触发,CMA 原文：“这场并非由降雨引发的灾害”,中国气象局,https://www.cma.gov.cn/ztbd/2026zt/20260407/2026040703/202609/t20260902_8022008.html,2026-10-24,A
 2025-07-08 同一区域冰湖溃决山洪泥石流，17人失联,05:00；中方11人、尼方6名中方施工人员失联；友谊桥冲毁,央广网；中国青年报,http://news.cnr.cn/native/gd/20260826/t20260826_527793418.shtml,2026-10-24,A/B
 2015-04-25 尼泊尔 M8.1 地震距吉隆约43 km,山体松动/裂缝/松散物源；不是泥石流事件,央广网；IGM,https://www.igm.cgs.gov.cn/mobile/kjdt/202609/t20260903_867839.htm,2026-10-24,A/B
+CHIRPS v2.0 独立日降水（0.05°）,2026 事件区前3日约23 mm、站点约2 mm；2025 事件区前3日约12 mm、站点0 mm,UCSB Climate Hazards Center,https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_daily/tifs/p05/,2026-10-24,B
+2002-05-23 嘉龙错冰湖溃决（区域类比）,"85°50′E, 28°12′N；溃决水量约0.64×10^6 m³",《亚洲高山区冰湖溃决洪水事件回顾》表1,https://www.bcdt.ac.cn/article/2021/1000-0240/1000-0240-2021-43-6-1673/T1.html,2026-10-24,A/B
 TPDC-06 的 84 个多边形没有事件发生时间,只有 解译Time/影像Time；84 沟域 ≠ 84 次事件,本地附件审计,data/reports/existing_data_audit.md,2026-10-24,A
 TPDC-06 的 解译Time=20200725 不是事件日期,不能作为 2020-07-25 事件证据；无独立灾情报道支持,本地字段审计 + 网络检索,data/reports/existing_data_audit.md,2026-10-24,B

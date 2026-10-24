@@ -1,6 +1,6 @@
 {
   "batch": "7",
-  "generated_at": "2026-10-24T12:08:35",
+  "generated_at": "2026-10-24T12:25:37",
   "datasets": [
     "事件时间/降雨触发/历史灾情目录",
     "Q2 空间易发性基线（WOE）",
@@ -16,28 +16,33 @@
   "outputs": [
     {
       "path": "data/processed/event_catalog/event_catalog.csv",
-      "bytes": 2240,
-      "sha256": "4d8506d8cc3505b2e8003bedfc27a7ea0f983df025f31f29f6239962cb55a0f5"
+      "bytes": 2761,
+      "sha256": "e2501bcfa12ba8c23740a6408492792691b81a80406b33685416a1a33f572070"
     },
     {
       "path": "data/processed/event_catalog/event_rainfall_windows.csv",
-      "bytes": 4116,
-      "sha256": "1d2807065910cf9838de06c5eec983cf1aa16dbf766d9e02b1af89c6919a6372"
+      "bytes": 6168,
+      "sha256": "c8c6f3d8217327605de595f34e4cfdda334a34f0f0def56ba2c6ca747222e736"
     },
     {
       "path": "data/processed/event_catalog/event_rainfall_hourly.csv.gz",
       "bytes": 2573,
-      "sha256": "7a3854276644a835350a8c07c183ca129ef1d16c0af9cbfc7c1945bae3b657d0"
+      "sha256": "6395f21f7c55f6b2a7187ca8965d9e9f55496b11f6784e19e28233838818abef"
+    },
+    {
+      "path": "data/processed/event_catalog/chirps_daily_values.csv",
+      "bytes": 403,
+      "sha256": "ac7eb39f58c2633c3cd4f90f65190317de9cf2c496f3866a40ff8396863f8158"
     },
     {
       "path": "data/processed/event_catalog/evidence_register.csv",
-      "bytes": 1308,
-      "sha256": "670ed5322d7812878d1821535d50a99cf0f88559c77f4eebfefafdb6f8f3f5b6"
+      "bytes": 1809,
+      "sha256": "9c7d915797e8b7514f5a76c925771c90c0bb1d7d442866e50bfb5a00a41f479c"
     },
     {
       "path": "data/processed/event_catalog/summary.json",
-      "bytes": 916,
-      "sha256": "83871e1262508feb9ea45645f8c7aa06eab9b3c723e16ca220e55997594ef6d1"
+      "bytes": 1757,
+      "sha256": "15d05394574b7cea13acf77240e5074278e9367f607238936ad38b1899665733"
     },
     {
       "path": "data/processed/q2_susceptibility/q2_susceptibility_score.tif",

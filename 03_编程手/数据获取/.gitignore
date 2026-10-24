@@ -3,6 +3,8 @@ data/raw/*
 # 事件目录的原始 API 响应很小，保留以便 batch 7 可复现。
 !data/raw/event_catalog/
 !data/raw/event_catalog/**
+# CHIRPS 原始日栅格约 70 MB，不入库；保留 processed 日值表与来源 URL。
+data/raw/event_catalog/chirps/
 data/cache/*
 data/tables/*
 data/runs/*

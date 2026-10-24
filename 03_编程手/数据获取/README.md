@@ -390,12 +390,15 @@ POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
 
 | 目录 | 内容 | 关键值 |
 |---|---|---|
-| `event_catalog/` | `event_catalog.csv`：已确认事件 | **2 个泥石流事件 + 1 个地震背景** |
-| `event_catalog/` | `event_rainfall_windows.csv`：站点/Open-Meteo/NASA 事件窗口降水 | 2026 72h：**0.0 / 0.7 / 8.46 mm** |
+| `event_catalog/` | `event_catalog.csv`：已确认事件 | **2 个本地泥石流 + 1 个区域 GLOF 类比 + 1 个地震背景** |
+| `event_catalog/` | `event_rainfall_windows.csv`：站点/Open-Meteo/NASA/CHIRPS 事件窗口降水 | 2026 72h：站点 **0.0** / ERA5 **0.7** / NASA **8.46** / CHIRPS 事件区 **23.24 mm** |
+| `event_catalog/` | `chirps_daily_values.csv`：CHIRPS 独立日降水（0.05°） | 2026 事件区前3日 23.24 mm；站点 2.07 mm |
 | `event_catalog/` | `event_rainfall_hourly.csv.gz` + `evidence_register.csv` | 逐小时降水 + 证据登记 |
 | `event_catalog/` | `event_catalog.md` | “非降雨触发”结论与来源 |
 
-关键约束：TPDC-01 的 `9999.9`/`QC=8` 已标缺失、不补零；TPDC-02 的 2025 只有 214 天；TPDC-06 的 `解译Time`/`影像Time` 不是事件发生时间；TPDC-05 的 0 是 nodata，不是类别；batch 2 的 D8 未填洼（4,888 sinks），batch 3/5 主流路用填洼+epsilon D8，两者不能混用；batch 6 的 WOE 是**相对易发性，不是概率**，空间块 AUC 弱；batch 7 只确认 2 个泥石流事件，**2026/2025 均为冰崩/冰湖溃决触发，不是降雨触发**。
+> CHIRPS 原始日栅格约 70 MB，未入库；`chirps_daily_values.csv` 保留日值，来源 URL 见证据登记。
+
+关键约束：TPDC-01 的 `9999.9`/`QC=8` 已标缺失、不补零；TPDC-02 的 2025 只有 214 天；TPDC-06 的 `解译Time`/`影像Time` 不是事件发生时间；TPDC-05 的 0 是 nodata，不是类别；batch 2 的 D8 未填洼（4,888 sinks），batch 3/5 主流路用填洼+epsilon D8，两者不能混用；batch 6 的 WOE 是**相对易发性，不是概率**，空间块 AUC 弱；batch 7 只确认 **2 个本地泥石流事件 + 1 个区域 GLOF 类比**，**2026/2025 均为冰崩/冰湖溃决触发，不是降雨触发**。
 
 ---
 

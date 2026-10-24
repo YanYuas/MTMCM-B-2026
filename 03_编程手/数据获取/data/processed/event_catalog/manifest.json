@@ -1,57 +1,85 @@
 {
   "dataset": "事件时间/降雨触发/历史灾情目录",
-  "generated_at": "2026-10-24T12:08:35",
-  "events_total": 3,
-  "debris_flow_events": 2,
+  "generated_at": "2026-10-24T12:25:37",
+  "events_total": 4,
+  "debris_flow_events": 3,
+  "local_events": 2,
+  "regional_analogue_events": 1,
   "precondition_events": 1,
   "event_ids": [
     "E20260826",
     "E20250708",
+    "E20020523",
     "E20150425"
   ],
-  "rainfall_rows": 19,
-  "key_finding": "2026 与 2025 两次事件均为冰崩/冰湖溃决触发，不是降雨触发；站点/再分析 72 h 降水仅 0–8.5 mm，远低于暴雨阈值。",
+  "rainfall_rows": 27,
+  "key_finding": "2026 与 2025 两次事件均为冰崩/冰湖溃决触发，不是降雨触发；2026 事件区 CHIRPS 前3日累计 23.236 mm，站点仅 2.069 mm；仍不是暴雨级。",
   "2026_72h": {
     "station_mm": 0.0,
     "open_meteo_mm": 0.7,
-    "nasa_mm": 8.46
+    "nasa_mm": 8.46,
+    "chirps_station_mm": 2.069,
+    "chirps_event_area_mm": 23.236
   },
   "2025_72h": {
     "station_mm": 0.0,
     "open_meteo_mm": 0.3,
-    "open_meteo_120h_mm": 11.8
+    "open_meteo_120h_mm": 11.8,
+    "chirps_station_mm": 0.0,
+    "chirps_event_area_mm": 11.809
+  },
+  "chirps_daily": {
+    "E20250708": {
+      "station_antecedent_72h_mm": 0.0,
+      "station_event_day_mm": 0.0,
+      "event_area_antecedent_72h_mm": 11.809,
+      "event_area_event_day_mm": 0.0
+    },
+    "E20260826": {
+      "station_antecedent_72h_mm": 2.069,
+      "station_event_day_mm": 5.196,
+      "event_area_antecedent_72h_mm": 23.236,
+      "event_area_event_day_mm": 4.622
+    }
   },
   "notes": [
     "历史灾情目录只收有公开来源的事件；未把 TPDC-06 的 84 个沟域当事件",
+    "2002-05-23 嘉龙错是区域类比，不在吉隆县，不计入吉隆事件频率",
     "2026 事件的直接触发是高位冰崩，降雨只是背景/后续救援风险",
     "NASA POWER 时间标准为 LST，不能与 UTC+8 直接逐小时对齐",
+    "CHIRPS 为日值、0.05°，不能精确到 10:30；‘前3日’是事件日前三个日历日",
     "事件伤亡数字为截至报道时点，不作为模型输入"
   ],
   "outputs": [
     {
       "path": "data/processed/event_catalog/event_catalog.csv",
-      "bytes": 2240,
-      "sha256": "4d8506d8cc3505b2e8003bedfc27a7ea0f983df025f31f29f6239962cb55a0f5"
+      "bytes": 2761,
+      "sha256": "e2501bcfa12ba8c23740a6408492792691b81a80406b33685416a1a33f572070"
     },
     {
       "path": "data/processed/event_catalog/event_rainfall_windows.csv",
-      "bytes": 4116,
-      "sha256": "1d2807065910cf9838de06c5eec983cf1aa16dbf766d9e02b1af89c6919a6372"
+      "bytes": 6168,
+      "sha256": "c8c6f3d8217327605de595f34e4cfdda334a34f0f0def56ba2c6ca747222e736"
     },
     {
       "path": "data/processed/event_catalog/event_rainfall_hourly.csv.gz",
       "bytes": 2573,
-      "sha256": "7a3854276644a835350a8c07c183ca129ef1d16c0af9cbfc7c1945bae3b657d0"
+      "sha256": "6395f21f7c55f6b2a7187ca8965d9e9f55496b11f6784e19e28233838818abef"
+    },
+    {
+      "path": "data/processed/event_catalog/chirps_daily_values.csv",
+      "bytes": 403,
+      "sha256": "ac7eb39f58c2633c3cd4f90f65190317de9cf2c496f3866a40ff8396863f8158"
     },
     {
       "path": "data/processed/event_catalog/evidence_register.csv",
-      "bytes": 1308,
-      "sha256": "670ed5322d7812878d1821535d50a99cf0f88559c77f4eebfefafdb6f8f3f5b6"
+      "bytes": 1809,
+      "sha256": "9c7d915797e8b7514f5a76c925771c90c0bb1d7d442866e50bfb5a00a41f479c"
     },
     {
       "path": "data/processed/event_catalog/summary.json",
-      "bytes": 916,
-      "sha256": "83871e1262508feb9ea45645f8c7aa06eab9b3c723e16ca220e55997594ef6d1"
+      "bytes": 1757,
+      "sha256": "15d05394574b7cea13acf77240e5074278e9367f607238936ad38b1899665733"
     }
   ]
 }
