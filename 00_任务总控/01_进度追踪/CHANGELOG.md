@@ -4,6 +4,25 @@
 
 ---
 
+## v1.5.0 — 2026-10-24 13:20
+
+### 新增
+- `03_编程手/Q1/源代码/q1_pipeline.py`：24 CSV 解析、33 特征、E_pre/E72/E6/E_all、B 基线、1000 次循环块置换、BH FDR、500 次 bootstrap。
+- `03_编程手/Q1/实验结果/`：`q1_features_hourly.csv.gz`（49,545×33）、`q1_ranking.csv`、`q1_ranking_bootstrap.csv`、`q1_summary.json`。
+- `03_编程手/Q1/验证题结果.md`、`00_交付清单.md`、`理论问题反馈.md`。
+
+### 修改
+- `进度看板.md` 刷新到 v1.5.0：Q1 第一里程碑；0 个 FDR 显著，Top5 探索性。
+
+### 修复
+- Q1 `z` 不能在 B 子集上算完再用 E 索引；改为用 B 的 med/MAD 给完整序列算 z。
+- Top5 兜底只从 usable 且 A_std 有限的池中补，不把 NaN/不可用特征塞进 Top5。
+
+### 废弃
+- （无）
+
+---
+
 ## v1.4.0 — 2026-10-24 13:10
 
 ### 新增

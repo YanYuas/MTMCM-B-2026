@@ -1,0 +1,34 @@
+﻿feature_id,name,group,formula,unit,priority
+F01,ws_shear_2_10,A 边界层动力,(WS_10m-WS_2m)/8,s^-1,P0
+F02,ws_shear_2_20,A 边界层动力,(WS_20m-WS_2m)/18,s^-1,P0
+F03,wd_shear_2_20,A 边界层动力,1-cos(ΔWD),-,P1
+F04,theta_v_diff_2_20,A 边界层动力,θv_20-θv_2,K,P1
+F05,ri_bulk_2_20,A 边界层动力,g·Δθv·18/(θv_mean·ΔU²),-,P0
+F06,ustar,A 边界层动力,USTAR,m/s,P0
+F07,tke,A 边界层动力,TKE,m²/s²,P1
+F08,net_sw,B 辐射,Rsd-Rsu,W/m²,P1
+F09,net_lw,B 辐射,Rld-Rlu,W/m²,P1
+F10,rn,B 辐射,Rsd-Rsu+Rld-Rlu,W/m²,P0
+F11,albedo,B 辐射,"Rsu/Rsd, Rsd>50",-,P1
+F12,cloudiness,B 辐射,"Rld/(σT⁴), clamp[0,1.2]",-,P1
+F13,vwc_40,C 土壤水热,VWC_0.4m,m³/m³,P0
+F14,vwc_storage_0_40,C 土壤水热,100VWC0.1+100VWC0.2+200VWC0.4,mm,P1
+F15,soilT_grad_0.1_0.4,C 土壤水热,(soilT0.4-soilT0.1)/0.3,°C/m,P0
+F16,g_0.1,C 土壤水热,G_0.1m,W/m²,P1
+F17,soilT_0.4,C 土壤水热,soilT_0.4m,°C,P1
+F18,H,D 湍流/能量,H,W/m²,P0
+F19,LE,D 湍流/能量,LE,W/m²,P1
+F20,bowen,D 湍流/能量,"H/LE, |LE|>10",-,P1
+F21,vpd,D 湍流/能量,es(Ta)(1-RH/100),kPa,P0
+F22,tstar,D 湍流/能量,TSTAR,°C,P1
+F23,precip_1h,E 降水/前期,Precip,mm/h,P1
+F24,precip_24h,E 降水/前期,24h rolling sum,mm,P0
+F25,precip_72h,E 降水/前期,72h rolling sum,mm,P1
+F26,pos_temp_24h,E 降水/前期,"24h Σmax(Ta,0)",°C·h,P0
+F27,pos_temp_72h,E 降水/前期,"72h Σmax(Ta,0)",°C·h,P1
+F28,api_72h,E 降水/前期,Σ0.9^i Precip(t-i),mm,P0
+F29,pressure_tendency_3h,F 天气过程/极端,P(t)-P(t-3h),hPa/3h,P1
+F30,p1h_p99,F 天气过程/极端,I(Precip>Q99_B),0/1,P1
+F31,p24_p95,F 天气过程/极端,I(Precip24>Q95_B),0/1,P1
+F32,ta_p95,F 天气过程/极端,I(Ta>Q95_B),0/1,P1
+F33,ws_p95,F 天气过程/极端,I(WS10>Q95_B),0/1,P1
