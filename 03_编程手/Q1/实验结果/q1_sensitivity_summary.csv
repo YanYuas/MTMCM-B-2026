@@ -1,0 +1,7 @@
+﻿scenario,description,n_usable,n_q10,top5,overlap_with_E_pre
+E_pre,主窗口 25h,29,0,ta_p95|vpd|pos_temp_24h|net_lw|tstar,5
+E6,末 6h（7 样本）,29,0,pos_temp_24h|pos_temp_72h|ri_bulk_2_20|wd_shear_2_20|vwc_40,1
+E72,72h（73 样本）,29,1,ta_p95|vpd|cloudiness|LE|pos_temp_24h,3
+E_all,描述窗口 31h,29,0,ta_p95|tstar|vpd|net_lw|LE,4
+base_pm7,基线 804-917,29,0,ta_p95|vpd|net_lw|tstar|cloudiness,4
+base_pm30,基线 712-1010,29,0,ta_p95|vpd|tstar|net_lw|cloudiness,4

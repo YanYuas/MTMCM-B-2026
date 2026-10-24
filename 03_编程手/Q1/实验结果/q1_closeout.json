@@ -1,0 +1,96 @@
+{
+  "base_top5": [
+    "ta_p95",
+    "vpd",
+    "pos_temp_24h",
+    "net_lw",
+    "tstar"
+  ],
+  "A5": {
+    "n_pseudo": 1000,
+    "n_with_any_q10": 68,
+    "fpr": 0.068
+  },
+  "A6": {
+    "n": 100,
+    "top1_hits": 78,
+    "top1_rate": 0.78,
+    "median_rank": 1.0,
+    "target_counts": {
+      "precip_1h": 3,
+      "pos_temp_24h": 5,
+      "vpd": 5,
+      "vwc_storage_0_40": 4,
+      "soilT_0.4": 10,
+      "tke": 3,
+      "wd_shear_2_20": 3,
+      "soilT_grad_0.1_0.4": 4,
+      "ustar": 6,
+      "cloudiness": 5,
+      "precip_24h": 4,
+      "vwc_40": 4,
+      "pos_temp_72h": 3,
+      "ri_bulk_2_20": 7,
+      "tstar": 4,
+      "LE": 3,
+      "H": 3,
+      "ws_shear_2_10": 4,
+      "api_72h": 4,
+      "theta_v_diff_2_20": 6,
+      "pressure_tendency_3h": 2,
+      "ws_shear_2_20": 2,
+      "precip_72h": 2,
+      "net_lw": 4
+    }
+  },
+  "A8_A9_summary": [
+    {
+      "scenario": "E_pre",
+      "description": "主窗口 25h",
+      "n_usable": 29,
+      "n_q10": 0,
+      "top5": "ta_p95|vpd|pos_temp_24h|net_lw|tstar",
+      "overlap_with_E_pre": 5
+    },
+    {
+      "scenario": "E6",
+      "description": "末 6h（7 样本）",
+      "n_usable": 29,
+      "n_q10": 0,
+      "top5": "pos_temp_24h|pos_temp_72h|ri_bulk_2_20|wd_shear_2_20|vwc_40",
+      "overlap_with_E_pre": 1
+    },
+    {
+      "scenario": "E72",
+      "description": "72h（73 样本）",
+      "n_usable": 29,
+      "n_q10": 1,
+      "top5": "ta_p95|vpd|cloudiness|LE|pos_temp_24h",
+      "overlap_with_E_pre": 3
+    },
+    {
+      "scenario": "E_all",
+      "description": "描述窗口 31h",
+      "n_usable": 29,
+      "n_q10": 0,
+      "top5": "ta_p95|tstar|vpd|net_lw|LE",
+      "overlap_with_E_pre": 4
+    },
+    {
+      "scenario": "base_pm7",
+      "description": "基线 804-917",
+      "n_usable": 29,
+      "n_q10": 0,
+      "top5": "ta_p95|vpd|net_lw|tstar|cloudiness",
+      "overlap_with_E_pre": 4
+    },
+    {
+      "scenario": "base_pm30",
+      "description": "基线 712-1010",
+      "n_usable": 29,
+      "n_q10": 0,
+      "top5": "ta_p95|vpd|tstar|net_lw|cloudiness",
+      "overlap_with_E_pre": 4
+    }
+  ]
+}
