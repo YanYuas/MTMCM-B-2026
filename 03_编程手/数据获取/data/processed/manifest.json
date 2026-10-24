@@ -1,18 +1,35 @@
 {
-  "batch": "all",
-  "generated_at": "2026-10-24T11:41:41",
+  "batch": "3",
+  "generated_at": "2026-10-24T11:52:11",
   "datasets": [
+    "TPDC-06 历史沟域 × DEM/坡度/汇流/土地覆盖",
     "TPDC-01 逐小时综合观测",
     "TPDC-02 逐日平均气温",
     "TPDC-05 土地覆盖（2023）",
     "TPDC-06 历史灾点（沟域多边形）",
+    "TPDC-07 主流路/纵剖面",
     "TPDC-07 DEM 派生地形（核心沟谷）"
   ],
   "outputs": [
     {
+      "path": "data/processed/spatial_baseline/tpdc06_gully_overlay_stats.csv",
+      "bytes": 13905,
+      "sha256": "e670d366f3db80263124dae48d3c606833129003d6adc1c8e1d6b55ded4ef07c"
+    },
+    {
+      "path": "data/processed/spatial_baseline/tpdc06_gully_id_mask.tif",
+      "bytes": 28162,
+      "sha256": "7c388a5316615b84eb244422f66bbdf093a9c82d77bb2453fcfd7c338d08d861"
+    },
+    {
+      "path": "data/processed/spatial_baseline/summary.json",
+      "bytes": 740,
+      "sha256": "85417f821b4de796ed2b15090a77c6d4c1e932dd8c88965cec224a6555c645fb"
+    },
+    {
       "path": "data/processed/tpdc01_hourly/tpdc01_key_vars_long.csv.gz",
       "bytes": 3612052,
-      "sha256": "e5d956d1d97b9f5052f11c44d78bb8ddc27354a58abe07d91104a6b1e1d61bd5"
+      "sha256": "91e50ccf4f33d9947b4e0a5d883fb3f256885f0c7374e1437befd70039050cf2"
     },
     {
       "path": "data/processed/tpdc01_hourly/tpdc01_missing_by_variable.csv",
@@ -27,12 +44,12 @@
     {
       "path": "data/processed/tpdc02_temp/tpdc02_temp_long.csv.gz",
       "bytes": 479100,
-      "sha256": "091112395efdcee569a8f35a5e3b4f2edb112eabb3b8d1ac4a5af044b18b14bf"
+      "sha256": "5f4f170c09cd9e6325f93ff440c76755025ef7275da7eb35b4d03caa75c4dfff"
     },
     {
       "path": "data/processed/tpdc02_temp/tpdc02_temp_wide.csv.gz",
       "bytes": 342530,
-      "sha256": "ced61f4f98027196eb2153b67a6dee7aa02969fa887a7078f2716ec3f4284ef0"
+      "sha256": "537bda1c37086c6dfbdcc02dc2feb9cff6f2d00bcd6bc1c8c7355e91c623f8df"
     },
     {
       "path": "data/processed/tpdc02_temp/tpdc02_coverage_by_county.csv",
@@ -56,13 +73,48 @@
     },
     {
       "path": "data/processed/tpdc06_points/tpdc06_points.geojson",
-      "bytes": 994968,
-      "sha256": "9de2272737d32f894816b0d9a87ac6b31957d11cfc8aa8c34a6200db94e3a91d"
+      "bytes": 995502,
+      "sha256": "5ba503df3d8f9b4be390242fef74ed0d1c592a6a39e8e395f3fd0fe885bdaf26"
     },
     {
       "path": "data/processed/tpdc06_points/tpdc06_fields.csv",
-      "bytes": 1161,
-      "sha256": "8d7368f7e369b09d7d1f32bcb8015b7ad53a927864c2eb9a6be45d2017c045aa"
+      "bytes": 1168,
+      "sha256": "8b79b6a47cf164dd9dc957fa9e7129bc7d682ce4ae1ab1ebd0ff3663c9869d93"
+    },
+    {
+      "path": "data/processed/tpdc07_channel/main_channel_profile.csv",
+      "bytes": 122781,
+      "sha256": "14173cfc07fea642588a428fe3e33f8b095bfb34584d9cc5cb5d5f12e7f4a41e"
+    },
+    {
+      "path": "data/processed/tpdc07_channel/main_channel.geojson",
+      "bytes": 111803,
+      "sha256": "01faa74fa8999e41ccd520de40e3c72f60af118a7734c1485b84403b7ae63f0d"
+    },
+    {
+      "path": "data/processed/tpdc07_channel/main_channel_mask.tif",
+      "bytes": 16016,
+      "sha256": "bf6c036aef9a5f308ce50766c9cc3a8c079f750c3303550d7a29908f59321bdd"
+    },
+    {
+      "path": "data/processed/tpdc07_channel/dem_filled_30m.tif",
+      "bytes": 8802498,
+      "sha256": "59636ae355701355643d7d30978bef6e79a14db0c537a1ca814759afe59c0f7e"
+    },
+    {
+      "path": "data/processed/tpdc07_channel/flow_direction_filled_d8.tif",
+      "bytes": 449804,
+      "sha256": "2f34fe226dbe97a9c20a3dd830af0b6bdb3b3d4b337692be2e9365761fad9928"
+    },
+    {
+      "path": "data/processed/tpdc07_channel/flow_accumulation_filled.tif",
+      "bytes": 2270952,
+      "sha256": "6cec142e4bde4372a33a6167b09871cbdc63492cc33d77dbe8e3ea124d08eb19"
+    },
+    {
+      "path": "data/processed/tpdc07_channel/main_channel_summary.json",
+      "bytes": 1205,
+      "sha256": "38d5dc91f4f9c1e457419a8131c0bf06febd892e71dfe685d7a993df8666dde2"
     },
     {
       "path": "data/processed/tpdc07_dem/dem_core_30m.tif",

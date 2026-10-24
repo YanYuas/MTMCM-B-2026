@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import WORKSPACE_ROOT, load_config
+from .dbf import read_dbf
 from .store import Store
 
 
@@ -252,38 +253,7 @@ def process_tpdc02(store: Store) -> dict[str, Any]:
 
 
 def _dbf_records(data: bytes) -> tuple[list[dict[str, str]], list[tuple[str, str, int]]]:
-    _, _, _, _, nrec, hlen, rlen = struct.unpack("<BBBBIHH", data[:12])
-    fields: list[tuple[str, str, int]] = []
-    pos = 32
-    while data[pos] != 0x0D:
-        fd = data[pos : pos + 32]
-        raw = fd[:11].split(b"\x00")[0]
-        name = None
-        for enc in ("utf-8", "gb18030", "gbk", "latin-1"):
-            try:
-                name = raw.decode(enc).strip()
-                break
-            except UnicodeDecodeError:
-                continue
-        fields.append((name or "?", chr(fd[11]), fd[16]))
-        pos += 32
-    records: list[dict[str, str]] = []
-    for index in range(nrec):
-        rec = data[hlen + index * rlen : hlen + (index + 1) * rlen]
-        if len(rec) < rlen:
-            break
-        values: dict[str, str] = {}
-        off = 1
-        for name, _, length in fields:
-            raw = rec[off : off + length]
-            off += length
-            for enc in ("utf-8", "gb18030", "gbk", "latin-1"):
-                try:
-                    values[name] = raw.decode(enc).strip()
-                    break
-                except UnicodeDecodeError:
-                    continue
-        records.append(values)
+    records, fields, _ = read_dbf(data)
     return records, fields
 
 
@@ -642,13 +612,21 @@ def process_tpdc07(store: Store) -> dict[str, Any]:
 def build_processed(store: Store, *, batch: str = "1") -> dict[str, Any]:
     if pd is None or np is None or Image is None or TiffImagePlugin is None:
         raise RuntimeError("缺少 pandas/numpy/Pillow；请安装 requirements.txt")
-    if batch not in {"1", "2", "all"}:
-        raise ValueError("batch 只能是 1、2 或 all")
+    if batch not in {"1", "2", "3", "4", "all"}:
+        raise ValueError("batch 只能是 1、2、3、4 或 all")
     results: list[dict[str, Any]] = []
     if batch in {"1", "all"}:
         results.extend([process_tpdc01(store), process_tpdc02(store), process_tpdc06(store)])
     if batch in {"2", "all"}:
         results.extend([process_tpdc05(store), process_tpdc07(store)])
+    if batch in {"3", "all"}:
+        from .spatial import process_main_channel
+
+        results.append(process_main_channel(store))
+    if batch in {"4", "all"}:
+        from .spatial import process_gully_overlay
+
+        results.append(process_gully_overlay(store))
     processed = store.data_dir / "processed"
     all_datasets: list[str] = []
     all_outputs: list[dict[str, Any]] = []
@@ -674,7 +652,7 @@ def build_processed(store: Store, *, batch: str = "1") -> dict[str, Any]:
     readme = [
         "# data/processed 基线",
         "",
-        "> 由 `python -m mtmcm_data process --batch 1/2/all` 生成；原始附件只读。",
+        "> 由 `python -m mtmcm_data process --batch 1/2/3/4/all` 生成；原始附件只读。",
         "",
         "## 第一批（batch 1）",
         "",
@@ -695,6 +673,20 @@ def build_processed(store: Store, *, batch: str = "1") -> dict[str, Any]:
         "- `tpdc07_dem/channel_mask_acc1000.tif`：沟道掩膜（accum≥1000 cells）；",
         "- `tpdc07_dem/tpdc07_terrain_stats.csv`：地形统计。",
         "",
+        "## 第三批（batch 3）",
+        "",
+        "- `tpdc07_channel/main_channel_profile.csv`：主流路纵剖面（距离/原始高程/路由高程/水力坡度/汇流）；",
+        "- `tpdc07_channel/main_channel.geojson`：主流路 LineString；",
+        "- `tpdc07_channel/main_channel_mask.tif`：主流路栅格；",
+        "- `tpdc07_channel/dem_filled_30m.tif`、`flow_direction_filled_d8.tif`、`flow_accumulation_filled.tif`：填洼+epsilon 后的 D8 层；",
+        "- `tpdc07_channel/main_channel_summary.json`：长度/落差/比降/源汇点/填洼前后 sink 数。",
+        "",
+        "## 第四批（batch 4）",
+        "",
+        "- `spatial_baseline/tpdc06_gully_overlay_stats.csv`：84 个沟域 × DEM/坡度/汇流/土地覆盖；",
+        "- `spatial_baseline/tpdc06_gully_id_mask.tif`：沟域 ID 栅格（1–84，0=outside）；",
+        "- `spatial_baseline/summary.json`：in_dem 数量、总像元、平均坡度等。",
+        "",
         "## 关键约束",
         "",
         "- TPDC-01 的 `9999.9`/`QC=8` 已标缺失，未补零；",
@@ -707,8 +699,7 @@ def build_processed(store: Store, *, batch: str = "1") -> dict[str, Any]:
         "## 复现",
         "",
         "```powershell",
-        "python -m mtmcm_data process --batch 1",
-        "python -m mtmcm_data process --batch 2",
+        "python -m mtmcm_data process --batch all",
         "```",
         "",
     ]

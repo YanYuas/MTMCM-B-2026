@@ -1,6 +1,6 @@
 # data/processed 基线
 
-> 由 `python -m mtmcm_data process --batch 1/2/all` 生成；原始附件只读。
+> 由 `python -m mtmcm_data process --batch 1/2/3/4/all` 生成；原始附件只读。
 
 ## 第一批（batch 1）
 
@@ -21,6 +21,20 @@
 - `tpdc07_dem/channel_mask_acc1000.tif`：沟道掩膜（accum≥1000 cells）；
 - `tpdc07_dem/tpdc07_terrain_stats.csv`：地形统计。
 
+## 第三批（batch 3）
+
+- `tpdc07_channel/main_channel_profile.csv`：主流路纵剖面（距离/原始高程/路由高程/水力坡度/汇流）；
+- `tpdc07_channel/main_channel.geojson`：主流路 LineString；
+- `tpdc07_channel/main_channel_mask.tif`：主流路栅格；
+- `tpdc07_channel/dem_filled_30m.tif`、`flow_direction_filled_d8.tif`、`flow_accumulation_filled.tif`：填洼+epsilon 后的 D8 层；
+- `tpdc07_channel/main_channel_summary.json`：长度/落差/比降/源汇点/填洼前后 sink 数。
+
+## 第四批（batch 4）
+
+- `spatial_baseline/tpdc06_gully_overlay_stats.csv`：84 个沟域 × DEM/坡度/汇流/土地覆盖；
+- `spatial_baseline/tpdc06_gully_id_mask.tif`：沟域 ID 栅格（1–84，0=outside）；
+- `spatial_baseline/summary.json`：in_dem 数量、总像元、平均坡度等。
+
 ## 关键约束
 
 - TPDC-01 的 `9999.9`/`QC=8` 已标缺失，未补零；
@@ -33,6 +47,5 @@
 ## 复现
 
 ```powershell
-python -m mtmcm_data process --batch 1
-python -m mtmcm_data process --batch 2
+python -m mtmcm_data process --batch all
 ```

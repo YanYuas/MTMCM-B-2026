@@ -1,0 +1,36 @@
+{
+  "dataset": "TPDC-07 主流路/纵剖面",
+  "generated_at": "2026-10-24T11:52:11",
+  "threshold_cells": 1000,
+  "path_cells": 1470,
+  "length_km": 49.622,
+  "drop_m": 3992.74,
+  "gradient_pct": 8.046,
+  "gradient_deg": 4.6,
+  "outlet_boundary": true,
+  "filled_cells": 38866,
+  "fill_epsilon_m": 0.0001,
+  "sink_cells_before": 4888,
+  "sink_cells_after": 161,
+  "source": {
+    "lon": 85.621513,
+    "lat": 28.439815,
+    "elevation_m": 5613.647,
+    "routed_elevation_m": 5613.647,
+    "flow_accum_cells": 1566
+  },
+  "outlet": {
+    "lon": 85.3618199,
+    "lat": 28.2456734,
+    "elevation_m": 1620.91,
+    "routed_elevation_m": 1620.91,
+    "flow_accum_cells": 1657724
+  },
+  "notes": [
+    "主流路 = 填洼+epsilon 后的 D8 汇流，再从边界出口逆流回溯到源头",
+    "outlet 优先取 DEM 边界上汇流最大的沟道单元；outlet_boundary 表示是否成功",
+    "elevation_m 为原始 DEM 高程；routed_elevation_m 为填洼后的路由高程",
+    "local_slope_deg 用填洼路由高程（水力坡降）；local_slope_original_deg 用原始 DEM（可含局部上坡）",
+    "D8 codes: 1=N,2=S,3=W,4=E,5=NW,6=NE,7=SW,8=SE,0=sink"
+  ]
+}

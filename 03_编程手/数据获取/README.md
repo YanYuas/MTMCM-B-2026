@@ -326,9 +326,9 @@ POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
 
 报告还给出 7 步治理流水线（登记冻结→格式审计→时空基准→缺失/异常→质量标记→派生层→冻结交接）和“先内后外”的外部补充准入条件。
 
-### 7.5 processed 基线（`process --batch 1/2/all`）
+### 7.5 processed 基线（`process --batch 1/2/3/4/all`）
 
-`python -m mtmcm_data process --batch 1` 生成第一批；`--batch 2` 生成第二批；`--batch all` 两批一起。只做已有数据的“可建模基线”，不掺外部数据。
+`--batch 1` 气象/灾点长表；`--batch 2` 土地覆盖/DEM 派生；`--batch 3` 主流路纵剖面；`--batch 4` 历史沟域空间叠加；`--batch all` 全部。只做已有数据的“可建模基线”，不掺外部数据。
 
 **第一批（TPDC-01/02/06）**
 
@@ -349,7 +349,24 @@ POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
 | `tpdc07_dem/` | `dem_core_30m.tif`、`slope_deg.tif`、`flow_accumulation_cells.tif`、`flow_direction_d8.tif`、`channel_mask_acc1000.tif` | DEM 8.0 MB / 坡度 8.9 MB / 汇流 2.1 MB |
 | `tpdc07_dem/` | `tpdc07_terrain_stats.csv` | 地形/沟道统计 |
 
-关键约束：TPDC-01 的 `9999.9`/`QC=8` 已标缺失、不补零；TPDC-02 的 2025 只有 214 天；TPDC-06 的 `解译Time`/`影像Time` 不是事件发生时间；TPDC-05 的 0 是 nodata，不是类别；TPDC-07 的 D8 未填洼（4,888 个 sink），坡度按中心纬度近似米制间距，沟道阈值 1,000 cells。
+**第三批（TPDC-07 主流路）**
+
+| 目录 | 内容 | 关键值 |
+|---|---|---|
+| `tpdc07_channel/` | `main_channel_profile.csv`：纵剖面（距离/原始高程/路由高程/水力坡度/汇流） | **1,470 像元 / 49.62 km** |
+| `tpdc07_channel/` | `main_channel.geojson` + `main_channel_mask.tif` | LineString / 栅格 |
+| `tpdc07_channel/` | `main_channel_summary.json` | 落差 **3,992.74 m**，纵向比降 **8.05%**（4.60°）；填洼前 4,888 sinks → 填洼后 161 |
+| `tpdc07_channel/` | `dem_filled_30m.tif`、`flow_direction_filled_d8.tif`、`flow_accumulation_filled.tif` | 主流路使用的填洼 D8 层 |
+
+**第四批（历史沟域 × 地形）**
+
+| 目录 | 内容 | 关键值 |
+|---|---|---|
+| `spatial_baseline/` | `tpdc06_gully_overlay_stats.csv`：84 个沟域 × DEM/坡度/汇流/土地覆盖 | **23/84 落在 DEM 内** |
+| `spatial_baseline/` | `tpdc06_gully_id_mask.tif`：沟域 ID 栅格（1–84） | 27.5 KB |
+| `spatial_baseline/` | `summary.json` | DEM 内 408,718 像元；平均坡度 34.04°；沟道像元 4,946 |
+
+关键约束：TPDC-01 的 `9999.9`/`QC=8` 已标缺失、不补零；TPDC-02 的 2025 只有 214 天；TPDC-06 的 `解译Time`/`影像Time` 不是事件发生时间；TPDC-05 的 0 是 nodata，不是类别；TPDC-07 的 D8 未填洼（4,888 个 sink），坡度按中心纬度近似米制间距，沟道阈值 1,000 cells；主流路/叠加结果都是**空间登记**，不是事件概率。
 
 ---
 

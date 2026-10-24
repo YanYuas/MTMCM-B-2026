@@ -1,0 +1,41 @@
+{
+  "dataset": "TPDC-06 历史沟域 × DEM/坡度/汇流/土地覆盖",
+  "generated_at": "2026-10-24T11:47:49",
+  "gullies_total": 84,
+  "gullies_in_dem": 23,
+  "cell_area_km2": 0.000835,
+  "total_cells_in_dem": 408718,
+  "mean_slope_deg_in_dem": 34.04,
+  "channel_cells_in_dem": 4946,
+  "notes": [
+    "84 个沟域多边形不是 84 次独立事件；本表只做空间登记叠加",
+    "GeoJSON 坐标为 CGCS2000 近似 WGS84；与 DEM 叠加以像元中心为准",
+    "土地覆盖 0=nodata，majority 只在 1–10 中统计，但无官方图例",
+    "土地覆盖按最近邻采样到 DEM 网格（全县 30 m → 核心沟谷 30 m）",
+    "in_dem=False 表示该沟域完全落在 DEM 实际范围之外"
+  ],
+  "source_files": [
+    "data/processed/tpdc06_points/tpdc06_points.geojson",
+    "data/processed/tpdc07_dem/dem_core_30m.tif",
+    "data/processed/tpdc07_dem/slope_deg.tif",
+    "data/processed/tpdc07_dem/flow_accumulation_cells.tif",
+    "data/processed/tpdc05_landcover/jilong_LUCD_2023.tif"
+  ],
+  "outputs": [
+    {
+      "path": "data/processed/spatial_baseline/tpdc06_gully_overlay_stats.csv",
+      "bytes": 13905,
+      "sha256": "e670d366f3db80263124dae48d3c606833129003d6adc1c8e1d6b55ded4ef07c"
+    },
+    {
+      "path": "data/processed/spatial_baseline/tpdc06_gully_id_mask.tif",
+      "bytes": 28162,
+      "sha256": "7c388a5316615b84eb244422f66bbdf093a9c82d77bb2453fcfd7c338d08d861"
+    },
+    {
+      "path": "data/processed/spatial_baseline/summary.json",
+      "bytes": 740,
+      "sha256": "85417f821b4de796ed2b15090a77c6d4c1e932dd8c88965cec224a6555c645fb"
+    }
+  ]
+}

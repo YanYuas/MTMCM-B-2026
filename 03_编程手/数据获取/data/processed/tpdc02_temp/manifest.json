@@ -2,7 +2,7 @@
   "dataset": "TPDC-02 逐日平均气温",
   "source_zip": "C:/Users/21722/Desktop/妈妈杯秋季赛/MTMCM比赛协作/05_辅助文档/题目附件/附件/（2）2005-2025年吉隆县及周边县市逐日平均气温数据.zip",
   "source_sha256": "5802359b362ab95b97a8f232a00e860d8bf935b00b4498df27974d9cc3c4c6bc",
-  "generated_at": "2026-10-24T11:41:38",
+  "generated_at": "2026-10-24T11:47:45",
   "rows_long": 37595,
   "rows_wide": 7519,
   "time_start": "2005-01-01 00:00:00",
@@ -16,12 +16,12 @@
     {
       "path": "data/processed/tpdc02_temp/tpdc02_temp_long.csv.gz",
       "bytes": 479100,
-      "sha256": "091112395efdcee569a8f35a5e3b4f2edb112eabb3b8d1ac4a5af044b18b14bf"
+      "sha256": "5f4f170c09cd9e6325f93ff440c76755025ef7275da7eb35b4d03caa75c4dfff"
     },
     {
       "path": "data/processed/tpdc02_temp/tpdc02_temp_wide.csv.gz",
       "bytes": 342530,
-      "sha256": "ced61f4f98027196eb2153b67a6dee7aa02969fa887a7078f2716ec3f4284ef0"
+      "sha256": "537bda1c37086c6dfbdcc02dc2feb9cff6f2d00bcd6bc1c8c7355e91c623f8df"
     },
     {
       "path": "data/processed/tpdc02_temp/tpdc02_coverage_by_county.csv",

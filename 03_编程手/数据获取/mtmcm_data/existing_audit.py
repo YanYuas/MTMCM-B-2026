@@ -13,6 +13,7 @@ from typing import Any
 
 from .audit import EVENT_TIME, read_station_rows, window_stats
 from .config import Source, WORKSPACE_ROOT, load_config
+from .dbf import read_dbf
 from .store import Store
 
 
@@ -57,26 +58,8 @@ def _zip_member(zip_path: Path, suffixes: tuple[str, ...]) -> tuple[str, bytes] 
 
 
 def _dbf_records(data: bytes) -> tuple[list[dict[str, str]], list[str]]:
-    _, _, _, _, nrec, hlen, rlen = struct.unpack("<BBBBIHH", data[:12])
-    fields: list[tuple[str, str, int]] = []
-    pos = 32
-    while data[pos] != 0x0D:
-        fd = data[pos : pos + 32]
-        name = _decode(fd[:11].split(b"\x00")[0])
-        fields.append((name, chr(fd[11]), fd[16]))
-        pos += 32
-    records: list[dict[str, str]] = []
-    for index in range(nrec):
-        rec = data[hlen + index * rlen : hlen + (index + 1) * rlen]
-        if len(rec) < rlen:
-            break
-        values: dict[str, str] = {}
-        off = 1
-        for name, _, length in fields:
-            values[name] = _decode(rec[off : off + length])
-            off += length
-        records.append(values)
-    return records, [f[0] for f in fields]
+    records, fields, _ = read_dbf(data)
+    return records, [name for name, _, _ in fields]
 
 
 def _shp_header(data: bytes) -> dict[str, Any]:
