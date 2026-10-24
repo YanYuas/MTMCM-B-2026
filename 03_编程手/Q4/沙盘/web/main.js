@@ -44,6 +44,31 @@ const COLORS = {
   steep: new THREE.Color('#8a6654'),
 };
 
+const TERRAIN_STOPS = [
+  [1700, new THREE.Color('#1b3327')],
+  [2600, new THREE.Color('#34502f')],
+  [3400, new THREE.Color('#5f5a3b')],
+  [4100, new THREE.Color('#786a55')],
+  [4700, new THREE.Color('#9aa0a3')],
+  [5300, new THREE.Color('#cdd8df')],
+  [6200, new THREE.Color('#f4f8fb')],
+  [7300, new THREE.Color('#ffffff')],
+];
+const ROCK_DARK = new THREE.Color('#4b4038');
+
+function terrainColor(out, h, slope) {
+  let i = 0;
+  while (i < TERRAIN_STOPS.length - 2 && h > TERRAIN_STOPS[i + 1][0]) i++;
+  const [h0, c0] = TERRAIN_STOPS[i];
+  const [h1, c1] = TERRAIN_STOPS[i + 1];
+  const f = THREE.MathUtils.clamp((h - h0) / Math.max(1, h1 - h0), 0, 1);
+  out.copy(c0).lerp(c1, f);
+  const steep = THREE.MathUtils.clamp((slope - 28) / 30, 0, 1);
+  out.lerp(ROCK_DARK, steep * 0.35);
+  if (h > 5200 && slope < 25) out.lerp(new THREE.Color('#ffffff'), 0.15);
+  return out;
+}
+
 init();
 
 async function init() {
@@ -117,6 +142,17 @@ function buildScene(heights, slopes) {
   scene.fog = new THREE.FogExp2('#070b10', 0.0065);
   state.scene = scene;
 
+  const sky = new THREE.Mesh(
+    new THREE.SphereGeometry(190, 32, 16),
+    new THREE.ShaderMaterial({
+      side: THREE.BackSide,
+      uniforms: { top: { value: new THREE.Color('#04070c') }, horizon: { value: new THREE.Color('#182b3a') } },
+      vertexShader: 'varying vec3 vP; void main(){ vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
+      fragmentShader: 'varying vec3 vP; uniform vec3 top; uniform vec3 horizon; void main(){ float h = clamp(normalize(vP).y*1.8+0.25,0.0,1.0); gl_FragColor = vec4(mix(horizon, top, h),1.0); }',
+    })
+  );
+  scene.add(sky);
+
   const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 300);
   camera.position.set(38, 26, 38);
   state.camera = camera;
@@ -162,10 +198,9 @@ function buildScene(heights, slopes) {
       positions[idx * 3 + 1] = y;
       positions[idx * 3 + 2] = z;
       const t = THREE.MathUtils.clamp((h - zmin) / (zmax - zmin), 0, 1);
-      if (t < 0.5) c.copy(COLORS.terrainLow).lerp(COLORS.terrainMid, t / 0.5);
-      else c.copy(COLORS.terrainMid).lerp(COLORS.terrainHigh, (t - 0.5) / 0.5);
-      const sl = THREE.MathUtils.clamp((slopes[idx] || 0) / 55, 0, 1);
-      c.lerp(COLORS.steep, Math.min(0.35, sl * 0.35));
+      terrainColor(c, h, slopes[idx] || 0);
+      const band = 0.965 + 0.035 * Math.sin((h - 1600) / 180 * Math.PI);
+      c.multiplyScalar(band);
       colors[idx * 3] = c.r; colors[idx * 3 + 1] = c.g; colors[idx * 3 + 2] = c.b;
     }
   }
@@ -356,13 +391,25 @@ function buildWarningRings() {
 }
 
 function buildLabels() {
-  state.labels = state.sites.map(s => {
+  const entries = [];
+  for (const s of state.sites) {
+    const sub = s.kind === 'event' ? '约 5200 m · 近似' : s.kind === 'outlet' ? '海拔 1621 m' : '海拔 5614 m';
+    entries.push({ name: s.name.replace('（近似）', '（近似）'), sub, kind: s.kind, importance: s.kind === 'event' ? 5 : s.kind === 'outlet' ? 4 : 3, x: s.x, z: s.z, y: s.y });
+  }
+  if (state.glacierPoints?.length) {
+    let gx = 0, gz = 0;
+    for (const p of state.glacierPoints) { gx += p.x; gz += p.z; }
+    gx /= state.glacierPoints.length; gz /= state.glacierPoints.length;
+    entries.push({ name: '冰川源区', sub: 'TPDC-04 mask', kind: 'glacier', importance: 2, x: gx, z: gz, y: 5200 });
+  }
+
+  state.labels = entries.map((e) => {
     const el = document.createElement('div');
-    el.className = `label ${s.kind}`;
-    el.textContent = s.name;
+    el.className = `label ${e.kind}`;
+    el.innerHTML = `${e.name}<span class="sub">${e.sub}</span>`;
     labelLayer.appendChild(el);
-    const pos = new THREE.Vector3(s.x, Math.max(baseY(s.y), terrainYAt(s.x, s.z)) + 1.15, s.z);
-    return { el, pos, kind: s.kind, site: s };
+    const pos = new THREE.Vector3(e.x, Math.max(baseY(e.y), terrainYAt(e.x, e.z)) + 1.15, e.z);
+    return { el, pos, kind: e.kind, importance: e.importance };
   });
 }
 
@@ -370,20 +417,47 @@ function updateLabels() {
   if (!state.labels.length) return;
   const v = new THREE.Vector3();
   const show = $('layer-labels').checked;
+  const items = [];
   for (const l of state.labels) {
     if (!show) { l.el.style.display = 'none'; continue; }
     v.copy(l.pos).project(state.camera);
     const inFront = v.z < 1 && v.z > -1;
     const x = (v.x * 0.5 + 0.5) * innerWidth;
     const y = (-v.y * 0.5 + 0.5) * innerHeight;
-    const visible = inFront && x > 0 && x < innerWidth && y > 0 && y < innerHeight;
-    l.el.style.display = visible ? 'block' : 'none';
-    if (visible) {
-      l.el.style.left = `${x}px`;
-      l.el.style.top = `${y}px`;
-      l.el.style.opacity = String(THREE.MathUtils.clamp(1.2 - v.z, 0.2, 1));
-    }
+    const visible = inFront && x > 80 && x < innerWidth - 80 && y > 80 && y < innerHeight - 130;
+    if (!visible) { l.el.style.display = 'none'; continue; }
+    l.el.style.display = 'block';
+    l.el.style.left = `${x}px`;
+    l.el.style.top = `${y}px`;
+    l.el.style.opacity = String(THREE.MathUtils.clamp(1.2 - v.z, 0.3, 1));
+    const w = l.el.offsetWidth || 120, h = l.el.offsetHeight || 34;
+    items.push({ l, x, y, w, h });
   }
+  const shown = [];
+  items.sort((a, b) => b.l.importance - a.l.importance);
+  for (const it of items) {
+    const rect = { x: it.x - it.w / 2, y: it.y - it.h * 1.35, w: it.w, h: it.h };
+    const hit = shown.some(r => !(rect.x + rect.w < r.x - 5 || rect.x > r.x + r.w + 5 || rect.y + rect.h < r.y - 5 || rect.y > r.y + r.h + 5));
+    if (hit) { it.l.el.style.display = 'none'; continue; }
+    shown.push(rect);
+    it.l.el.style.display = 'block';
+  }
+}
+
+function updateScaleCompass() {
+  if (!state.controls) return;
+  const target = state.controls.target;
+  const a = target.clone().project(state.camera);
+  const b = target.clone().add(new THREE.Vector3(10, 0, 0)).project(state.camera);
+  const w = Math.abs((b.x - a.x) * innerWidth * 0.5);
+  const bar = $('scalebar').querySelector('.bar');
+  bar.style.width = `${Math.max(40, Math.min(220, w))}px`;
+  const northA = target.clone().project(state.camera);
+  const northB = target.clone().add(new THREE.Vector3(0, 0, -10)).project(state.camera);
+  const dx = (northB.x - northA.x) * innerWidth * 0.5;
+  const dy = -(northB.y - northA.y) * innerHeight * 0.5;
+  const angle = Math.atan2(dy, dx) + Math.PI / 2;
+  $('compass').querySelector('.needle').style.transform = `rotate(${angle}rad)`;
 }
 
 function buildUI() {
@@ -541,6 +615,7 @@ function animate(now = performance.now()) {
   }
   state.controls.update();
   updateLabels();
+  updateScaleCompass();
   if (state.warningGroup) state.warningGroup.children.forEach((r, i) => {
     r.material.opacity = 0.35 + 0.2 * Math.sin(now / 600 + i);
   });

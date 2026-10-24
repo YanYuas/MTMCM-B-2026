@@ -77,9 +77,13 @@ def build_corridor(ds: int = 1, half_width_km: float = 1.5, dx: float = 30.0) ->
     # source: one cross-row of 56 central cells, area ~50,400 m2
     center = n_cells // 2
     source = np.zeros_like(mask)
-    n_src = max(4, int(round(50000.0 / (dx * dx))))
-    half = n_src // 2
-    source[1, max(0, center - half) : min(n_cells, center + half + 1)] = True
+    target_cells = max(6, int(round(50000.0 / (dx * dx))))
+    n_cols = min(n_cells, max(3, int(round(math.sqrt(target_cells)))))
+    n_rows = max(1, int(math.ceil(target_cells / n_cols)))
+    c0 = max(0, center - n_cols // 2)
+    c1 = min(n_cells, c0 + n_cols)
+    r1 = min(mask.shape[0], n_rows)
+    source[0:r1, c0:c1] = True
     return Corridor(b=b, x=X, z=Z, s_km=s_km, n_km=n_km, dx=dx, source=source, mask=mask)
 
 

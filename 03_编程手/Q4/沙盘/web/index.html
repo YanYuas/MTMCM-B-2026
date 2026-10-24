@@ -18,6 +18,38 @@
   <div id="app"></div>
   <div id="labels"></div>
 
+  <aside id="right-panel">
+    <section class="card">
+      <h3>图例</h3>
+      <div class="legend-row"><span>高程</span><div class="ramp elev"></div></div>
+      <div class="legend-scale"><span>1.6 km</span><span>4.0</span><span>6.2 km</span></div>
+      <div class="legend-row"><span>水深</span><div class="ramp depth"></div></div>
+      <div class="legend-scale"><span>0</span><span>5</span><span>15 m</span></div>
+      <div class="legend-row"><span>流速</span><div class="ramp speed"></div></div>
+      <div class="legend-scale"><span>0</span><span>10</span><span>20 m/s</span></div>
+      <p class="hint">灾害面宽度为视觉放大；不是实测淹没宽度。</p>
+    </section>
+    <section class="card">
+      <h3>模型状态</h3>
+      <div class="kv"><span>Q4 情景</span><b>S5 · 60 m</b></div>
+      <div class="kv"><span>μ / ξ</span><b>0.05 / 300</b></div>
+      <div class="kv"><span>网格</span><b>60 m × 735</b></div>
+      <div class="kv"><span>验证</span><b class="bad">未过 2026 量级</b></div>
+      <p class="hint">2D HLL/Voellmy 首轮；网格收敛/2026 量级一致性未通过。</p>
+    </section>
+    <section class="card">
+      <h3>数据</h3>
+      <div class="kv"><span>地形</span><b>30 m DEM</b></div>
+      <div class="kv"><span>主沟</span><b>49.622 km</b></div>
+      <div class="kv"><span>冰川</span><b>TPDC-04</b></div>
+      <div class="kv"><span>坐标</span><b>85.19–85.69E</b></div>
+    </section>
+  </aside>
+
+  <div id="compass"><span>N</span><div class="needle">▲</div></div>
+  <div id="scalebar"><div class="bar"></div><span id="scale-label">10 km</span></div>
+  <div id="status-strip">情景回放 · 非预报 · 垂直夸大 2.2×</div>
+
   <div id="loading">
     <div class="loader"></div>
     <div>正在加载地形与沟道数据…</div>
