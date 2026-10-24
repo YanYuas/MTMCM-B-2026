@@ -34,6 +34,9 @@
       <div class="kv"><span>Q4 情景</span><b>S5 · 60 m</b></div>
       <div class="kv"><span>μ / ξ</span><b>0.05 / 300</b></div>
       <div class="kv"><span>网格</span><b>60 m × 735</b></div>
+      <div class="kv"><span>源区</span><b>5e4 m² · h0 5.2 m</b></div>
+      <div class="kv"><span>质量守恒</span><b>~1e-15</b></div>
+      <div class="kv"><span>Ritter</span><b>3.7%</b></div>
       <div class="kv"><span>验证</span><b class="bad">未过 2026 量级</b></div>
       <p class="hint">2D HLL/Voellmy 首轮；网格收敛/2026 量级一致性未通过。</p>
     </section>
@@ -79,6 +82,11 @@
     </section>
 
     <section class="card">
+      <h3>Q3 条件预警</h3>
+      <div id="q3-panel" class="q3-panel">加载中…</div>
+    </section>
+
+    <section class="card">
       <h3>释放参数</h3>
       <label>释放体积 V0 <output id="v0-out">3.0e5 m³</output></label>
       <input id="v0" type="range" min="1" max="6" step="0.1" value="3" />
@@ -96,11 +104,6 @@
       <label class="check"><input type="checkbox" id="layer-glacier" checked /> 冰川源区</label>
       <label class="check"><input type="checkbox" id="layer-labels" checked /> 标签</label>
       <label class="check"><input type="checkbox" id="layer-warning" checked /> 预警圈</label>
-    </section>
-
-    <section class="card">
-      <h3>Q3 条件预警</h3>
-      <div id="q3-panel" class="q3-panel">加载中…</div>
     </section>
   </aside>
 

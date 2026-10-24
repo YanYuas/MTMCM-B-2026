@@ -10,6 +10,7 @@ const state = {
   channel: null,
   sites: [],
   q3: null,
+  q3branch: null,
   time: 0,
   duration: 1800,
   playing: false,
@@ -73,11 +74,12 @@ init();
 
 async function init() {
   try {
-    const [manifest, channel, sites, q3, glacier, q4] = await Promise.all([
+    const [manifest, channel, sites, q3, q3branch, glacier, q4] = await Promise.all([
       fetchJSON('./data/manifest.json'),
       fetchJSON('./data/channel.json'),
       fetchJSON('./data/sites.json'),
       fetchJSON('./data/q3.json'),
+      fetchJSON('./data/q3_branch.json').catch(() => null),
       fetchJSON('./data/glacier_points.json'),
       fetchJSON('./data/q4_frames.json').catch(() => null),
     ]);
@@ -85,6 +87,7 @@ async function init() {
     state.channel = channel;
     state.sites = sites;
     state.q3 = q3;
+    state.q3branch = q3branch;
     state.glacierPoints = glacier;
     state.q4 = q4;
 
@@ -516,6 +519,7 @@ function buildUI() {
     $('scenario-note').textContent = state.useQ4
       ? '2026-08-26 10:30；Q4 60 m 基线帧（S5，μ=0.05）；3D 地形为 30 m DEM。'
       : '2026-08-26 10:30；快速情景预览；滑杆生效，不是 Q4 验证结果。';
+    updateStatusStrip();
     updateHazard();
   };
   for (const [id, key] of [['layer-hazard', 'hazard'], ['layer-channel', 'channel'], ['layer-glacier', 'glacier'], ['layer-warning', 'warning']]) {
@@ -532,15 +536,29 @@ function buildUI() {
   state.profileCtx = $('profile').getContext('2d');
 }
 
+function updateStatusStrip() {
+  const el = $('status-strip');
+  if (!el) return;
+  if (state.scenario === '2025') {
+    el.textContent = '2025 GLOF · 条件情景 · 非预报 · 垂直夸大 2.2×';
+  } else if (state.useQ4 && state.q4) {
+    el.textContent = 'Q4 S5 60 m · μ=0.05 · 未通过 2026 量级 · 垂直夸大 2.2×';
+  } else {
+    el.textContent = '快速预览 · 非 Q4 验证 · 垂直夸大 2.2×';
+  }
+}
+
 function switchToPreview() {
   if (!state.useQ4) return;
   state.useQ4 = false;
   const box = $('use-q4');
   if (box) box.checked = false;
   $('scenario-note').textContent = '2026-08-26 10:30；快速情景预览；滑杆生效，不是 Q4 验证结果。';
+  updateStatusStrip();
 }
 
-function setScenario(id, announce = true) {  state.scenario = id;
+function setScenario(id, announce = true) {
+  state.scenario = id;
   document.querySelectorAll('#scenario-seg button').forEach(b => b.classList.toggle('active', b.dataset.scenario === id));
   if (id === '2026') {
     const m = state.q4?.meta || {};
@@ -571,6 +589,7 @@ function setScenario(id, announce = true) {  state.scenario = id;
   state.playing = false;
   $('btn-play').textContent = '▶ 播放';
   updateQ3Panel();
+  updateStatusStrip();
   updateTime();
   if (announce) toast(id === '2026' ? '已切到 2026 冰崩链情景' : '已切到 2025 GLOF 情景');
 }
@@ -581,19 +600,19 @@ function updateQ3Panel() {
   const event = Number(state.scenario);
   const rows = state.q3.warning.filter(r => Number(r.event) === event);
   const main = rows.find(r => Number(r.H_warn_h) === 6 && Number(r.p_warn) === 0.9) || rows[0];
-  const interval = state.q3.interval.filter(r => Number(r.event) === event && r.quantity === 'T_trigger_h')[0];
   const caseRow = state.q3.cases.find(r => Number(r.event) === event);
+  const branchRows = (state.q3branch?.rows || []).filter(r => Number(r.event) === event);
+  const dominant = branchRows.slice().sort((a, b) => b.n - a.n)[0];
+  const rain = branchRows.find(r => r.branch === 'rain');
   const fmt = (v, d = 2) => (v === null || v === undefined || Number.isNaN(Number(v))) ? 'NA' : Number(v).toFixed(d);
   el.innerHTML = `
     <div class="row"><span>事件</span><b>${escapeHtml(String(caseRow?.event_time_bjt || event))}</b></div>
-    <div class="row"><span>主分支</span><b>${escapeHtml(String(caseRow?.dominant_branch || 'NA'))}</b></div>
-    <div class="row"><span>站点 T_rain</span><b>${caseRow && caseRow.T_rain_station_h ? escapeHtml(String(caseRow.T_rain_station_h)) : '∞'}</b></div>
-    <div class="row"><span>T_trigger 中位</span><b>${fmt(interval?.median, 1)} h</b></div>
-    <div class="row"><span>95% 区间</span><b>${fmt(interval?.q025, 1)}–${interval?.q975 ? fmt(interval.q975, 1) : '∞'} h</b></div>
-    <div class="row"><span>p_inf</span><b>${fmt(interval?.p_inf, 2)}</b></div>
+    <div class="row"><span>主导分支</span><b>${escapeHtml(String(dominant?.branch || caseRow?.dominant_branch || 'NA'))} · ${dominant ? (dominant.p * 100).toFixed(1) : 'NA'}%</b></div>
+    <div class="row"><span>分支条件区间</span><b>${fmt(dominant?.q025, 1)}–${fmt(dominant?.q975, 1)} h</b></div>
+    <div class="row"><span>P(rain first)</span><b>${rain ? (rain.p * 100).toFixed(2) : 'NA'}%</b></div>
     <div class="row"><span>T_warn</span><b class="warn">${escapeHtml(String(main?.T_warn_bjt || '无预警'))}</b></div>
     <div class="row"><span>lead 中位</span><b class="warn">${fmt(main?.lead_median_h, 2)} h</b></div>
-    <p class="hint">Q3 是条件预测区间；2026 集合有 4% 降雨分支，lead 下尾可为负。</p>
+    <p class="hint">主结果用“主导分支条件区间”，不展示混合区间；Q3 是预测区间，不是概率。</p>
   `;
 }
 

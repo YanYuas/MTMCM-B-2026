@@ -108,7 +108,7 @@ input[type="range"] { width: 100%; accent-color: var(--cyan); }
   transform: translateY(3px); transform-origin: 50% 65%;
 }
 #scalebar {
-  position: fixed; right: 20px; bottom: 215px; z-index: 9; color: var(--muted); font-size: 10px;
+  position: fixed; right: 274px; bottom: 215px; z-index: 9; color: var(--muted); font-size: 10px;
   display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
 }
 #scalebar .bar { height: 4px; border-left: 1px solid var(--text); border-right: 1px solid var(--text); border-bottom: 1px solid var(--text); width: 120px; }
