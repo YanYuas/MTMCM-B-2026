@@ -1,7 +1,8 @@
 {
-  "batch": "6",
-  "generated_at": "2026-10-24T11:59:56",
+  "batch": "7",
+  "generated_at": "2026-10-24T12:08:35",
   "datasets": [
+    "事件时间/降雨触发/历史灾情目录",
     "Q2 空间易发性基线（WOE）",
     "TPDC-06 历史沟域 × DEM/坡度/汇流/土地覆盖",
     "TPDC-01 逐小时综合观测",
@@ -13,6 +14,31 @@
     "TPDC-07 DEM 派生地形（核心沟谷）"
   ],
   "outputs": [
+    {
+      "path": "data/processed/event_catalog/event_catalog.csv",
+      "bytes": 2240,
+      "sha256": "4d8506d8cc3505b2e8003bedfc27a7ea0f983df025f31f29f6239962cb55a0f5"
+    },
+    {
+      "path": "data/processed/event_catalog/event_rainfall_windows.csv",
+      "bytes": 4116,
+      "sha256": "1d2807065910cf9838de06c5eec983cf1aa16dbf766d9e02b1af89c6919a6372"
+    },
+    {
+      "path": "data/processed/event_catalog/event_rainfall_hourly.csv.gz",
+      "bytes": 2573,
+      "sha256": "7a3854276644a835350a8c07c183ca129ef1d16c0af9cbfc7c1945bae3b657d0"
+    },
+    {
+      "path": "data/processed/event_catalog/evidence_register.csv",
+      "bytes": 1308,
+      "sha256": "670ed5322d7812878d1821535d50a99cf0f88559c77f4eebfefafdb6f8f3f5b6"
+    },
+    {
+      "path": "data/processed/event_catalog/summary.json",
+      "bytes": 916,
+      "sha256": "83871e1262508feb9ea45645f8c7aa06eab9b3c723e16ca220e55997594ef6d1"
+    },
     {
       "path": "data/processed/q2_susceptibility/q2_susceptibility_score.tif",
       "bytes": 4636190,

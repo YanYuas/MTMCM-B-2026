@@ -1,0 +1,28 @@
+{
+  "events_total": 3,
+  "debris_flow_events": 2,
+  "precondition_events": 1,
+  "event_ids": [
+    "E20260826",
+    "E20250708",
+    "E20150425"
+  ],
+  "rainfall_rows": 19,
+  "key_finding": "2026 与 2025 两次事件均为冰崩/冰湖溃决触发，不是降雨触发；站点/再分析 72 h 降水仅 0–8.5 mm，远低于暴雨阈值。",
+  "2026_72h": {
+    "station_mm": 0.0,
+    "open_meteo_mm": 0.7,
+    "nasa_mm": 8.46
+  },
+  "2025_72h": {
+    "station_mm": 0.0,
+    "open_meteo_mm": 0.3,
+    "open_meteo_120h_mm": 11.8
+  },
+  "notes": [
+    "历史灾情目录只收有公开来源的事件；未把 TPDC-06 的 84 个沟域当事件",
+    "2026 事件的直接触发是高位冰崩，降雨只是背景/后续救援风险",
+    "NASA POWER 时间标准为 LST，不能与 UTC+8 直接逐小时对齐",
+    "事件伤亡数字为截至报道时点，不作为模型输入"
+  ]
+}

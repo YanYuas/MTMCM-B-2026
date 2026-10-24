@@ -960,8 +960,8 @@ def build_parser() -> argparse.ArgumentParser:
     p_existing = sub.add_parser("existing", help="审计赛题已有 8 组附件的格式/时间/空间/质量")
     p_existing.set_defaults(func=cmd_existing)
 
-    p_process = sub.add_parser("process", help="生成 data/processed 基线（batch 1-6/all）")
-    p_process.add_argument("--batch", default="1", choices=["1", "2", "3", "4", "5", "6", "all"], help="批次；默认 1")
+    p_process = sub.add_parser("process", help="生成 data/processed 基线（batch 1-7/all）")
+    p_process.add_argument("--batch", default="1", choices=["1", "2", "3", "4", "5", "6", "7", "all"], help="批次；默认 1")
     p_process.set_defaults(func=cmd_process)
 
     p_verify = sub.add_parser("verify", help="核验 manifest、raw 文件和本地附件")

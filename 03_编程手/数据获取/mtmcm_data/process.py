@@ -612,8 +612,8 @@ def process_tpdc07(store: Store) -> dict[str, Any]:
 def build_processed(store: Store, *, batch: str = "1") -> dict[str, Any]:
     if pd is None or np is None or Image is None or TiffImagePlugin is None:
         raise RuntimeError("缺少 pandas/numpy/Pillow；请安装 requirements.txt")
-    if batch not in {"1", "2", "3", "4", "5", "6", "all"}:
-        raise ValueError("batch 只能是 1–6 或 all")
+    if batch not in {"1", "2", "3", "4", "5", "6", "7", "all"}:
+        raise ValueError("batch 只能是 1–7 或 all")
     results: list[dict[str, Any]] = []
     if batch in {"1", "all"}:
         results.extend([process_tpdc01(store), process_tpdc02(store), process_tpdc06(store)])
@@ -635,6 +635,10 @@ def build_processed(store: Store, *, batch: str = "1") -> dict[str, Any]:
         from .susceptibility import process_susceptibility
 
         results.append(process_susceptibility(store))
+    if batch in {"7", "all"}:
+        from .events import process_event_catalog
+
+        results.append(process_event_catalog(store))
     processed = store.data_dir / "processed"
     all_datasets: list[str] = []
     all_outputs: list[dict[str, Any]] = []
@@ -660,7 +664,7 @@ def build_processed(store: Store, *, batch: str = "1") -> dict[str, Any]:
     readme = [
         "# data/processed 基线",
         "",
-        "> 由 `python -m mtmcm_data process --batch 1-6/all` 生成；原始附件只读。",
+        "> 由 `python -m mtmcm_data process --batch 1-7/all` 生成；原始附件只读。",
         "",
         "## 第一批（batch 1）",
         "",
@@ -709,6 +713,14 @@ def build_processed(store: Store, *, batch: str = "1") -> dict[str, Any]:
         "- `q2_susceptibility/q2_gully_scores.csv`：84 个沟域的均分与背景百分位；",
         "- `q2_susceptibility/summary.json`：全局/空间块 AUC、沟域百分位。",
         "",
+        "## 第七批（batch 7）",
+        "",
+        "- `event_catalog/event_catalog.csv`：已确认事件（2026-08-26、2025-07-08、2015 地震背景）；",
+        "- `event_catalog/event_rainfall_windows.csv`：站点/Open-Meteo/NASA 的事件窗口降水；",
+        "- `event_catalog/event_rainfall_hourly.csv.gz`：事件窗口逐小时降水；",
+        "- `event_catalog/evidence_register.csv`：证据登记（来源/访问日期/置信度）；",
+        "- `event_catalog/event_catalog.md`：事件目录与“非降雨触发”结论。",
+        "",
         "## 关键约束",
         "",
         "- TPDC-01 的 `9999.9`/`QC=8` 已标缺失，未补零；",
@@ -717,6 +729,7 @@ def build_processed(store: Store, *, batch: str = "1") -> dict[str, Any]:
         "- TPDC-05 的 0 是 nodata，不是类别；1–10 无官方图例；",
         "- batch 2 的 D8 未填洼；batch 3 主流路用填洼+epsilon D8，两者不能混用；",
         "- batch 6 的 WOE 是相对易发性，不是概率；空间块 AUC 较弱，不能外推；",
+        "- batch 7 只确认 2 个泥石流事件；2026/2025 均为冰崩/冰湖溃决触发，不是降雨触发；",
         "- 原始附件只读；派生层可由脚本重建。",
         "",
         "## 复现",

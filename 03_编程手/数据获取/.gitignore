@@ -1,5 +1,8 @@
 # 本工具产生的数据、缓存、日志不入库；配置和代码入库。
 data/raw/*
+# 事件目录的原始 API 响应很小，保留以便 batch 7 可复现。
+!data/raw/event_catalog/
+!data/raw/event_catalog/**
 data/cache/*
 data/tables/*
 data/runs/*

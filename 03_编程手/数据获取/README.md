@@ -326,9 +326,11 @@ POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
 
 报告还给出 7 步治理流水线（登记冻结→格式审计→时空基准→缺失/异常→质量标记→派生层→冻结交接）和“先内后外”的外部补充准入条件。
 
-### 7.5 processed 基线（`process --batch 1-6/all`）
+当前总体治理状态与四问“能写/不能写”见 [`data/reports/data_governance_status.md`](data/reports/data_governance_status.md)。
 
-`--batch 1` 气象/灾点长表；`--batch 2` 土地覆盖/DEM 派生；`--batch 3` 主流路纵剖面；`--batch 4` 历史沟域空间叠加；`--batch 5` 主流路阈值/填洼敏感性；`--batch 6` Q2 WOE 易发性基线；`--batch all` 全部。只做已有数据的“可建模基线”，不掺外部数据。
+### 7.5 processed 基线（`process --batch 1-7/all`）
+
+`--batch 1` 气象/灾点长表；`--batch 2` 土地覆盖/DEM 派生；`--batch 3` 主流路纵剖面；`--batch 4` 历史沟域空间叠加；`--batch 5` 主流路阈值/填洼敏感性；`--batch 6` Q2 WOE 易发性基线；`--batch 7` 事件时间/降雨/历史灾情目录；`--batch all` 全部。只做已有数据的“可建模基线”，不掺外部数据。
 
 **第一批（TPDC-01/02/06）**
 
@@ -384,7 +386,16 @@ POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
 | `q2_susceptibility/` | `q2_gully_scores.csv` | 23/84 在 DEM 内；沟域均分中位百分位 **0.815** |
 | `q2_susceptibility/` | `summary.json` | 2×2 空间块 AUC 仅 **0.528 / 0.650**（两块无正样本） |
 
-关键约束：TPDC-01 的 `9999.9`/`QC=8` 已标缺失、不补零；TPDC-02 的 2025 只有 214 天；TPDC-06 的 `解译Time`/`影像Time` 不是事件发生时间；TPDC-05 的 0 是 nodata，不是类别；batch 2 的 D8 未填洼（4,888 sinks），batch 3/5 主流路用填洼+epsilon D8，两者不能混用；batch 6 的 WOE 是**相对易发性，不是概率**，空间块 AUC 弱，23 个沟域不是 23 次事件。
+**第七批（事件时间/降雨/历史灾情）**
+
+| 目录 | 内容 | 关键值 |
+|---|---|---|
+| `event_catalog/` | `event_catalog.csv`：已确认事件 | **2 个泥石流事件 + 1 个地震背景** |
+| `event_catalog/` | `event_rainfall_windows.csv`：站点/Open-Meteo/NASA 事件窗口降水 | 2026 72h：**0.0 / 0.7 / 8.46 mm** |
+| `event_catalog/` | `event_rainfall_hourly.csv.gz` + `evidence_register.csv` | 逐小时降水 + 证据登记 |
+| `event_catalog/` | `event_catalog.md` | “非降雨触发”结论与来源 |
+
+关键约束：TPDC-01 的 `9999.9`/`QC=8` 已标缺失、不补零；TPDC-02 的 2025 只有 214 天；TPDC-06 的 `解译Time`/`影像Time` 不是事件发生时间；TPDC-05 的 0 是 nodata，不是类别；batch 2 的 D8 未填洼（4,888 sinks），batch 3/5 主流路用填洼+epsilon D8，两者不能混用；batch 6 的 WOE 是**相对易发性，不是概率**，空间块 AUC 弱；batch 7 只确认 2 个泥石流事件，**2026/2025 均为冰崩/冰湖溃决触发，不是降雨触发**。
 
 ---
 
