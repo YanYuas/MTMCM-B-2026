@@ -8,7 +8,7 @@ tpdc_06_disaster_points,TPDC-06 吉隆县泥石流灾害区历史灾点数据,tp
 tpdc_07_dem,TPDC-07 2026-08-26 吉隆县泥石流灾害区 DEM 数据,tpdc_dataset,Q2、Q4,OK,2026-10-24T02:38:15+00:00,https://www.tpdc.ac.cn/zh-hans/data/88b5ab22-19a1-480f-bcdc-cec41776ab46,,有，10.38 MB,,约 30 m DEM；获取时点未在附件名中说明，不能预设为灾前地形。,
 tpdc_08_population,TPDC-08 吉隆县第七次人口普查数据,tpdc_dataset,Q4,OK,2026-10-24T02:38:25+00:00,https://www.tpdc.ac.cn/zh-hans/data/8662c472-43d6-4e92-bff8-e26923970642,,有，0.04 MB,,"县级多边形，合计 17,536 人；不含居民点，不能直接细化局部暴露。",
 mnr_debris_conditions,自然资源部 地球科普：泥石流形成的基本条件,article,Q1、Q2,OK,2026-10-24T02:42:41+00:00,https://www.mnr.gov.cn/zt/hd/dqr/43earthday/dqkp/201203/t20120316_2057013.html,,未找到,,官方背景页，用来支撑“地形—物质—水源”三条件，不作为观测数据。,
-baike_debris_flow,百度百科：泥石流灾害,article,背景,BLOCKED,2026-10-24T02:43:06+00:00,https://baike.baidu.com/item/%E6%B3%A5%E7%9F%B3%E6%B5%81%E7%81%BE%E5%AE%B3/9911941,,,,百度安全验证 403；不绕过反爬，只保留引用链接并记录失败证据，正文背景以自然资源部页面为准。,离线模式且缓存未命中
+baike_debris_flow,百度百科：泥石流灾害,article,背景,BLOCKED,2026-10-24T02:45:06+00:00,https://baike.baidu.com/item/%E6%B3%A5%E7%9F%B3%E6%B5%81%E7%81%BE%E5%AE%B3/9911941,,,,百度安全验证 403；不绕过反爬，只保留引用链接并记录失败证据，正文背景以自然资源部页面为准。,robots.txt 禁止抓取
 open_meteo_archive,Open-Meteo 历史天气（ERA5 再分析）,api_json,Q1、Q2、Q3,OK,2026-10-24T02:38:37+00:00,https://archive-api.open-meteo.com/v1/archive,,未找到,216,公开 API，按 API 条款使用；网格点海拔约 4138 m，不能替代站点实测。,
 open_meteo_forecast,Open-Meteo 天气预报（业务预报接口）,api_json,Q3,OK,2026-10-24T02:38:38+00:00,https://api.open-meteo.com/v1/forecast,,未找到,72,用于演示“未来 72 h”预报接口；历史事件复盘不要把它当实测。,
 nasa_power,NASA POWER 逐小时气象（MERRA-2 / POWER）,api_json,Q1、Q3,OK,2026-10-24T02:38:40+00:00,https://power.larc.nasa.gov/api/temporal/hourly/point,,未找到,216,再分析交叉核对；API 返回的网格海拔约 4995 m，与站点 4140 m 不同，必须标注。,
