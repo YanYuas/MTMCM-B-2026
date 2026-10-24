@@ -1,0 +1,4 @@
+tools/
+web/node_modules/
+web/screenshot*.png
+npm-debug.log*

@@ -1,0 +1,13 @@
+{
+  "name": "jilong-3d-sandbox",
+  "private": true,
+  "version": "0.1.0",
+  "description": "吉隆沟 3D 推演沙盘 v0.1：地形/沟道/冰川/Q3 预警/情景预览",
+  "type": "module",
+  "scripts": {
+    "serve": "python -m http.server 8765 --bind 127.0.0.1"
+  },
+  "dependencies": {
+    "three": "^0.186.1"
+  }
+}

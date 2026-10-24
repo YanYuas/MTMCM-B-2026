@@ -1,0 +1,213 @@
+{
+  "warning": [
+    {
+      "event": 2026,
+      "H_warn_h": 6,
+      "p_warn": 0.9,
+      "T_warn_h": 69.0,
+      "T_warn_bjt": "2026-08-26 07:00:00",
+      "lead_median_h": 3.648235036256573,
+      "lead_q025_h": -41.14092347341394,
+      "lead_q975_h": 5.779955724937754,
+      "n_negative_lead": 79.0
+    },
+    {
+      "event": 2026,
+      "H_warn_h": 1,
+      "p_warn": 0.9,
+      "T_warn_h": null,
+      "T_warn_bjt": null,
+      "lead_median_h": null,
+      "lead_q025_h": null,
+      "lead_q975_h": null,
+      "n_negative_lead": null
+    },
+    {
+      "event": 2026,
+      "H_warn_h": 3,
+      "p_warn": 0.9,
+      "T_warn_h": 72.0,
+      "T_warn_bjt": "2026-08-26 10:00:00",
+      "lead_median_h": 0.6482350362565725,
+      "lead_q025_h": -44.14092347341394,
+      "lead_q975_h": 2.779955724937754,
+      "n_negative_lead": 610.0
+    },
+    {
+      "event": 2026,
+      "H_warn_h": 12,
+      "p_warn": 0.9,
+      "T_warn_h": 63.0,
+      "T_warn_bjt": "2026-08-26 01:00:00",
+      "lead_median_h": 9.648235036256573,
+      "lead_q025_h": -35.14092347341394,
+      "lead_q975_h": 11.779955724937754,
+      "n_negative_lead": 79.0
+    },
+    {
+      "event": 2026,
+      "H_warn_h": 6,
+      "p_warn": 0.8,
+      "T_warn_h": 68.0,
+      "T_warn_bjt": "2026-08-26 06:00:00",
+      "lead_median_h": 4.6482350362565725,
+      "lead_q025_h": -40.14092347341394,
+      "lead_q975_h": 6.779955724937754,
+      "n_negative_lead": 79.0
+    },
+    {
+      "event": 2026,
+      "H_warn_h": 6,
+      "p_warn": 0.95,
+      "T_warn_h": 69.0,
+      "T_warn_bjt": "2026-08-26 07:00:00",
+      "lead_median_h": 3.648235036256573,
+      "lead_q025_h": -41.14092347341394,
+      "lead_q975_h": 5.779955724937754,
+      "n_negative_lead": 79.0
+    },
+    {
+      "event": 2025,
+      "H_warn_h": 6,
+      "p_warn": 0.9,
+      "T_warn_h": 68.0,
+      "T_warn_bjt": "2025-07-08 01:00:00",
+      "lead_median_h": 3.6528689874951255,
+      "lead_q025_h": 0.0198400612508528,
+      "lead_q975_h": 6.2737258509848255,
+      "n_negative_lead": 49.0
+    },
+    {
+      "event": 2025,
+      "H_warn_h": 1,
+      "p_warn": 0.9,
+      "T_warn_h": null,
+      "T_warn_bjt": null,
+      "lead_median_h": null,
+      "lead_q025_h": null,
+      "lead_q975_h": null,
+      "n_negative_lead": null
+    },
+    {
+      "event": 2025,
+      "H_warn_h": 3,
+      "p_warn": 0.9,
+      "T_warn_h": 71.0,
+      "T_warn_bjt": "2025-07-08 04:00:00",
+      "lead_median_h": 0.6528689874951255,
+      "lead_q025_h": -2.9801599387491478,
+      "lead_q975_h": 3.273725850984825,
+      "n_negative_lead": 737.0
+    },
+    {
+      "event": 2025,
+      "H_warn_h": 12,
+      "p_warn": 0.9,
+      "T_warn_h": 62.0,
+      "T_warn_bjt": "2025-07-07 19:00:00",
+      "lead_median_h": 9.652868987495124,
+      "lead_q025_h": 6.019840061250853,
+      "lead_q975_h": 12.273725850984825,
+      "n_negative_lead": 20.0
+    },
+    {
+      "event": 2025,
+      "H_warn_h": 6,
+      "p_warn": 0.8,
+      "T_warn_h": 67.0,
+      "T_warn_bjt": "2025-07-08 00:00:00",
+      "lead_median_h": 4.6528689874951255,
+      "lead_q025_h": 1.019840061250853,
+      "lead_q975_h": 7.2737258509848255,
+      "n_negative_lead": 20.0
+    },
+    {
+      "event": 2025,
+      "H_warn_h": 6,
+      "p_warn": 0.95,
+      "T_warn_h": 68.0,
+      "T_warn_bjt": "2025-07-08 01:00:00",
+      "lead_median_h": 3.6528689874951255,
+      "lead_q025_h": 0.0198400612508528,
+      "lead_q975_h": 6.2737258509848255,
+      "n_negative_lead": 49.0
+    }
+  ],
+  "interval": [
+    {
+      "event": 2026,
+      "quantity": "T_trigger_h",
+      "p_inf": 0.0,
+      "q025": 27.0,
+      "median": 70.90956474130518,
+      "q975": 72.39748750093372,
+      "width_h": 45.39748750093372,
+      "n_finite": 2000,
+      "branch_counts": "{\"ice\": 1921, \"rain\": 79}"
+    },
+    {
+      "event": 2026,
+      "quantity": "T_impact_h",
+      "p_inf": 0.0,
+      "q025": 27.85907652658606,
+      "median": 72.64823503625658,
+      "q975": 74.77995572493775,
+      "width_h": 46.92087919835169,
+      "n_finite": 2000,
+      "branch_counts": "{\"ice\": 1921, \"rain\": 79}"
+    },
+    {
+      "event": 2025,
+      "quantity": "T_trigger_h",
+      "p_inf": 0.0,
+      "q025": 66.72429161261793,
+      "median": 69.86563374941005,
+      "q975": 71.85137221681622,
+      "width_h": 5.127080604198284,
+      "n_finite": 2000,
+      "branch_counts": "{\"glof\": 1980, \"rain\": 20}"
+    },
+    {
+      "event": 2025,
+      "quantity": "T_impact_h",
+      "p_inf": 0.0,
+      "q025": 68.01984006125085,
+      "median": 71.65286898749513,
+      "q975": 74.27372585098483,
+      "width_h": 6.253885789733985,
+      "n_finite": 2000,
+      "branch_counts": "{\"glof\": 1980, \"rain\": 20}"
+    }
+  ],
+  "cases": [
+    {
+      "event": 2026,
+      "event_time_bjt": "2026-08-26 10:30:00",
+      "I_rain_station": 0,
+      "T_rain_station_h": null,
+      "T_ice_h_scenario": "finite (detect−τ)",
+      "T_glof_h_scenario": "∞",
+      "T_trigger_q025_h": 27.0,
+      "T_trigger_median_h": 70.90956474130518,
+      "T_trigger_q975_h": 72.39748750093372,
+      "p_inf": 0.0,
+      "dominant_branch": "ice",
+      "note": "case consistency only; not event-level coverage"
+    },
+    {
+      "event": 2025,
+      "event_time_bjt": "2025-07-08 05:00:00",
+      "I_rain_station": 0,
+      "T_rain_station_h": null,
+      "T_ice_h_scenario": "∞",
+      "T_glof_h_scenario": "finite (detect−τ)",
+      "T_trigger_q025_h": 66.72429161261793,
+      "T_trigger_median_h": 69.86563374941005,
+      "T_trigger_q975_h": 71.85137221681622,
+      "p_inf": 0.0,
+      "dominant_branch": "glof",
+      "note": "case consistency only; not event-level coverage"
+    }
+  ],
+  "note": "Q3 是条件预测区间，不是事件级 95% 覆盖率；2026 有 4% 降雨分支。"
+}
