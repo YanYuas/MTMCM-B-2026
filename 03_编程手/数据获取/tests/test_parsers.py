@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import json
 import unittest
+from datetime import datetime
 from pathlib import Path
 
+from mtmcm_data import audit
 from mtmcm_data.config import Source, load_config
 from mtmcm_data.http import build_url
 from mtmcm_data.manifest import Manifest, ManifestEntry, new_run_id
@@ -107,6 +109,31 @@ class ArticleParserTests(unittest.TestCase):
 
     def test_clean_text_removes_private_use(self):
         self.assertEqual(article.clean_text("a\ue004b\xa0c"), "ab c")
+
+
+class AuditTests(unittest.TestCase):
+    def test_parse_station_time_without_leading_zero(self):
+        parsed = audit.parse_station_time("2026-8-26 10:00")
+        self.assertEqual(parsed, datetime(2026, 8, 26, 10, 0))
+
+    def test_window_stats_skips_missing_sentinel(self):
+        rows = [
+            {"time": datetime(2026, 8, 26, 8), "row": {"Precip(mm)": "0.0"}},
+            {"time": datetime(2026, 8, 26, 9), "row": {"Precip(mm)": "1.5"}},
+            {"time": datetime(2026, 8, 26, 10), "row": {"Precip(mm)": "9999.9"}},
+            {"time": datetime(2026, 8, 26, 11), "row": {"Precip(mm)": "0.5"}},
+        ]
+        stats = audit.window_stats(
+            rows,
+            column="Precip(mm)",
+            start=datetime(2026, 8, 26, 8),
+            end=datetime(2026, 8, 26, 10),
+        )
+        self.assertEqual(stats["slots"], 3)
+        self.assertEqual(stats["valid"], 2)
+        self.assertEqual(stats["missing"], 1)
+        self.assertEqual(stats["sum"], 1.5)
+        self.assertEqual(stats["nonzero_hours"], 1)
 
 
 class ApiParserTests(unittest.TestCase):

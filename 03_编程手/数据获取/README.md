@@ -40,7 +40,10 @@ python -m mtmcm_data fetch all
 # 3) 生成审计报告
 python -m mtmcm_data report
 
-# 4) 核验 raw 文件与本地附件
+# 4) 核对事件前 72 小时站点/再分析降水
+python -m mtmcm_data audit
+
+# 5) 核验 raw 文件与本地附件
 python -m mtmcm_data verify
 ```
 
@@ -217,6 +220,18 @@ GET  /view/metadataView/getGoogleJson?metadataId=<uuid>
 8. **Open-Meteo / NASA POWER**：都是再分析/预报，不是站点实测；两者网格海拔分别约 4138 m 和 4995 m，和站点 4140 m 的差异要在论文里说明。
 9. **Copernicus**：只取产品元数据；返回产品可能只覆盖研究区边缘，使用前要按 `GeoFootprint` 与核心区求交；下载需账号。
 10. **百度百科**：robots/403 阻断，不作为数据证据；背景以自然资源部页面为准。
+
+### 7.1 事件窗口核对（`audit` 命令）
+
+`python -m mtmcm_data audit` 会读取 TPDC-01 的 2026 年 MET 文件、Open-Meteo 历史表和 NASA POWER 表，算事件前 72 小时的降水：
+
+| 来源 | 变量 | 累计 | 非零小时 | 说明 |
+|---|---|---|---|---|
+| TPDC-01 站点 | `Precip(mm)` | **0.00 mm** | 0 | 单点观测，距口岸约 65 km |
+| Open-Meteo（ERA5） | `precipitation` | 0.70 mm | 6 | 再分析网格，海拔约 4138 m |
+| NASA POWER | `PRECTOTCORR` | 8.46 mm | 58 | 再分析网格，海拔约 4995 m |
+
+结论：**站点灾前 72 小时无降水，但再分析网格有非零降水**；不能把“本站零降雨”写成“没有水源”，也不能把再分析降水写成“站点实测”。这段核对可以直接支撑 Q1 的“事件窗口异常”与 Q3 的“预警不能只看本站雨量”。完整输出见 `data/reports/event_window_audit.md`。
 
 ---
 

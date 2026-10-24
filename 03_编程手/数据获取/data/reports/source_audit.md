@@ -1,6 +1,6 @@
 # B 题数据来源审计报告
 
-> 生成时间：2026-10-24T10:43:26+08:00
+> 生成时间：2026-10-24T10:44:45+08:00
 > 工具：`03_编程手/数据获取`（`python -m mtmcm_data fetch all && python -m mtmcm_data report`）
 > 原则：每个来源都保留 URL、抓取时间、HTTP 状态和 sha256；失败也留痕，不绕过登录/反爬。
 
@@ -106,5 +106,6 @@
 cd "03_编程手/数据获取"
 python -m mtmcm_data fetch all --refresh
 python -m mtmcm_data report
+python -m mtmcm_data audit
 python -m mtmcm_data verify
 ```

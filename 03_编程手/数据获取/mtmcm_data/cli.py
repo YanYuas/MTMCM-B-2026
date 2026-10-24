@@ -469,6 +469,15 @@ def cmd_report(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_audit(args: argparse.Namespace) -> int:
+    from .audit import build_event_audit
+
+    store = Store()
+    path = build_event_audit(store)
+    print(f"事件窗口核对：{store.rel(path)}")
+    return 0
+
+
 def cmd_verify(args: argparse.Namespace) -> int:
     config = load_config()
     store = Store()
@@ -540,6 +549,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_report = sub.add_parser("report", help="生成来源审计报告（Markdown + CSV）")
     p_report.set_defaults(func=cmd_report)
+
+    p_audit = sub.add_parser("audit", help="核对事件前 72 小时站点/再分析降水")
+    p_audit.set_defaults(func=cmd_audit)
 
     p_verify = sub.add_parser("verify", help="核验 manifest、raw 文件和本地附件")
     p_verify.set_defaults(func=cmd_verify)
