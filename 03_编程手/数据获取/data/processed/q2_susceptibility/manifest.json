@@ -1,6 +1,6 @@
 {
   "dataset": "Q2 空间易发性基线（WOE）",
-  "generated_at": "2026-10-24T11:59:56",
+  "generated_at": "2026-10-24T12:35:40",
   "presence_cells": 407821,
   "background_cells": 1676947,
   "gullies_total": 84,
@@ -86,7 +86,7 @@
     {
       "path": "data/processed/q2_susceptibility/summary.json",
       "bytes": 1631,
-      "sha256": "bcd38af4bc24f519e2075a014ebbe3efd45bed8866aabba2ef5f49c336ec17e8"
+      "sha256": "dd53c4ff72f3050b27d027223d0cb5f3c8deb636eb74394fa47af83fb6d11d4a"
     }
   ]
 }

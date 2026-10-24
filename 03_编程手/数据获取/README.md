@@ -326,11 +326,11 @@ POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
 
 报告还给出 7 步治理流水线（登记冻结→格式审计→时空基准→缺失/异常→质量标记→派生层→冻结交接）和“先内后外”的外部补充准入条件。
 
-当前总体治理状态与四问“能写/不能写”见 [`data/reports/data_governance_status.md`](data/reports/data_governance_status.md)。
+当前总体治理状态与四问“能写/不能写”见 [`data/reports/data_governance_status.md`](data/reports/data_governance_status.md)。DEM 时点/土地覆盖图例的元数据证据见 [`data/reports/metadata_evidence.md`](data/reports/metadata_evidence.md)。
 
-### 7.5 processed 基线（`process --batch 1-7/all`）
+### 7.5 processed 基线（`process --batch 1-8/all`）
 
-`--batch 1` 气象/灾点长表；`--batch 2` 土地覆盖/DEM 派生；`--batch 3` 主流路纵剖面；`--batch 4` 历史沟域空间叠加；`--batch 5` 主流路阈值/填洼敏感性；`--batch 6` Q2 WOE 易发性基线；`--batch 7` 事件时间/降雨/历史灾情目录；`--batch all` 全部。只做已有数据的“可建模基线”，不掺外部数据。
+`--batch 1` 气象/灾点长表；`--batch 2` 土地覆盖/DEM 派生；`--batch 3` 主流路纵剖面；`--batch 4` 历史沟域空间叠加；`--batch 5` 主流路阈值/填洼敏感性；`--batch 6` Q2 WOE 易发性基线；`--batch 7` 事件时间/降雨/历史灾情目录；`--batch 8` TPDC-03/04/08 全量加工；`--batch all` 全部。只做已有数据的“可建模基线”，不掺外部数据。
 
 **第一批（TPDC-01/02/06）**
 
@@ -397,6 +397,16 @@ POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
 | `event_catalog/` | `event_catalog.md` | “非降雨触发”结论与来源 |
 
 > CHIRPS 原始日栅格约 70 MB，未入库；`chirps_daily_values.csv` 保留日值，来源 URL 见证据登记。
+
+**第八批（TPDC-03/04/08 全量加工）**
+
+| 目录 | 内容 | 关键值 |
+|---|---|---|
+| `tpdc03_glacier/` | `tpdc03_tiles.csv` + `tpdc03_period_summary.csv` | **168 TIFF**；4 时段；`dhdt` 112 / `dhdt_err` 56 |
+| `tpdc04_glacier/` | 10 个 GeoTIFF + `tpdc04_variables.csv` | 138×145；冰厚均值 49.59 m；体积 **0.319 km³**；速度均值 7.84 m/yr |
+| `tpdc08_population/` | `tpdc08_population.csv` + GeoJSON + 字段表 | 17,536 / 16,155 双口径；城镇 5,015 / 乡村 12,521；户数 4,845 |
+
+关键约束：TPDC-03 的 `dhdt` 单位未在附件中给出，引用前需核源产品；TPDC-04 冰厚为 Farinotti 估算、速度为 2014–2024 气候态；TPDC-08 只有县级，不能均摊到沟道。
 
 关键约束：TPDC-01 的 `9999.9`/`QC=8` 已标缺失、不补零；TPDC-02 的 2025 只有 214 天；TPDC-06 的 `解译Time`/`影像Time` 不是事件发生时间；TPDC-05 的 0 是 nodata，不是类别；batch 2 的 D8 未填洼（4,888 sinks），batch 3/5 主流路用填洼+epsilon D8，两者不能混用；batch 6 的 WOE 是**相对易发性，不是概率**，空间块 AUC 弱；batch 7 只确认 **2 个本地泥石流事件 + 1 个区域 GLOF 类比**，**2026/2025 均为冰崩/冰湖溃决触发，不是降雨触发**。
 

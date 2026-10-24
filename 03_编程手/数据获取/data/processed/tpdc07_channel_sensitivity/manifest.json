@@ -1,6 +1,6 @@
 {
   "dataset": "TPDC-07 主流路阈值/填洼敏感性",
-  "generated_at": "2026-10-24T11:57:48",
+  "generated_at": "2026-10-24T12:35:36",
   "runs": 9,
   "successful_runs": 9,
   "thresholds": [
@@ -41,7 +41,7 @@
     {
       "path": "data/processed/tpdc07_channel_sensitivity/summary.json",
       "bytes": 708,
-      "sha256": "a4652ac9f351f44cd13d40195243e92240a0a23a95d7fe2c20d92bcc9dfb703a"
+      "sha256": "59799fcc4a0f664623bb0071601fd578a7692f16b1d68703d49c515f940b5439"
     }
   ]
 }

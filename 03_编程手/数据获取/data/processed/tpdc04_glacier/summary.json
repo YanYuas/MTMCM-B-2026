@@ -1,0 +1,92 @@
+{
+  "dataset": "TPDC-04 冰川地形/冰厚/表面速度",
+  "generated_at": "2026-10-24T12:35:49",
+  "source_zip": "C:/Users/21722/Desktop/妈妈杯秋季赛/MTMCM比赛协作/05_辅助文档/题目附件/附件/（4）吉隆口岸山洪灾害-蓝塘里壤峰冰崩前冰川地形、冰厚及表面速度数据集.zip",
+  "source_sha256": "fffd408711bba9c23b1409eef4aa09deec120a3e1fd97600bcbd5868c92d3c13",
+  "crs": "EPSG:32645（WGS 84 / UTM zone 45N）",
+  "shape": [
+    138,
+    145
+  ],
+  "variables": [
+    "dem",
+    "slope",
+    "thickness",
+    "vx",
+    "vx_amp",
+    "vy",
+    "vy_amp",
+    "v",
+    "v_amp",
+    "glacier_mask"
+  ],
+  "thickness_volume_km3": 0.31918,
+  "rules": [
+    "用 h5py 读取 NetCDF4/HDF5 数组；不再只读字符串",
+    "NaN/_FillValue 标为无效；GeoTIFF 输出用 -9999 表示无效",
+    "冰厚来自 Farinotti et al. 2019 估算；速度为 2014–2024 气候态，不是事件瞬时值",
+    "GeoTransform 来自 spatial_ref；UTM45N，30 m"
+  ],
+  "outputs": [
+    {
+      "path": "data/processed/tpdc04_glacier/tpdc04_variables.csv",
+      "bytes": 700,
+      "sha256": "3c9433c7ee3fe131fa98830f48ef75ee60e81b0e6b6f03c05eb5c2bb58f90148"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/tpdc04_attrs.json",
+      "bytes": 540,
+      "sha256": "eb91471c71d10c1383fd6d48355776b403df62eb7cb61943d2e41963669bbb78"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/dem.tif",
+      "bytes": 83032,
+      "sha256": "aa493f09f5f919b1207f947254159f28c19088ab0f6ce8d93f8df8d380c00621"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/slope.tif",
+      "bytes": 89176,
+      "sha256": "f00cf53aa26efa388f3dfee6dd72b63b723c125e672fcadfb6116a88a64c9fd9"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/thickness.tif",
+      "bytes": 11734,
+      "sha256": "5e1b1f5b95597b7eda802139e7e2068d6a28d79b872d707cee0c3c45c9ee4393"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/vx.tif",
+      "bytes": 37964,
+      "sha256": "e823a285370dc705c672fe898bd5999befc3d2ae78c30c484b0ff93a0f2b4514"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/vx_amp.tif",
+      "bytes": 34478,
+      "sha256": "bad26da3270e0ae4735a448344f8d90876e44e809b685fdc886eff9f95f26606"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/vy.tif",
+      "bytes": 37046,
+      "sha256": "1e9662828874a81b0addf87be5e2fdca4f9cfeffec8ec98f02e996244b46262c"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/vy_amp.tif",
+      "bytes": 35216,
+      "sha256": "f799aea8b6dc832abcaf7976e050178b2f554939bfb372eeb650206ec208add0"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/v.tif",
+      "bytes": 36306,
+      "sha256": "9b97e167e3b4328a5fc8190018461b0a61a9bde1adb2738f57778f743985712e"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/v_amp.tif",
+      "bytes": 35070,
+      "sha256": "21e8e8d80b941c94abfa43484355208ef3c2ac9d7fd43345fd70a433bd712927"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/glacier_mask.tif",
+      "bytes": 2518,
+      "sha256": "be3ea66f72c92fdd5b80b0737b7c0be5bb69c40e1817b9bc89d94fb38d287e13"
+    }
+  ]
+}

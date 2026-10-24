@@ -1,0 +1,10 @@
+{
+  "Conventions": "CF-1.8",
+  "title": "Glacier topographic and dynamic drivers",
+  "source": "dem_30m.tif, slope_30m.tif, thickness_30m.tif",
+  "velocity_source": "ITS_LIVE v2.1",
+  "velocity_resampling": "bilinear to the 30 m reference grid",
+  "ice_thickness_source": "https://www.research-collection.ethz.ch/entities/researchdata/23bc92d0-aa11-48b8-b6ca-69c5dcf0de6b",
+  "author": "zhaohongyu (zhaohongyu@swpu.edu.cn); zhang tong (tzhang@bnu.edu.cn)",
+  "_NCProperties": "b'version=2,h5netcdf=1.2.0,hdf5=1.14.5,h5py=3.14.0'"
+}

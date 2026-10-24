@@ -1,0 +1,39 @@
+{
+  "dataset": "TPDC-03 冰川表面高程变化（2000–2020）",
+  "source_rar": "C:/Users/21722/Desktop/妈妈杯秋季赛/MTMCM比赛协作/05_辅助文档/题目附件/附件/（3）日喀则市吉隆县特大洪水——200km周围内的冰川及冰川表面高程变化数据集 (2000-2020).rar",
+  "source_sha256": "c1869251bf7d9b1a8d0b5fb81134ca9ffeacfe26df815959c37af48c37cd96d1",
+  "generated_at": "2026-10-24T12:35:49",
+  "tiles": 168,
+  "periods": [
+    "2000-01-01..2005-01-01",
+    "2005-01-01..2010-01-01",
+    "2010-01-01..2015-01-01",
+    "2015-01-01..2020-01-01"
+  ],
+  "variables": [
+    "dhdt",
+    "dhdt_err"
+  ],
+  "crs_folders": [
+    "GCS",
+    "UTM"
+  ],
+  "rules": [
+    "全量解压到 data/raw/tpdc03_extracted（不入库）",
+    "逐 TIFF 读取标签/有效像元；不把 nodata 计入统计",
+    "dhdt 与 dhdt_err 分开统计；UTM/GCS 分幅保留原文件夹标记",
+    "均值按有效像元加权；年代际产品，不能外推为事件瞬时状态"
+  ],
+  "outputs": [
+    {
+      "path": "data/processed/tpdc03_glacier/tpdc03_tiles.csv",
+      "bytes": 64703,
+      "sha256": "5339206585d8fe336b928e5cdb88dca3c2a0fe32ebe479744a4491ef258c0973"
+    },
+    {
+      "path": "data/processed/tpdc03_glacier/tpdc03_period_summary.csv",
+      "bytes": 948,
+      "sha256": "6c7fa3b804c5a73fa27c5e585813f2ba9acb3ac8b3fdbc99e5c549f969b2332e"
+    }
+  ]
+}

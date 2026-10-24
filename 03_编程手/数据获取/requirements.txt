@@ -5,3 +5,6 @@ lxml>=5.0
 pandas>=2.0
 openpyxl>=3.1
 Pillow>=10.0
+
+# TPDC-04 NetCDF4/HDF5 数组读取（batch 8）。
+h5py>=3.10

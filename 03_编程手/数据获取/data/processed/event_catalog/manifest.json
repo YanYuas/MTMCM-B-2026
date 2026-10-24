@@ -1,6 +1,6 @@
 {
   "dataset": "事件时间/降雨触发/历史灾情目录",
-  "generated_at": "2026-10-24T12:25:37",
+  "generated_at": "2026-10-24T12:35:44",
   "events_total": 4,
   "debris_flow_events": 3,
   "local_events": 2,
@@ -64,7 +64,7 @@
     {
       "path": "data/processed/event_catalog/event_rainfall_hourly.csv.gz",
       "bytes": 2573,
-      "sha256": "6395f21f7c55f6b2a7187ca8965d9e9f55496b11f6784e19e28233838818abef"
+      "sha256": "99ca2db9b6f8f10b9ba6b971c280bd98d371a0def82bfea354bf501ca10615dc"
     },
     {
       "path": "data/processed/event_catalog/chirps_daily_values.csv",

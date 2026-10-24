@@ -1,6 +1,6 @@
 {
   "dataset": "TPDC-06 历史沟域 × DEM/坡度/汇流/土地覆盖",
-  "generated_at": "2026-10-24T11:53:38",
+  "generated_at": "2026-10-24T12:35:11",
   "gullies_total": 84,
   "gullies_in_dem": 23,
   "cell_area_km2": 0.000835,

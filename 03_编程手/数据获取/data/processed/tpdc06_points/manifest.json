@@ -2,7 +2,7 @@
   "dataset": "TPDC-06 历史灾点（沟域多边形）",
   "source_zip": "C:/Users/21722/Desktop/妈妈杯秋季赛/MTMCM比赛协作/05_辅助文档/题目附件/附件/（6）西藏日喀则市吉隆县泥石流灾害区历史灾点数据.zip",
   "source_sha256": "38addea9bf18e7c5cd05413901f5ea2921556aff6c4b74215e582e1fcb3469d7",
-  "generated_at": "2026-10-24T11:53:24",
+  "generated_at": "2026-10-24T12:34:52",
   "features": 84,
   "fields": 33,
   "crs": "GEOGCS[\"GCS_China_Geodetic_Coordinate_System_2000\",DATUM[\"D_China_2000\",SPHEROID[\"CGCS2000\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",

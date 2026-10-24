@@ -1,0 +1,11 @@
+﻿variable,shape,dtype,valid_pixels,min,max,mean,units,long_name
+dem,138x145,float32,20010,3551.7659,6458.127,4991.184,m,digital elevation model
+slope,138x145,float32,20010,0.4645,78.507,36.3788,degree,terrain slope
+thickness,138x145,float32,7152,6.0,154.0,49.5871,m,ice thickness
+vx,138x145,float32,7152,-50.2511,4.1719,-3.7353,meter/year,
+vx_amp,138x145,float32,7152,0.6232,32.8486,6.5206,meter/year,
+vy,138x145,float32,7152,-0.5404,35.7443,6.1728,meter/year,
+vy_amp,138x145,float32,7152,0.1254,30.7616,9.2919,meter/year,
+v,138x145,float32,7152,0.075,55.8289,7.841,meter/year,
+v_amp,138x145,float32,7152,0.1852,42.3167,9.7245,meter/year,
+glacier_mask,138x145,float32,7152,1.0,1.0,1.0,,

@@ -4,6 +4,28 @@
 
 ---
 
+## v1.3.0 — 2026-10-24 12:40
+
+### 新增
+- `03_编程手/数据获取/mtmcm_data/glacier.py`：TPDC-03 RAR 全量解压/统计、TPDC-04 h5py 数组读取/GeoTIFF、TPDC-08 人口加工。
+- `data/processed/tpdc03_glacier/`、`tpdc04_glacier/`、`tpdc08_population/`：8/8 附件全部进入 processed。
+- `data/reports/metadata_evidence.md`：DEM 获取时点、土地覆盖图例的元数据证据。
+- `00_任务总控/01_进度追踪/待办追踪.md`：数据窗口 16 项 + 建模/论文 10 项。
+
+### 修改
+- `进度看板.md` 刷新到 v1.3.0：数据窗口 8/8 完成；Q1 编程/Q3 拍板/Q4 仿真仍待接手。
+- `权威数字表.md`：回填 TPDC-03/04/08、事件目录、CHIRPS、Q2 WOE 基线。
+- `data_governance_status.md`：8/8 processed；batch 8 明细。
+
+### 修复
+- TPDC-03 `dhdt_GCS` 被文件名中的 `UTM45` 误判为 UTM；改为按父目录判定 CRS。
+- TPDC-08 城镇/乡村字段名改为 `城镇人`/`乡村人`。
+
+### 废弃
+- （无）
+
+---
+
 ## v1.2.0 — 2026-10-24 12:10
 
 ### 新增

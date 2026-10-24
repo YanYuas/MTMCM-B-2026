@@ -1,17 +1,20 @@
 {
-  "batch": "7",
-  "generated_at": "2026-10-24T12:25:37",
+  "batch": "all",
+  "generated_at": "2026-10-24T12:35:49",
   "datasets": [
     "事件时间/降雨触发/历史灾情目录",
     "Q2 空间易发性基线（WOE）",
     "TPDC-06 历史沟域 × DEM/坡度/汇流/土地覆盖",
     "TPDC-01 逐小时综合观测",
     "TPDC-02 逐日平均气温",
+    "TPDC-03 冰川表面高程变化（2000–2020）",
+    "TPDC-04 冰川地形/冰厚/表面速度",
     "TPDC-05 土地覆盖（2023）",
     "TPDC-06 历史灾点（沟域多边形）",
     "TPDC-07 主流路/纵剖面",
     "TPDC-07 主流路阈值/填洼敏感性",
-    "TPDC-07 DEM 派生地形（核心沟谷）"
+    "TPDC-07 DEM 派生地形（核心沟谷）",
+    "TPDC-08 吉隆县第七次人口普查"
   ],
   "outputs": [
     {
@@ -27,7 +30,7 @@
     {
       "path": "data/processed/event_catalog/event_rainfall_hourly.csv.gz",
       "bytes": 2573,
-      "sha256": "6395f21f7c55f6b2a7187ca8965d9e9f55496b11f6784e19e28233838818abef"
+      "sha256": "99ca2db9b6f8f10b9ba6b971c280bd98d371a0def82bfea354bf501ca10615dc"
     },
     {
       "path": "data/processed/event_catalog/chirps_daily_values.csv",
@@ -67,7 +70,7 @@
     {
       "path": "data/processed/q2_susceptibility/summary.json",
       "bytes": 1631,
-      "sha256": "bcd38af4bc24f519e2075a014ebbe3efd45bed8866aabba2ef5f49c336ec17e8"
+      "sha256": "dd53c4ff72f3050b27d027223d0cb5f3c8deb636eb74394fa47af83fb6d11d4a"
     },
     {
       "path": "data/processed/spatial_baseline/tpdc06_gully_overlay_stats.csv",
@@ -82,12 +85,12 @@
     {
       "path": "data/processed/spatial_baseline/summary.json",
       "bytes": 906,
-      "sha256": "a01e1cf596cec366f5d702d5ca498a5e710b467f7f451f9de84f625b2d2e17ae"
+      "sha256": "32d1c007d3264b04951443f3eb784de05fcc8a453d4338f4ee5bab6f817c4654"
     },
     {
       "path": "data/processed/tpdc01_hourly/tpdc01_key_vars_long.csv.gz",
       "bytes": 3612052,
-      "sha256": "624d37a652886bcee0c9205126b6c36e8a9890e8908603bdf15b469da6c71c80"
+      "sha256": "516167c70257e973d433aef6ad1683127bd983210dd5c2494587780d9e343e68"
     },
     {
       "path": "data/processed/tpdc01_hourly/tpdc01_missing_by_variable.csv",
@@ -102,17 +105,87 @@
     {
       "path": "data/processed/tpdc02_temp/tpdc02_temp_long.csv.gz",
       "bytes": 479100,
-      "sha256": "36e2552414e0dd33e3aeed70602788071b38727a4c3c4f78c3de8ef649e77e2d"
+      "sha256": "86c036ad2fe4225a7c27b06c38ffa3169ea1f5390883c5c62c2ffffc6ed1eedd"
     },
     {
       "path": "data/processed/tpdc02_temp/tpdc02_temp_wide.csv.gz",
       "bytes": 342530,
-      "sha256": "61af7945f615dfd60ced7bf1099d4afb09fffb49787d7167f9a4c478a9c8cb44"
+      "sha256": "66533023d5a8e924d6748dcf1d6adb4fe819c17f876d88b08ada93060a7a6dac"
     },
     {
       "path": "data/processed/tpdc02_temp/tpdc02_coverage_by_county.csv",
       "bytes": 345,
       "sha256": "d57022b5d9fce87114a51af4b6a55698d275c68df0c5687f2b246a82ca7b4ff1"
+    },
+    {
+      "path": "data/processed/tpdc03_glacier/tpdc03_tiles.csv",
+      "bytes": 64703,
+      "sha256": "5339206585d8fe336b928e5cdb88dca3c2a0fe32ebe479744a4491ef258c0973"
+    },
+    {
+      "path": "data/processed/tpdc03_glacier/tpdc03_period_summary.csv",
+      "bytes": 948,
+      "sha256": "6c7fa3b804c5a73fa27c5e585813f2ba9acb3ac8b3fdbc99e5c549f969b2332e"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/tpdc04_variables.csv",
+      "bytes": 700,
+      "sha256": "3c9433c7ee3fe131fa98830f48ef75ee60e81b0e6b6f03c05eb5c2bb58f90148"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/tpdc04_attrs.json",
+      "bytes": 540,
+      "sha256": "eb91471c71d10c1383fd6d48355776b403df62eb7cb61943d2e41963669bbb78"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/dem.tif",
+      "bytes": 83032,
+      "sha256": "aa493f09f5f919b1207f947254159f28c19088ab0f6ce8d93f8df8d380c00621"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/slope.tif",
+      "bytes": 89176,
+      "sha256": "f00cf53aa26efa388f3dfee6dd72b63b723c125e672fcadfb6116a88a64c9fd9"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/thickness.tif",
+      "bytes": 11734,
+      "sha256": "5e1b1f5b95597b7eda802139e7e2068d6a28d79b872d707cee0c3c45c9ee4393"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/vx.tif",
+      "bytes": 37964,
+      "sha256": "e823a285370dc705c672fe898bd5999befc3d2ae78c30c484b0ff93a0f2b4514"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/vx_amp.tif",
+      "bytes": 34478,
+      "sha256": "bad26da3270e0ae4735a448344f8d90876e44e809b685fdc886eff9f95f26606"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/vy.tif",
+      "bytes": 37046,
+      "sha256": "1e9662828874a81b0addf87be5e2fdca4f9cfeffec8ec98f02e996244b46262c"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/vy_amp.tif",
+      "bytes": 35216,
+      "sha256": "f799aea8b6dc832abcaf7976e050178b2f554939bfb372eeb650206ec208add0"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/v.tif",
+      "bytes": 36306,
+      "sha256": "9b97e167e3b4328a5fc8190018461b0a61a9bde1adb2738f57778f743985712e"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/v_amp.tif",
+      "bytes": 35070,
+      "sha256": "21e8e8d80b941c94abfa43484355208ef3c2ac9d7fd43345fd70a433bd712927"
+    },
+    {
+      "path": "data/processed/tpdc04_glacier/glacier_mask.tif",
+      "bytes": 2518,
+      "sha256": "be3ea66f72c92fdd5b80b0737b7c0be5bb69c40e1817b9bc89d94fb38d287e13"
     },
     {
       "path": "data/processed/tpdc05_landcover/jilong_LUCD_2023.tif",
@@ -172,7 +245,7 @@
     {
       "path": "data/processed/tpdc07_channel/main_channel_summary.json",
       "bytes": 1205,
-      "sha256": "3bad62fcf15d6ca9426826c6b189e59cfaed847c72b80c98391afd3cfbee5597"
+      "sha256": "b1d333c91c0191f977dff5a91644eb2468c8ad5430638ee9c186dcd50e041f30"
     },
     {
       "path": "data/processed/tpdc07_channel_sensitivity/main_channel_sensitivity_runs.csv",
@@ -187,7 +260,7 @@
     {
       "path": "data/processed/tpdc07_channel_sensitivity/summary.json",
       "bytes": 708,
-      "sha256": "a4652ac9f351f44cd13d40195243e92240a0a23a95d7fe2c20d92bcc9dfb703a"
+      "sha256": "59799fcc4a0f664623bb0071601fd578a7692f16b1d68703d49c515f940b5439"
     },
     {
       "path": "data/processed/tpdc07_dem/dem_core_30m.tif",
@@ -218,6 +291,21 @@
       "path": "data/processed/tpdc07_dem/tpdc07_terrain_stats.csv",
       "bytes": 612,
       "sha256": "2e41137a7df4fd6a3c7026c4ed2303676eecbcae54b526592e923f6f4bc28582"
+    },
+    {
+      "path": "data/processed/tpdc08_population/tpdc08_population.csv",
+      "bytes": 462,
+      "sha256": "a9f54b0e5187cdedc64fa00f84368ecec569e8c137edaf1a9369aa7cba34ac65"
+    },
+    {
+      "path": "data/processed/tpdc08_population/tpdc08_fields.csv",
+      "bytes": 700,
+      "sha256": "266c2afde93e678461088be1ea5ca0b8abbc18b408ee2e3e0ab4a981860cf3c5"
+    },
+    {
+      "path": "data/processed/tpdc08_population/tpdc08_population.geojson",
+      "bytes": 311216,
+      "sha256": "d5755e2621a6cbd09f3daa762491458bf754f94deb14990dbc9841b79ff89c14"
     }
   ],
   "notes": [

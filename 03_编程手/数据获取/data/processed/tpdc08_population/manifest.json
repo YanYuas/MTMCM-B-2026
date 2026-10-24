@@ -1,0 +1,39 @@
+{
+  "dataset": "TPDC-08 吉隆县第七次人口普查",
+  "generated_at": "2026-10-24T12:35:49",
+  "source_zip": "C:/Users/21722/Desktop/妈妈杯秋季赛/MTMCM比赛协作/05_辅助文档/题目附件/附件/（8）西藏日喀则市吉隆县泥石流灾害区吉隆县第七次人口普查数据.zip",
+  "source_sha256": "21c2a1c4485bbfdecb05a4d09063cbc644a2dfb3804797da18c89575dbd680e7",
+  "records": 1,
+  "fields": 27,
+  "encoding": "utf-8",
+  "crs": "GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+  "合计": "17536",
+  "人口数": "16155",
+  "male": "9338",
+  "female": "8198",
+  "urban": "5015",
+  "rural": "12521",
+  "households": "4845",
+  "notes": [
+    "县级单一 polygon；无居民点，不能按面积均摊到沟道",
+    "‘合计’与‘人口数’口径不同，引用时必须写明用哪一个"
+  ],
+  "outputs": [
+    {
+      "path": "data/processed/tpdc08_population/tpdc08_population.csv",
+      "bytes": 462,
+      "sha256": "a9f54b0e5187cdedc64fa00f84368ecec569e8c137edaf1a9369aa7cba34ac65"
+    },
+    {
+      "path": "data/processed/tpdc08_population/tpdc08_fields.csv",
+      "bytes": 700,
+      "sha256": "266c2afde93e678461088be1ea5ca0b8abbc18b408ee2e3e0ab4a981860cf3c5"
+    },
+    {
+      "path": "data/processed/tpdc08_population/tpdc08_population.geojson",
+      "bytes": 311216,
+      "sha256": "d5755e2621a6cbd09f3daa762491458bf754f94deb14990dbc9841b79ff89c14"
+    }
+  ],
+  "source_file": "C:/Users/21722/Desktop/妈妈杯秋季赛/MTMCM比赛协作/05_辅助文档/题目附件/附件/（8）西藏日喀则市吉隆县泥石流灾害区吉隆县第七次人口普查数据.zip"
+}
