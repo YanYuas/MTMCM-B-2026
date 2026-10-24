@@ -1,0 +1,129 @@
+{
+  "n_checks": 10,
+  "n_pass": 10,
+  "all_pass": true,
+  "ritter": [
+    {
+      "dx": 20.0,
+      "front_sim": 710.0,
+      "front_anal": 698.0908882306301,
+      "front_rel_err": 0.06011943242692001,
+      "L1_rel_err": 0.0115277290689723,
+      "L2_rel_err": 0.02581283883306153,
+      "mass0": 5000.0,
+      "mass_end": 5000.000000000538
+    },
+    {
+      "dx": 10.0,
+      "front_sim": 685.0,
+      "front_anal": 698.0908882306301,
+      "front_rel_err": 0.06608526190961808,
+      "L1_rel_err": 0.008071388849718353,
+      "L2_rel_err": 0.018664838163313553,
+      "mass0": 5000.0,
+      "mass_end": 4999.999999999999
+    },
+    {
+      "dx": 5.0,
+      "front_sim": 672.5,
+      "front_anal": 698.0908882306301,
+      "front_rel_err": 0.12918760907788712,
+      "L1_rel_err": 0.005574132723853815,
+      "L2_rel_err": 0.013185616068308112,
+      "mass0": 5000.0,
+      "mass_end": 4999.999999999999
+    }
+  ],
+  "checks": [
+    {
+      "id": "U1a",
+      "desc": "HLL uniform F_h",
+      "expected": 2.0,
+      "actual": 2.0,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "U1b",
+      "desc": "HLL uniform F_hu",
+      "expected": 8.905000000000001,
+      "actual": 8.905000000000001,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "U2",
+      "desc": "CFL dt",
+      "expected": 0.5293005954540675,
+      "actual": 0.5293005954540675,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "U3a",
+      "desc": "deposit thickness",
+      "expected": 0.025,
+      "actual": 0.025,
+      "tol": 1e-12,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "U3b",
+      "desc": "h+dep mass",
+      "expected": 1.0,
+      "actual": 1.0,
+      "tol": 1e-12,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "U4",
+      "desc": "zero momentum max abs(u)",
+      "expected": 0.0,
+      "actual": 0.0,
+      "tol": 1e-09,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "U5a",
+      "desc": "Ritter dx=5 L1 rel err",
+      "expected": 0.0,
+      "actual": 0.005574132723853815,
+      "tol": 0.02,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "U5b",
+      "desc": "Ritter dx=10 L1 rel err",
+      "expected": 0.0,
+      "actual": 0.008071388849718353,
+      "tol": 0.03,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "U5c",
+      "desc": "Ritter L1 error decreases with dx",
+      "expected": "e20>=e10>=e5",
+      "actual": "0.0115/0.0081/0.0056",
+      "tol": 0.0,
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "U5d",
+      "desc": "Ritter dx=5 front rel err (diagnostic)",
+      "expected": 0.0,
+      "actual": 0.12918760907788712,
+      "tol": 0.15,
+      "pass": true,
+      "note": ""
+    }
+  ]
+}
