@@ -29,6 +29,7 @@ class Source:
     questions: tuple[str, ...] = ()
     notes: str = ""
     local_mirror: str = ""
+    manual_snapshot: str = ""
     allow_blocked: bool = False
     enabled: bool = True
     respect_robots: bool = True
@@ -37,6 +38,7 @@ class Source:
     timeout_sec: float = 30.0
     retries: int = 3
     max_bytes: int = 52_428_800
+    study_area: dict[str, float] = field(default_factory=dict)
 
     @classmethod
     def from_dict(cls, raw: dict[str, Any], defaults: dict[str, Any]) -> "Source":
@@ -56,6 +58,7 @@ class Source:
             questions=tuple(str(q) for q in questions),
             notes=str(merged.get("notes", "")),
             local_mirror=str(merged.get("local_mirror", "")),
+            manual_snapshot=str(merged.get("manual_snapshot", "")),
             allow_blocked=bool(merged.get("allow_blocked", False)),
             enabled=bool(merged.get("enabled", True)),
             respect_robots=bool(merged.get("respect_robots", True)),
@@ -64,6 +67,7 @@ class Source:
             timeout_sec=float(merged.get("timeout_sec", 30.0)),
             retries=int(merged.get("retries", 3)),
             max_bytes=int(merged.get("max_bytes", 52_428_800)),
+            study_area={str(k): float(v) for k, v in (merged.get("study_area") or {}).items()},
         )
 
     @property
@@ -72,6 +76,13 @@ class Source:
             return None
         p = Path(self.local_mirror)
         return p if p.is_absolute() else WORKSPACE_ROOT / p
+
+    @property
+    def manual_snapshot_path(self) -> Path | None:
+        if not self.manual_snapshot:
+            return None
+        p = Path(self.manual_snapshot)
+        return p if p.is_absolute() else APP_ROOT / p
 
 
 @dataclass(frozen=True)

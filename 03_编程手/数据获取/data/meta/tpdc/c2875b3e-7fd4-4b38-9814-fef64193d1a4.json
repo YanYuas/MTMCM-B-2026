@@ -145,12 +145,15 @@
   ],
   "recorded_at": "2026-08-31 15:38:11",
   "description_source": "TPDC metadataView/detail + metadataView/getGoogleJson",
+  "citation_ris": "TY  - DATA\nTI  - 吉隆口岸山洪灾害-蓝塘里壤峰冰崩前冰川地形、冰厚及表面速度数据集\nAU  - 赵宏宇\nAU  - 张通\nPY  - 2026/08/31\nUR  - https://dx.doi.org/10.11888/Cryos.tpdc.303606\nPB  - 国家青藏高原科学数据中心\nDO  - 10.11888/Cryos.tpdc.303606\nM1  - Dataset\nER  - \n",
+  "citation_ris_path": "data/meta/tpdc/c2875b3e-7fd4-4b38-9814-fef64193d1a4.ris",
+  "citation_ris_status": 200,
   "fetched_at": "2026-10-24T02:37:26+00:00",
   "http": {
     "detail_status": 200,
     "google_status": 200,
-    "detail_raw": "data/raw/tpdc_04_glacier_nc/20261024T024306Z_359dda96.json",
-    "google_raw": "data/raw/tpdc_04_glacier_nc/20261024T024306Z_8eded21a.json",
+    "detail_raw": "data/raw/tpdc_04_glacier_nc/20261024T024949Z_359dda96.json",
+    "google_raw": "data/raw/tpdc_04_glacier_nc/20261024T024949Z_8eded21a.json",
     "detail_from_cache": true,
     "google_from_cache": true
   }

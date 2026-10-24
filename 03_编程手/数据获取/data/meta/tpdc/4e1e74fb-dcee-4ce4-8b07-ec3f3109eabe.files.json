@@ -1,0 +1,55 @@
+{
+  "source_id": "tpdc_05_landcover",
+  "metadata_id": "4e1e74fb-dcee-4ce4-8b07-ec3f3109eabe",
+  "files": [
+    {
+      "name": "jilong_LUCD_2022.tif",
+      "ext": "tif",
+      "size": 25095672,
+      "type": "file",
+      "path": "4e1e74fb-dcee-4ce4-8b07-ec3f3109eabe/jilong_LUCD_2022.tif"
+    },
+    {
+      "name": "jilong_LUCD_2023.tif",
+      "ext": "tif",
+      "size": 25095672,
+      "type": "file",
+      "path": "4e1e74fb-dcee-4ce4-8b07-ec3f3109eabe/jilong_LUCD_2023.tif"
+    },
+    {
+      "name": "jilong_LUCD_2021.tif",
+      "ext": "tif",
+      "size": 25095672,
+      "type": "file",
+      "path": "4e1e74fb-dcee-4ce4-8b07-ec3f3109eabe/jilong_LUCD_2021.tif"
+    },
+    {
+      "name": "jilong_LUCD_2020.tif",
+      "ext": "tif",
+      "size": 25144116,
+      "type": "file",
+      "path": "4e1e74fb-dcee-4ce4-8b07-ec3f3109eabe/jilong_LUCD_2020.tif"
+    }
+  ],
+  "file_count": 4,
+  "total_size_bytes": 100431132,
+  "fetched_at": "2026-10-24T02:59:37+00:00",
+  "list_url": "https://www.tpdc.ac.cn/file/file/getRootFileDataList",
+  "download_status": "ok",
+  "zip_path": "data/tpdc_files/tpdc_05_landcover/20261024T030709Z.zip",
+  "zip_bytes": 6606952,
+  "zip_members": 4,
+  "member_names": [
+    "西藏日喀则市吉隆县泥石流灾害区土地覆盖数据（2020-2023）/jilong_LUCD_2022.tif",
+    "西藏日喀则市吉隆县泥石流灾害区土地覆盖数据（2020-2023）/jilong_LUCD_2023.tif",
+    "西藏日喀则市吉隆县泥石流灾害区土地覆盖数据（2020-2023）/jilong_LUCD_2021.tif",
+    "西藏日喀则市吉隆县泥石流灾害区土地覆盖数据（2020-2023）/jilong_LUCD_2020.tif"
+  ],
+  "downloaded_at": "2026-10-24T03:07:09+00:00",
+  "local_zip_members": 4,
+  "downloaded_members_expanded": 4,
+  "nested_archives": [],
+  "missing_vs_local": [],
+  "extra_vs_local": [],
+  "comparison_status": "same"
+}

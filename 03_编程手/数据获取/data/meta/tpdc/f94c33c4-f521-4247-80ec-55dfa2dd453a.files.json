@@ -1,0 +1,19 @@
+{
+  "source_id": "tpdc_03_glacier_rar",
+  "metadata_id": "f94c33c4-f521-4247-80ec-55dfa2dd453a",
+  "files": [
+    {
+      "name": "西藏日喀则市吉隆县特大洪水—200km周围内的冰川和冰川厚度变化数据集.rar",
+      "ext": "rar",
+      "size": 268881071,
+      "type": "file",
+      "path": "f94c33c4-f521-4247-80ec-55dfa2dd453a/西藏日喀则市吉隆县特大洪水—200km周围内的冰川和冰川厚度变化数据集.rar"
+    }
+  ],
+  "file_count": 1,
+  "total_size_bytes": 268881071,
+  "fetched_at": "2026-10-24T02:58:41+00:00",
+  "list_url": "https://www.tpdc.ac.cn/file/file/getRootFileDataList",
+  "download_status": "skipped_large",
+  "skip_reason": "总大小 268.9 MB > max_mb=50.0；如需下载用 --include-large"
+}

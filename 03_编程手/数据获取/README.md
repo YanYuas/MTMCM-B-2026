@@ -34,16 +34,22 @@ cd "03_编程手\数据获取"
 # 1) 看有哪些来源
 python -m mtmcm_data list
 
-# 2) 抓全部（首次会建缓存；--refresh 强制重抓）
+# 2) 抓全部元数据（首次会建缓存；--refresh 强制重抓）
 python -m mtmcm_data fetch all
 
-# 3) 生成审计报告
+# 3) 下载 TPDC 数据文件（默认跳过 >50MB；大文件加 --include-large）
+python -m mtmcm_data download all
+
+# 4) 生成审计报告
 python -m mtmcm_data report
 
-# 4) 核对事件前 72 小时站点/再分析降水
+# 5) 核对事件前 72 小时站点/再分析降水
 python -m mtmcm_data audit
 
-# 5) 核验 raw 文件与本地附件
+# 6) 按来源逐项核验抓取质量
+python -m mtmcm_data validate
+
+# 7) 核验 raw 文件与本地附件
 python -m mtmcm_data verify
 ```
 
@@ -143,20 +149,27 @@ GET  /view/metadataView/getGoogleJson?metadataId=<uuid>
 │   ├── cache/<source_id>/       # HTTP 缓存（body + meta）
 │   ├── meta/
 │   │   ├── tpdc/<uuid>.json     # 八个数据集的统一元数据
+│   │   ├── tpdc/<uuid>.ris      # TPDC 公开 RIS 引用（可导入 Zotero/EndNote）
+│   │   ├── tpdc/<uuid>.files.json # 文件清单 + 下载状态 + 与本地附件差异
 │   │   ├── articles/<id>.json   # 背景文章正文
 │   │   ├── api/<id>.json        # 补充源元信息
 │   │   └── errors/<id>.json     # 失败证据（状态码、body 片段）
 │   ├── tables/<id>.csv          # Open-Meteo/NASA/Copernicus 的表格
+│   ├── manual/                  # 人工保存的公开页面快照（gitignore）
+│   ├── tpdc_files/<id>/*.zip    # TPDC 免登录下载的原始 ZIP（gitignore）
 │   ├── reports/
 │   │   ├── source_audit.md      # 来源审计报告（给论文手）
-│   │   └── source_audit.csv     # 同上的机读版
+│   │   ├── source_audit.csv     # 同上的机读版
+│   │   ├── validation.md        # 逐来源质量核验（FAIL/WARN/BLOCKED）
+│   │   ├── validation.csv
+│   │   └── event_window_audit.md
 │   ├── runs/<run_id>.json       # 每次运行的汇总
 │   └── manifest.jsonl           # 一行一个请求的审计清单
 ├── logs/crawl.log
 └── README.md
 ```
 
-`data/` 的入库策略：**元数据（`meta/`）和审计报告（`reports/`）入库**，作为可复核证据；**原始响应（`raw/`）、缓存（`cache/`）、数据表（`tables/`）、运行日志不入库**，可用 `fetch` 一键重建。见本目录 `.gitignore`。
+`data/` 的入库策略：**元数据（`meta/`）和审计报告（`reports/`）入库**，作为可复核证据；**原始响应（`raw/`）、缓存（`cache/`）、数据表（`tables/`）、TPDC 下载 ZIP（`tpdc_files/`）、人工快照、运行日志不入库**，可用 `fetch`/`download` 一键重建。见本目录 `.gitignore`。
 
 ---
 
@@ -177,6 +190,17 @@ GET  /view/metadataView/getGoogleJson?metadataId=<uuid>
 `title/title_en`、`doi/doi_url`、`cstr`、`authors`、`publisher`、`year`、`description`、`instructions`、`use_terms`、`time_coverage`、`spatial_coverage`、`keywords`、`citation_cn`、`citation_en`、`local_mirror`、`download_status`。
 
 **本地附件核对**：配置里 `local_mirror` 指向 `05_辅助文档/题目附件/附件/...`，工具会记录文件是否存在、大小、sha256（>64 MiB 的 RAR 只记大小，避免每次抓元数据都重算）。
+
+**数据文件下载**：TPDC 详情页提供“免登录下载”按钮，前端调用公开接口：
+
+```text
+GET  /file/file/getRootFileDataList?metadataId=<uuid>
+POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
+```
+
+`download` 命令复用同一公开接口，不伪造登录态；下载的 ZIP 存到 `data/tpdc_files/<id>/`，会做 ZIP 完整性校验，并与本地附件比对文件成员。默认跳过总大小 >50 MB 的数据集（3 号冰川 RAR、5 号土地覆盖），用 `--include-large` 可下载。
+
+> 实测发现：TPDC-01 的免登录 ZIP 只有 21 个文件，缺 `FLUX_Gyirong_2024/2025/2026.csv`；本地附件有 24 个。建模以本地附件为准，下载 ZIP 作为“公开可获取性”的证据。
 
 ### 5.2 背景文章
 
@@ -201,13 +225,14 @@ GET  /view/metadataView/getGoogleJson?metadataId=<uuid>
 - **限速**：TPDC 0.8 s/请求，MNR 2 s，Baidu 3 s，API 1 s；避免给公共服务器造成压力。
 - **不绕过**：百度百科返回“百度安全验证”，本工具不伪造 cookie、不接打码、不绕过；只保留引用链接，并在 `data/meta/errors/` 记录失败。
 - **不代填凭据**：Copernicus 下载需要账号/OAuth；工具只取公开元数据，不读取/保存任何账号密码。
+- **TPDC 数据文件**：官网提供免登录下载接口（`batchDownloadFile` + `noToken`），工具直接复用；大文件（3 号 268.9 MB、5 号 100.4 MB）默认跳过，`--include-large` 可下载。下载 ZIP 与本地附件不一致时会在 `validate` 里报 WARN。
+- **百度百科**：反爬阻断，支持人工保存公开页面到 `data/manual/baike_debris_flow.html`，再用 `fetch baike_debris_flow` 离线解析；不伪造 cookie、不接打码。
 - **不伪造**：所有数值来自响应；缺失写 `null`/空，不补零、不猜测。TPDC 的 9999.9 只在原始数据里保留，元数据层不把它转成 0。
 - **可复现**：每个请求有 URL、参数、状态、时间、sha256；`--offline` 可只用缓存复算。
 
 ---
 
 ## 7. 已知数据审计结论（写论文时直接用）
-
 这些是抓取/核对后得到的关键事实，建议写进“数据来源与预处理”一节：
 
 1. **站点与时间**：TPDC-01 元数据写明站点位于吉隆县城（约 **28.86°N, 85.29°E, 4140 m**），距吉隆口岸直线约 **65 km**；时间采用 **北京时间 UTC+8**；缺测标记 **9999.9**；QC 码 **0 正确 / 1 可疑 / 2 错误 / 4 插补 / 8 缺失 / 9 未质控**。
@@ -218,8 +243,9 @@ GET  /view/metadataView/getGoogleJson?metadataId=<uuid>
 6. **TPDC-07 DEM**：约 30 m；附件名没有说明获取时点，不能预设为“灾前 DEM”。
 7. **TPDC-08 人口**：县级多边形合计 **17,536 人**，不含居民点；不能把“县人口/县面积”当作局部暴露。
 8. **Open-Meteo / NASA POWER**：都是再分析/预报，不是站点实测；两者网格海拔分别约 4138 m 和 4995 m，和站点 4140 m 的差异要在论文里说明。
-9. **Copernicus**：只取产品元数据；返回产品可能只覆盖研究区边缘，使用前要按 `GeoFootprint` 与核心区求交；下载需账号。
+9. **Copernicus**：只取产品元数据；查询用吉隆口岸核心区 bbox，当前 S2/S1 各 10 个产品均与研究区相交；仍建议使用前按 `GeoFootprint` 复核；下载需账号。
 10. **百度百科**：robots/403 阻断，不作为数据证据；背景以自然资源部页面为准。
+11. **TPDC 免登录下载**：`download` 命令可绕过登录页直接拿公开 ZIP（`noToken` 是官网前端公开流程），但 TPDC-01 的 ZIP 只有 21 个文件，缺 **FLUX 2024–2026**；本地附件有 24 个，建模以本地附件为准。
 
 ### 7.1 事件窗口核对（`audit` 命令）
 
@@ -232,6 +258,19 @@ GET  /view/metadataView/getGoogleJson?metadataId=<uuid>
 | NASA POWER | `PRECTOTCORR` | 8.46 mm | 58 | 再分析网格，海拔约 4995 m |
 
 结论：**站点灾前 72 小时无降水，但再分析网格有非零降水**；不能把“本站零降雨”写成“没有水源”，也不能把再分析降水写成“站点实测”。这段核对可以直接支撑 Q1 的“事件窗口异常”与 Q3 的“预警不能只看本站雨量”。完整输出见 `data/reports/event_window_audit.md`。
+
+### 7.2 质量核验结果（`validate` 命令）
+
+当前一次实测运行的结果：
+
+- **15 个来源：FAIL 0，WARN 5，BLOCKED 1。**
+- **WARN（时间）**：TPDC-04/06/08 的元数据没有给 `startTime/endTime`，标题/附件也没有可提取的时间提示；不是抓取失败，论文中写“元数据未给出时间范围”即可。
+- **WARN（下载）**：TPDC-03 的 268.9 MB RAR 默认跳过；TPDC-01 的免登录 ZIP 缺 3 个 FLUX 文件（2024–2026），本地附件 24 个完整。
+- **BLOCKED**：百度百科 robots/403；工具不绕过，只保留引用链接。
+- **Copernicus**：S2 返回 10 个产品（5 个 L1C、5 个 L2A），S1 返回 10 个（4 个 GRDH、2 个 SLC、2 个 RAW），全部与研究区相交；产品下载仍需账号/OAuth。
+- **TPDC 引用**：八个数据集均已生成 `.ris`，可直接导入 Zotero/EndNote。
+
+> 质量核验不是“抓到了就算”，而是逐项检查：元数据字段、本地附件、时间/空间范围、正文长度、API 行数、研究区相交、产品类型。详细结果见 `data/reports/validation.md`。
 
 ---
 
@@ -275,7 +314,7 @@ python -m unittest discover -s tests -v
 
 ## 11. 已知限制 / 下一步
 
-- **TPDC 数据文件**：本工具以元数据 + 本地附件核对为主；TPDC 文件下载通常需要登录/申请，未在工具里代填凭据。若拿到公开直链，可在 `tpdc_dataset` 分支加 `download`。
+- **TPDC 数据文件**：已支持免登录下载；3 号（268.9 MB RAR）与 5 号（100.4 MB 土地覆盖）默认跳过，后者已用 `--include-large` 实测通过。TPDC-01 免登录 ZIP 缺 3 个 FLUX 文件，已在 `validate` 里留 WARN；建模以本地 24 文件附件为准。
 - **百度百科**：反爬阻断，未做绕过；如比赛允许，可人工保存快照到 `data/manual/`，再用 `article` 解析器离线解析。
 - **ERA5/CDS**：需要 API key，未默认启用；如需要，可加一个 `cds` parser，从环境变量读 key。
 - **地图/暴露**：OSM/Overpass、WorldPop 等还没纳入；Q4 需要建筑/道路/居民点时可再加。

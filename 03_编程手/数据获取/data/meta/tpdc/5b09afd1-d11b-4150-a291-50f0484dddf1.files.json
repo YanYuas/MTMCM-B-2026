@@ -1,0 +1,195 @@
+{
+  "source_id": "tpdc_01_hourly",
+  "metadata_id": "5b09afd1-d11b-4150-a291-50f0484dddf1",
+  "files": [
+    {
+      "name": "RADM_Gyirong_2023.csv",
+      "ext": "csv",
+      "size": 487379,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/RADM_Gyirong_2023.csv"
+    },
+    {
+      "name": "SOIL_Gyirong_2024.csv",
+      "ext": "csv",
+      "size": 1245453,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/SOIL_Gyirong_2024.csv"
+    },
+    {
+      "name": "SOIL_Gyirong_2025.csv",
+      "ext": "csv",
+      "size": 1258833,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/SOIL_Gyirong_2025.csv"
+    },
+    {
+      "name": "MET_Gyirong_2023.csv",
+      "ext": "csv",
+      "size": 1585900,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/MET_Gyirong_2023.csv"
+    },
+    {
+      "name": "FLUX_Gyirong_2022.csv",
+      "ext": "csv",
+      "size": 1704763,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/FLUX_Gyirong_2022.csv"
+    },
+    {
+      "name": "FLUX_Gyirong_2023.csv",
+      "ext": "csv",
+      "size": 2106293,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/FLUX_Gyirong_2023.csv"
+    },
+    {
+      "name": "SOIL_Gyirong_2022.csv",
+      "ext": "csv",
+      "size": 1013676,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/SOIL_Gyirong_2022.csv"
+    },
+    {
+      "name": "RADM_Gyirong_2024.csv",
+      "ext": "csv",
+      "size": 488760,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/RADM_Gyirong_2024.csv"
+    },
+    {
+      "name": "RADM_Gyirong_2025.csv",
+      "ext": "csv",
+      "size": 487388,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/RADM_Gyirong_2025.csv"
+    },
+    {
+      "name": "FLUX_Gyirong_2021.csv",
+      "ext": "csv",
+      "size": 1781827,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/FLUX_Gyirong_2021.csv"
+    },
+    {
+      "name": "RADM_Gyirong_2026.csv",
+      "ext": "csv",
+      "size": 474824,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/RADM_Gyirong_2026.csv"
+    },
+    {
+      "name": "RADM_Gyirong_2021.csv",
+      "ext": "csv",
+      "size": 475770,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/RADM_Gyirong_2021.csv"
+    },
+    {
+      "name": "MET_Gyirong_2026.csv",
+      "ext": "csv",
+      "size": 1680672,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/MET_Gyirong_2026.csv"
+    },
+    {
+      "name": "SOIL_Gyirong_2023.csv",
+      "ext": "csv",
+      "size": 1007493,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/SOIL_Gyirong_2023.csv"
+    },
+    {
+      "name": "SOIL_Gyirong_2021.csv",
+      "ext": "csv",
+      "size": 1030464,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/SOIL_Gyirong_2021.csv"
+    },
+    {
+      "name": "RADM_Gyirong_2022.csv",
+      "ext": "csv",
+      "size": 487575,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/RADM_Gyirong_2022.csv"
+    },
+    {
+      "name": "MET_Gyirong_2024.csv",
+      "ext": "csv",
+      "size": 1596015,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/MET_Gyirong_2024.csv"
+    },
+    {
+      "name": "MET_Gyirong_2022.csv",
+      "ext": "csv",
+      "size": 1591541,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/MET_Gyirong_2022.csv"
+    },
+    {
+      "name": "MET_Gyirong_2021.csv",
+      "ext": "csv",
+      "size": 1666729,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/MET_Gyirong_2021.csv"
+    },
+    {
+      "name": "SOIL_Gyirong_2026.csv",
+      "ext": "csv",
+      "size": 1196302,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/SOIL_Gyirong_2026.csv"
+    },
+    {
+      "name": "MET_Gyirong_2025.csv",
+      "ext": "csv",
+      "size": 1584489,
+      "type": "file",
+      "path": "5b09afd1-d11b-4150-a291-50f0484dddf1/MET_Gyirong_2025.csv"
+    }
+  ],
+  "file_count": 21,
+  "total_size_bytes": 24952146,
+  "fetched_at": "2026-10-24T02:56:19+00:00",
+  "list_url": "https://www.tpdc.ac.cn/file/file/getRootFileDataList",
+  "download_status": "ok",
+  "zip_path": "data/tpdc_files/tpdc_01_hourly/20261024T030520Z.zip",
+  "zip_bytes": 7286606,
+  "zip_members": 21,
+  "member_names": [
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/RADM_Gyirong_2023.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/SOIL_Gyirong_2024.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/SOIL_Gyirong_2025.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/MET_Gyirong_2023.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/FLUX_Gyirong_2023.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/SOIL_Gyirong_2022.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/RADM_Gyirong_2024.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/FLUX_Gyirong_2021.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/RADM_Gyirong_2026.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/RADM_Gyirong_2021.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/FLUX_Gyirong_2022.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/MET_Gyirong_2026.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/SOIL_Gyirong_2023.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/SOIL_Gyirong_2021.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/RADM_Gyirong_2025.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/RADM_Gyirong_2022.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/MET_Gyirong_2024.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/MET_Gyirong_2022.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/SOIL_Gyirong_2026.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/MET_Gyirong_2025.csv",
+    "西藏吉隆高寒山区地气相互作用逐小时综合观测数据集（2021–2026）/MET_Gyirong_2021.csv"
+  ],
+  "downloaded_at": "2026-10-24T03:05:20+00:00",
+  "local_zip_members": 24,
+  "downloaded_members_expanded": 21,
+  "nested_archives": [],
+  "missing_vs_local": [
+    "FLUX_Gyirong_2024.csv",
+    "FLUX_Gyirong_2025.csv",
+    "FLUX_Gyirong_2026.csv"
+  ],
+  "extra_vs_local": [],
+  "comparison_status": "different"
+}

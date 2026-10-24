@@ -184,11 +184,42 @@ def build_report(config: Config, store: Store, manifest: Manifest) -> tuple[Path
         )
     lines.append("")
 
-    lines.append("### 2.1 关键审计发现（人工摘要）")
+    lines.append("### 2.1 TPDC 文件下载核对")
+    lines.append("")
+    lines.append("| 来源 | 文件数 | 总大小 | 下载状态 | ZIP | 与本地附件差异 |")
+    lines.append("|---|---|---|---|---|---|")
+    for source in config.sources:
+        if source.kind != "tpdc_dataset":
+            continue
+        files_meta = _read_json(store.data_dir / "meta" / "tpdc" / f"{source.metadata_id}.files.json") or {}
+        status = files_meta.get("download_status") or "未运行"
+        total = files_meta.get("total_size_bytes")
+        total_text = f"{total / 1e6:.1f} MB" if isinstance(total, (int, float)) else "—"
+        if files_meta.get("zip_members") is not None:
+            zip_text = f"{files_meta.get('zip_members')} 文件 / {files_meta.get('zip_bytes', 0) / 1e6:.1f} MB"
+        else:
+            zip_text = "—"
+        missing = files_meta.get("missing_vs_local") or []
+        if missing:
+            diff_text = f"缺 {len(missing)} 个: {', '.join(missing[:3])}"
+        elif files_meta.get("comparison_status") == "same_nested":
+            diff_text = "一致（嵌套 ZIP）"
+        elif files_meta.get("comparison_status") == "same":
+            diff_text = "一致"
+        else:
+            diff_text = "—"
+        lines.append(
+            f"| `{source.id}` | {_md(files_meta.get('file_count') or '—')} | {_md(total_text)} | "
+            f"{_md(status)} | {_md(zip_text)} | {_md(diff_text)} |"
+        )
+    lines.append("")
+
+    lines.append("### 2.2 关键审计发现（人工摘要）")
     lines.append("")
     lines.append("> 以下结论来自 TPDC 元数据与本地附件核对；逐条可在 `data/meta/tpdc/*.json` 中复核。")
     lines.append("")
     lines.append("- **TPDC-01**：站点约 **28.86°N, 85.29°E, 4140 m**，距吉隆口岸约 **65 km**；时间为 **北京时间 UTC+8**；缺测 **9999.9**；QC 码 **0/1/2/4/8/9**。")
+    lines.append("- **TPDC-01 下载差异**：免登录 ZIP 只有 21 个文件，缺 `FLUX_Gyirong_2024/2025/2026.csv`；本地附件有 24 个，建模以本地附件为准。")
     lines.append("- **坐标冲突**：`getGoogleJson` 英文描述写 28.26°N，与 `detail` 的 28.86°N 不一致；本工具以 `detail` 为准，论文引用不要用 GoogleJson 的坐标。")
     lines.append("- **TPDC-06**：84 个沟域多边形，字段只有 `解译Time`/`影像Time`，**没有事件发生时间**；只能做“登记沟域”空间标签。")
     lines.append("- **TPDC-02/07/08**：日气温 2025 年不完整；DEM 获取时点未说明；人口为县级多边形（合计 17,536 人），不含居民点。")
@@ -243,6 +274,8 @@ def build_report(config: Config, store: Store, manifest: Manifest) -> tuple[Path
         citation = _citation_for(source, meta, entry)
         lines.append(f"- **{source.id}**：{citation}")
     lines.append("")
+    lines.append("- TPDC 八个数据集已生成 `data/meta/tpdc/<uuid>.ris`，可直接导入 Zotero/EndNote。")
+    lines.append("")
 
     lines.append("## 6. 失败、受限与合规说明")
     lines.append("")
@@ -264,8 +297,10 @@ def build_report(config: Config, store: Store, manifest: Manifest) -> tuple[Path
     lines.append("```powershell")
     lines.append('cd "03_编程手/数据获取"')
     lines.append("python -m mtmcm_data fetch all --refresh")
+    lines.append("python -m mtmcm_data download all")
     lines.append("python -m mtmcm_data report")
     lines.append("python -m mtmcm_data audit")
+    lines.append("python -m mtmcm_data validate")
     lines.append("python -m mtmcm_data verify")
     lines.append("```")
     lines.append("")

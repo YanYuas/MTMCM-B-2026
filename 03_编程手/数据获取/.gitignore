@@ -3,6 +3,8 @@ data/raw/*
 data/cache/*
 data/tables/*
 data/runs/*
+data/manual/*
+data/tpdc_files/*
 data/manifest.jsonl
 data/meta/errors/*
 logs/*
@@ -12,6 +14,8 @@ logs/*
 !data/reports/.gitkeep
 !data/runs/.gitkeep
 !data/meta/errors/.gitkeep
+!data/manual/.gitkeep
+!data/tpdc_files/.gitkeep
 !logs/.gitkeep
 
 __pycache__/

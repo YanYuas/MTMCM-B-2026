@@ -130,12 +130,15 @@
   ],
   "recorded_at": "2026-08-27 02:58:41",
   "description_source": "TPDC metadataView/detail + metadataView/getGoogleJson",
+  "citation_ris": "TY  - DATA\nTI  - 西藏日喀则市吉隆县泥石流灾害区吉隆县第七次人口普查数据\nAU  - 国家统计局\nAU  - 吉隆县统计局\nPY  - 2026/08/27\nUR  - https://dx.doi.org/\nPB  - 国家青藏高原科学数据中心\nDO  - \nM1  - Dataset\nER  - \n",
+  "citation_ris_path": "data/meta/tpdc/8662c472-43d6-4e92-bff8-e26923970642.ris",
+  "citation_ris_status": 200,
   "fetched_at": "2026-10-24T02:38:20+00:00",
   "http": {
     "detail_status": 200,
     "google_status": 200,
-    "detail_raw": "data/raw/tpdc_08_population/20261024T024306Z_083cb5cc.json",
-    "google_raw": "data/raw/tpdc_08_population/20261024T024306Z_3100ae49.json",
+    "detail_raw": "data/raw/tpdc_08_population/20261024T025033Z_083cb5cc.json",
+    "google_raw": "data/raw/tpdc_08_population/20261024T025033Z_3100ae49.json",
     "detail_from_cache": true,
     "google_from_cache": true
   }

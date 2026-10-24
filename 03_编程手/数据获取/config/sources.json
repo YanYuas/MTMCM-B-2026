@@ -7,7 +7,13 @@
     "min_interval_sec": 1.0,
     "cache_ttl_sec": 86400,
     "respect_robots": true,
-    "max_bytes": 52428800
+    "max_bytes": 52428800,
+    "study_area": {
+      "west": 85.15,
+      "south": 28.15,
+      "east": 85.55,
+      "north": 28.55
+    }
   },
   "sources": [
     {
@@ -134,6 +140,7 @@
       },
       "questions": ["背景"],
       "allow_blocked": true,
+      "manual_snapshot": "data/manual/baike_debris_flow.html",
       "min_interval_sec": 3.0,
       "cache_ttl_sec": 604800,
       "notes": "百度安全验证 403；不绕过反爬，只保留引用链接并记录失败证据，正文背景以自然资源部页面为准。"
@@ -205,7 +212,7 @@
       "parser": "copernicus",
       "url": "https://catalogue.dataspace.copernicus.eu/odata/v1/Products",
       "params": {
-        "$filter": "Collection/Name eq 'SENTINEL-2' and ContentDate/Start gt 2026-08-20T00:00:00.000Z and ContentDate/Start lt 2026-08-30T00:00:00.000Z and OData.CSC.Intersects(area=geography'SRID=4326;POLYGON((84.9 28.1,85.7 28.1,85.7 29.1,84.9 29.1,84.9 28.1))')",
+        "$filter": "Collection/Name eq 'SENTINEL-2' and ContentDate/Start gt 2026-08-20T00:00:00.000Z and ContentDate/Start lt 2026-08-30T00:00:00.000Z and OData.CSC.Intersects(area=geography'SRID=4326;POLYGON((85.15 28.15,85.55 28.15,85.55 28.55,85.15 28.55,85.15 28.15))')",
         "$top": 30,
         "$orderby": "ContentDate/Start asc"
       },
@@ -213,7 +220,7 @@
       "respect_robots": false,
       "min_interval_sec": 1.0,
       "cache_ttl_sec": 3600,
-      "notes": "公开元数据检索；空间过滤 bbox 84.9–85.7E, 28.1–29.1N，返回产品可能只覆盖边缘，使用前需按 GeoFootprint 与核心区求交。产品下载需要 Copernicus 账号/OAuth，本工具只取元数据并记录下载条件。"
+      "notes": "公开元数据检索；空间过滤 bbox 85.15–85.55E, 28.15–28.55N（吉隆口岸/沟谷核心区）；返回产品仍可能只覆盖边缘，使用前需按 GeoFootprint 与核心区求交。产品下载需要 Copernicus 账号/OAuth，本工具只取元数据并记录下载条件。"
     },
     {
       "id": "copernicus_s1",
@@ -222,7 +229,7 @@
       "parser": "copernicus",
       "url": "https://catalogue.dataspace.copernicus.eu/odata/v1/Products",
       "params": {
-        "$filter": "Collection/Name eq 'SENTINEL-1' and ContentDate/Start gt 2026-08-20T00:00:00.000Z and ContentDate/Start lt 2026-08-30T00:00:00.000Z and OData.CSC.Intersects(area=geography'SRID=4326;POLYGON((84.9 28.1,85.7 28.1,85.7 29.1,84.9 29.1,84.9 28.1))')",
+        "$filter": "Collection/Name eq 'SENTINEL-1' and ContentDate/Start gt 2026-08-20T00:00:00.000Z and ContentDate/Start lt 2026-08-30T00:00:00.000Z and OData.CSC.Intersects(area=geography'SRID=4326;POLYGON((85.15 28.15,85.55 28.15,85.55 28.55,85.15 28.55,85.15 28.15))')",
         "$top": 30,
         "$orderby": "ContentDate/Start asc"
       },
@@ -230,7 +237,7 @@
       "respect_robots": false,
       "min_interval_sec": 1.0,
       "cache_ttl_sec": 3600,
-      "notes": "SAR 元数据；空间过滤 bbox 84.9–85.7E, 28.1–29.1N，返回产品可能只覆盖边缘。用于冰崩/泥石流灾后范围核查，下载需要账号。"
+      "notes": "SAR 元数据；空间过滤 bbox 85.15–85.55E, 28.15–28.55N（吉隆口岸/沟谷核心区），返回产品可能只覆盖边缘。用于冰崩/泥石流灾后范围核查，下载需要账号。"
     }
   ]
 }

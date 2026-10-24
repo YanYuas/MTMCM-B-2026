@@ -1,0 +1,41 @@
+{
+  "source_id": "tpdc_02_temp",
+  "metadata_id": "94d1bc8e-b912-413e-bd2b-851f2ff8f8f7",
+  "files": [
+    {
+      "name": "2005-2025年吉隆县及周边县市逐日平均气温数据.zip",
+      "ext": "zip",
+      "size": 742948,
+      "type": "file",
+      "path": "94d1bc8e-b912-413e-bd2b-851f2ff8f8f7/2005-2025年吉隆县及周边县市逐日平均气温数据.zip"
+    },
+    {
+      "name": "数据引用-数据来源.doc",
+      "ext": "doc",
+      "size": 13824,
+      "type": "file",
+      "path": "94d1bc8e-b912-413e-bd2b-851f2ff8f8f7/数据引用-数据来源.doc"
+    }
+  ],
+  "file_count": 2,
+  "total_size_bytes": 756772,
+  "fetched_at": "2026-10-24T02:58:00+00:00",
+  "list_url": "https://www.tpdc.ac.cn/file/file/getRootFileDataList",
+  "download_status": "ok",
+  "zip_path": "data/tpdc_files/tpdc_02_temp/20261024T030534Z.zip",
+  "zip_bytes": 742775,
+  "zip_members": 2,
+  "member_names": [
+    "2005-2025年吉隆县及周边县市逐日平均气温数据/数据引用-数据来源.doc",
+    "2005-2025年吉隆县及周边县市逐日平均气温数据/2005-2025年吉隆县及周边县市逐日平均气温数据.zip"
+  ],
+  "downloaded_at": "2026-10-24T03:05:34+00:00",
+  "local_zip_members": 23,
+  "downloaded_members_expanded": 23,
+  "nested_archives": [
+    "2005-2025年吉隆县及周边县市逐日平均气温数据.zip"
+  ],
+  "missing_vs_local": [],
+  "extra_vs_local": [],
+  "comparison_status": "same_nested"
+}

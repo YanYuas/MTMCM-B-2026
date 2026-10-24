@@ -1,0 +1,63 @@
+{
+  "source_id": "tpdc_07_dem",
+  "metadata_id": "88b5ab22-19a1-480f-bcdc-cec41776ab46",
+  "files": [
+    {
+      "name": "DEM.tif",
+      "ext": "tif",
+      "size": 8437119,
+      "type": "file",
+      "path": "88b5ab22-19a1-480f-bcdc-cec41776ab46/DEM.tif"
+    },
+    {
+      "name": "DEM.tif.xml",
+      "ext": "xml",
+      "size": 5784,
+      "type": "file",
+      "path": "88b5ab22-19a1-480f-bcdc-cec41776ab46/DEM.tif.xml"
+    },
+    {
+      "name": "DEM.tif.ovr",
+      "ext": "ovr",
+      "size": 2276161,
+      "type": "file",
+      "path": "88b5ab22-19a1-480f-bcdc-cec41776ab46/DEM.tif.ovr"
+    },
+    {
+      "name": "DEM.tif.aux.xml",
+      "ext": "xml",
+      "size": 2298,
+      "type": "file",
+      "path": "88b5ab22-19a1-480f-bcdc-cec41776ab46/DEM.tif.aux.xml"
+    },
+    {
+      "name": "DEM.tfw",
+      "ext": "tfw",
+      "size": 81,
+      "type": "file",
+      "path": "88b5ab22-19a1-480f-bcdc-cec41776ab46/DEM.tfw"
+    }
+  ],
+  "file_count": 5,
+  "total_size_bytes": 10721443,
+  "fetched_at": "2026-10-24T03:00:14+00:00",
+  "list_url": "https://www.tpdc.ac.cn/file/file/getRootFileDataList",
+  "download_status": "ok",
+  "zip_path": "data/tpdc_files/tpdc_07_dem/20261024T030635Z.zip",
+  "zip_bytes": 10383758,
+  "zip_members": 5,
+  "member_names": [
+    "2026年8月26日日喀则市吉隆县泥石流灾害区DEM数据/DEM.tif",
+    "2026年8月26日日喀则市吉隆县泥石流灾害区DEM数据/DEM.tif.xml",
+    "2026年8月26日日喀则市吉隆县泥石流灾害区DEM数据/DEM.tif.ovr",
+    "2026年8月26日日喀则市吉隆县泥石流灾害区DEM数据/DEM.tif.aux.xml",
+    "2026年8月26日日喀则市吉隆县泥石流灾害区DEM数据/DEM.tfw"
+  ],
+  "downloaded_at": "2026-10-24T03:06:35+00:00",
+  "local_zip_members": 5,
+  "downloaded_members_expanded": 5,
+  "nested_archives": [],
+  "missing_vs_local": [],
+  "extra_vs_local": [],
+  "comparison_status": "same"
+}

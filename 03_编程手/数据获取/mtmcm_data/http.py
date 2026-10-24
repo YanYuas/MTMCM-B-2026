@@ -275,6 +275,7 @@ class HttpClient:
         retries: int | None = None,
         min_interval_sec: float | None = None,
         refresh: bool | None = None,
+        cache: bool = True,
     ) -> Response:
         method = method.upper()
         full_url = build_url(url, params)
@@ -292,7 +293,7 @@ class HttpClient:
         body_hash = sha256_bytes(body)[:16] if body else "nobody"
         key = sha256_bytes(f"{source_id}\n{method}\n{full_url}\n{body_hash}".encode("utf-8"))[:24]
 
-        if not (self.refresh if refresh is None else refresh):
+        if cache and not (self.refresh if refresh is None else refresh):
             cached = self._load_cache(source_id, key, ttl, self.offline)
             if cached is not None:
                 self.logger.debug("cache hit %s %s", source_id, full_url)
@@ -338,7 +339,8 @@ class HttpClient:
                         elapsed_ms=elapsed_ms,
                         sha256=sha256_bytes(raw),
                     )
-                self._save_cache(source_id, key, response)
+                if cache:
+                    self._save_cache(source_id, key, response)
                 return response
             except urllib.error.HTTPError as exc:
                 raw = _safe_read(exc, max_bytes)

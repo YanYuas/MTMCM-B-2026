@@ -1,17 +1,21 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import io
 import json
 import logging
+import os
 import sys
 import time
 import traceback
+import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 from .config import APP_ROOT, Config, Source, load_config
-from .http import FetchError, HttpClient, decode_body
+from .http import FetchError, HttpClient, decode_body, utc_now
 from .manifest import Manifest, ManifestEntry, new_run_id, summarise
 from .parsers import article as article_parser
 from .parsers import copernicus as copernicus_parser
@@ -19,6 +23,7 @@ from .parsers import nasa_power as nasa_parser
 from .parsers import open_meteo as open_meteo_parser
 from .parsers import tpdc as tpdc_parser
 from .store import Store
+from .ziputil import expand_zip_names
 
 
 LOGGER = logging.getLogger("mtmcm_data")
@@ -182,12 +187,42 @@ def fetch_tpdc(
             body=detail_resp.body,
         )
 
+    # TPDC 公开的 RIS 引用接口：给论文手一份可直接导入 Zotero/EndNote 的引用。
+    ris_text = ""
+    ris_path_rel = ""
+    ris_resp = None
+    try:
+        ris_resp = client.fetch(
+            source.id,
+            base + "/view/metadataView/downloadNew",
+            method="POST",
+            json_body={"metadataId": source.metadata_id, "type": "1"},
+            cache_ttl=source.cache_ttl_sec,
+            respect_robots=source.respect_robots,
+            max_bytes=source.max_bytes,
+            timeout=source.timeout_sec,
+            retries=source.retries,
+            min_interval_sec=source.min_interval_sec,
+            headers=source.headers,
+        )
+        ris_text = ris_resp.text()
+        if "TY  - DATA" not in ris_text:
+            raise FetchError("RIS 响应缺少 TY  - DATA", url=ris_resp.url, status=ris_resp.status, body=ris_resp.body)
+        ris_path = store.save_text(f"meta/tpdc/{source.metadata_id}.ris", ris_text)
+        ris_path_rel = store.rel(ris_path)
+    except FetchError as exc:
+        LOGGER.warning("  · RIS 引用获取失败（不阻塞元数据）: %s", exc)
+        ris_resp = None
+
     meta = tpdc_parser.normalize(
         detail_json,
         google_json,
         source,
         local_mirror_path=source.local_mirror_path,
     )
+    meta["citation_ris"] = ris_text
+    meta["citation_ris_path"] = ris_path_rel
+    meta["citation_ris_status"] = ris_resp.status if ris_resp is not None else None
     meta["fetched_at"] = detail_resp.fetched_at
     meta["http"] = {
         "detail_status": detail_resp.status,
@@ -221,6 +256,25 @@ def fetch_tpdc(
             )
         )
 
+    if ris_resp is not None and ris_path_rel:
+        manifest.append(
+            _manifest_entry(
+                run_id,
+                source,
+                url=ris_resp.final_url or ris_resp.url,
+                method="POST",
+                status=ris_resp.status,
+                fetched_at=ris_resp.fetched_at,
+                sha256=ris_resp.sha256,
+                size=len(ris_resp.body),
+                content_type=ris_resp.content_type,
+                raw_path=ris_path_rel,
+                parser="tpdc.ris",
+                from_cache=ris_resp.from_cache,
+                elapsed_ms=ris_resp.elapsed_ms,
+            )
+        )
+
     LOGGER.info(
         "  ✓ %s | DOI=%s | 时间=%s→%s | 本地附件=%s",
         meta.get("title", "")[:60],
@@ -232,6 +286,181 @@ def fetch_tpdc(
     return meta
 
 
+def download_tpdc_files(
+    source: Source,
+    client: HttpClient,
+    store: Store,
+    manifest: Manifest,
+    run_id: str,
+    *,
+    max_mb: float = 50.0,
+    include_large: bool = False,
+) -> dict[str, Any]:
+    """下载 TPDC 数据文件。
+
+    2026-10 的 TPDC 详情页提供“免登录下载”按钮，前端调用
+    `POST /file/file/batchDownloadFile?metadataId=...`，body `{"noToken": true}`。
+    这里复用同一公开接口，不伪造登录态、不绕过权限。
+    """
+    base = "https://www.tpdc.ac.cn"
+    list_url = base + "/file/file/getRootFileDataList"
+    list_resp = client.fetch(
+        source.id,
+        list_url,
+        params={"metadataId": source.metadata_id},
+        cache_ttl=3600,
+        respect_robots=source.respect_robots,
+        max_bytes=10_000_000,
+        timeout=source.timeout_sec,
+        retries=source.retries,
+        min_interval_sec=source.min_interval_sec,
+        headers=source.headers,
+    )
+    payload = json.loads(list_resp.text())
+    if str(payload.get("code")) != "200":
+        raise FetchError(
+            f"文件列表返回 code={payload.get('code')}: {payload.get('message')}",
+            url=list_url,
+            status=list_resp.status,
+            body=list_resp.body,
+        )
+    files = payload.get("data") or []
+    total_size = sum(int(item.get("size") or 0) for item in files)
+    file_meta: dict[str, Any] = {
+        "source_id": source.id,
+        "metadata_id": source.metadata_id,
+        "files": [
+            {
+                "name": item.get("name"),
+                "ext": item.get("ext"),
+                "size": item.get("size"),
+                "type": item.get("type"),
+                "path": item.get("path"),
+            }
+            for item in files
+            if isinstance(item, dict)
+        ],
+        "file_count": len(files),
+        "total_size_bytes": total_size,
+        "fetched_at": list_resp.fetched_at,
+        "list_url": list_url,
+        "download_status": "pending",
+    }
+    file_meta_path = store.save_json(f"meta/tpdc/{source.metadata_id}.files.json", file_meta)
+    list_raw = store.save_raw(source.id, list_resp)
+    manifest.append(
+        _manifest_entry(
+            run_id,
+            source,
+            url=list_resp.final_url or list_url,
+            method="GET",
+            status=list_resp.status,
+            fetched_at=list_resp.fetched_at,
+            sha256=list_resp.sha256,
+            size=len(list_resp.body),
+            content_type=list_resp.content_type,
+            raw_path=store.rel(list_raw),
+            parser="tpdc.filelist",
+            from_cache=list_resp.from_cache,
+        )
+    )
+    if not files:
+        raise FetchError("TPDC 文件列表为空", url=list_url, status=list_resp.status)
+
+    if total_size > max_mb * 1_000_000 and not include_large:
+        file_meta["download_status"] = "skipped_large"
+        file_meta["skip_reason"] = f"总大小 {total_size / 1e6:.1f} MB > max_mb={max_mb}；如需下载用 --include-large"
+        store.save_json(f"meta/tpdc/{source.metadata_id}.files.json", file_meta)
+        LOGGER.info(
+            "  - %s | %s 个文件 %.1f MB，超过 %.0f MB，跳过（--include-large 可下载）",
+            source.id,
+            len(files),
+            total_size / 1e6,
+            max_mb,
+        )
+        return file_meta
+
+    zip_url = base + "/file/file/batchDownloadFile"
+    zip_resp = client.fetch(
+        source.id,
+        zip_url,
+        method="POST",
+        params={"metadataId": source.metadata_id},
+        json_body={"noToken": True},
+        cache=False,
+        respect_robots=source.respect_robots,
+        max_bytes=max(total_size * 2 + 10_000_000, 20_000_000),
+        timeout=180,
+        retries=1,
+        min_interval_sec=source.min_interval_sec,
+        headers=source.headers,
+    )
+    if not zip_resp.body.startswith(b"PK"):
+        raise FetchError("下载响应不是 ZIP", url=zip_url, status=zip_resp.status, body=zip_resp.body[:200])
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    zip_path = store.save_bytes(f"tpdc_files/{source.id}/{stamp}.zip", zip_resp.body)
+    try:
+        with zipfile.ZipFile(io.BytesIO(zip_resp.body)) as archive:
+            bad = archive.testzip()
+            members = archive.namelist()
+    except zipfile.BadZipFile as exc:
+        raise FetchError(f"ZIP 校验失败: {exc}", url=zip_url, status=zip_resp.status) from exc
+    if bad:
+        raise FetchError(f"ZIP 内文件损坏: {bad}", url=zip_url, status=zip_resp.status)
+
+    file_meta.update(
+        {
+            "download_status": "ok",
+            "zip_path": store.rel(zip_path),
+            "zip_bytes": len(zip_resp.body),
+            "zip_members": len(members),
+            "member_names": members[:100],
+            "downloaded_at": zip_resp.fetched_at,
+        }
+    )
+    local_zip = source.local_mirror_path
+    if local_zip is not None and local_zip.exists() and local_zip.suffix.lower() == ".zip":
+        try:
+            local_names, _ = expand_zip_names(local_zip)
+            downloaded_names, nested = expand_zip_names(zip_resp.body)
+            file_meta["local_zip_members"] = len(local_names)
+            file_meta["downloaded_members_expanded"] = len(downloaded_names)
+            file_meta["nested_archives"] = nested
+            file_meta["missing_vs_local"] = sorted(local_names - downloaded_names)
+            file_meta["extra_vs_local"] = sorted(downloaded_names - local_names)
+            if not file_meta["missing_vs_local"] and not file_meta["extra_vs_local"]:
+                file_meta["comparison_status"] = "same_nested" if nested else "same"
+            else:
+                file_meta["comparison_status"] = "different"
+        except Exception as exc:  # noqa: BLE001 - 本地附件损坏不应阻塞下载结果
+            file_meta["local_zip_compare_error"] = str(exc)
+    store.save_json(f"meta/tpdc/{source.metadata_id}.files.json", file_meta)
+    manifest.append(
+        _manifest_entry(
+            run_id,
+            source,
+            url=zip_resp.final_url or zip_url,
+            method="POST",
+            status=zip_resp.status,
+            fetched_at=zip_resp.fetched_at,
+            sha256=zip_resp.sha256,
+            size=len(zip_resp.body),
+            content_type=zip_resp.content_type,
+            raw_path=store.rel(zip_path),
+            parser="tpdc.zip",
+        )
+    )
+    LOGGER.info(
+        "  ✓ %s | %s 个文件 %.1f MB → ZIP %.1f MB | %s",
+        source.id,
+        len(files),
+        total_size / 1e6,
+        len(zip_resp.body) / 1e6,
+        store.rel(zip_path),
+    )
+    return file_meta
+
+
 def fetch_article(
     source: Source,
     client: HttpClient,
@@ -239,6 +468,41 @@ def fetch_article(
     manifest: Manifest,
     run_id: str,
 ) -> dict[str, Any]:
+    # 先看有没有人工保存的快照：百度百科这类反爬站点，合规做法是人工保存
+    # 一份公开页面快照，再离线解析，而不是在爬虫里伪造 cookie / 绕过验证码。
+    manual = source.manual_snapshot_path
+    if manual is not None and manual.exists():
+        raw = manual.read_bytes()
+        meta = article_parser.parse(raw.decode("utf-8", errors="replace"), source)
+        fetched_at = utc_now()
+        meta.update(
+            {
+                "fetched_at": fetched_at,
+                "http_status": 200,
+                "source_mode": "manual_snapshot",
+                "raw_path": store.rel(manual),
+                "manual_note": "人工保存的公开页面快照；不经过反爬绕过。",
+            }
+        )
+        store.save_json(f"meta/articles/{source.id}.json", meta)
+        manifest.append(
+            _manifest_entry(
+                run_id,
+                source,
+                url=source.url,
+                method="MANUAL",
+                status=200,
+                fetched_at=fetched_at,
+                sha256=hashlib.sha256(raw).hexdigest(),
+                size=len(raw),
+                content_type="text/html",
+                raw_path=store.rel(manual),
+                parser="article.manual",
+            )
+        )
+        LOGGER.info("  ✓ %s | 人工快照 | %s 字", meta.get("title", "")[:60], meta.get("char_count"))
+        return meta
+
     response = client.fetch(
         source.id,
         source.url,
@@ -457,6 +721,79 @@ def cmd_fetch(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_download(args: argparse.Namespace) -> int:
+    config = load_config()
+    store = Store()
+    manifest = Manifest(store.data_dir / "manifest.jsonl")
+    client = _common_client(config, refresh=False, offline=False, insecure=args.insecure)
+
+    try:
+        ids = args.sources or None
+        if ids == ["all"]:
+            ids = None
+        sources = config.select(ids, include_disabled=args.include_disabled)
+    except KeyError as exc:
+        print(f"参数错误: {exc}", file=sys.stderr)
+        return 2
+    if args.exclude:
+        excluded = set(args.exclude)
+        sources = [s for s in sources if s.id not in excluded]
+
+    run_id = new_run_id()
+    records: list[dict[str, Any]] = []
+    LOGGER.info("download run %s | max_mb=%.0f include_large=%s", run_id, args.max_mb, args.include_large)
+    for source in sources:
+        if source.kind != "tpdc_dataset":
+            LOGGER.info("  - %s 不是 TPDC 数据集，跳过下载", source.id)
+            continue
+        try:
+            meta = download_tpdc_files(
+                source,
+                client,
+                store,
+                manifest,
+                run_id,
+                max_mb=args.max_mb,
+                include_large=args.include_large,
+            )
+            records.append(
+                {
+                    "source_id": source.id,
+                    "status": meta.get("download_status"),
+                    "file_count": meta.get("file_count"),
+                    "total_size_bytes": meta.get("total_size_bytes"),
+                    "zip_path": meta.get("zip_path"),
+                }
+            )
+        except FetchError as exc:
+            LOGGER.warning("  ✗ %s | %s", source.id, exc)
+            _record_failure(manifest, store, run_id, source, exc)
+            records.append({"source_id": source.id, "status": "failed", "error": str(exc)})
+            if args.fail_fast:
+                break
+        except Exception as exc:  # noqa: BLE001
+            LOGGER.error("  ✗ %s | %s", source.id, exc)
+            _record_failure(manifest, store, run_id, source, FetchError(str(exc), url=source.url))
+            records.append({"source_id": source.id, "status": "failed", "error": str(exc)})
+            if args.fail_fast:
+                break
+
+    store.save_run(
+        run_id,
+        {
+            "run_id": run_id,
+            "kind": "download",
+            "records": records,
+            "manifest_entries": len(manifest.entries_for_run(run_id)),
+        },
+    )
+    ok = sum(1 for r in records if r["status"] == "ok")
+    skipped = sum(1 for r in records if r["status"] == "skipped_large")
+    failed = sum(1 for r in records if r["status"] == "failed")
+    print(f"下载完成：ok={ok} skipped_large={skipped} failed={failed} | run_id={run_id}")
+    return 1 if failed else 0
+
+
 def cmd_report(args: argparse.Namespace) -> int:
     from .report import build_report
 
@@ -476,6 +813,22 @@ def cmd_audit(args: argparse.Namespace) -> int:
     path = build_event_audit(store)
     print(f"事件窗口核对：{store.rel(path)}")
     return 0
+
+
+def cmd_validate(args: argparse.Namespace) -> int:
+    from .validate import build_validation_report
+
+    config = load_config()
+    store = Store()
+    manifest = Manifest(store.data_dir / "manifest.jsonl")
+    md_path, csv_path, checks = build_validation_report(config, store, manifest)
+    failed = sum(1 for c in checks if c.status == "FAIL")
+    warned = sum(1 for c in checks if c.status == "WARN")
+    blocked = sum(1 for c in checks if c.status == "BLOCKED")
+    print(f"核验报告：{store.rel(md_path)}")
+    print(f"核验表格：{store.rel(csv_path)}")
+    print(f"FAIL={failed} WARN={warned} BLOCKED={blocked}")
+    return 1 if failed else 0
 
 
 def cmd_verify(args: argparse.Namespace) -> int:
@@ -550,8 +903,21 @@ def build_parser() -> argparse.ArgumentParser:
     p_report = sub.add_parser("report", help="生成来源审计报告（Markdown + CSV）")
     p_report.set_defaults(func=cmd_report)
 
+    p_download = sub.add_parser("download", help="下载 TPDC 数据文件（免登录公开接口）")
+    p_download.add_argument("sources", nargs="*", help="来源 ID；留空/all 表示全部 TPDC 数据集")
+    p_download.add_argument("--max-mb", type=float, default=50.0, help="单数据集总大小上限（MB），默认 50")
+    p_download.add_argument("--include-large", action="store_true", help="允许下载超过 --max-mb 的数据集")
+    p_download.add_argument("--exclude", nargs="*", default=[], help="排除的来源 ID")
+    p_download.add_argument("--include-disabled", action="store_true", help="包含 enabled=false 的来源")
+    p_download.add_argument("--insecure", action="store_true", help="跳过 TLS 校验（仅临时使用）")
+    p_download.add_argument("--fail-fast", action="store_true", help="遇到失败立即停止")
+    p_download.set_defaults(func=cmd_download)
+
     p_audit = sub.add_parser("audit", help="核对事件前 72 小时站点/再分析降水")
     p_audit.set_defaults(func=cmd_audit)
+
+    p_validate = sub.add_parser("validate", help="按来源逐项核验抓取质量")
+    p_validate.set_defaults(func=cmd_validate)
 
     p_verify = sub.add_parser("verify", help="核验 manifest、raw 文件和本地附件")
     p_verify.set_defaults(func=cmd_verify)

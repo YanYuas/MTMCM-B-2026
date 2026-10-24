@@ -79,6 +79,16 @@ class Store:
         self._atomic_write_bytes(path, payload)
         return path
 
+    def save_text(self, relative_path: str | Path, text: str) -> Path:
+        path = self.data_dir / relative_path if not Path(relative_path).is_absolute() else Path(relative_path)
+        self._atomic_write_bytes(path, text.encode("utf-8"))
+        return path
+
+    def save_bytes(self, relative_path: str | Path, payload: bytes) -> Path:
+        path = self.data_dir / relative_path if not Path(relative_path).is_absolute() else Path(relative_path)
+        self._atomic_write_bytes(path, payload)
+        return path
+
     def save_meta(self, source_id: str, obj: dict[str, Any], subdir: str = "") -> Path:
         folder = self.meta_dir / subdir if subdir else self.meta_dir
         folder.mkdir(parents=True, exist_ok=True)

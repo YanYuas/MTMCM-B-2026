@@ -1,0 +1,31 @@
+{
+  "source_id": "tpdc_04_glacier_nc",
+  "metadata_id": "c2875b3e-7fd4-4b38-9814-fef64193d1a4",
+  "files": [
+    {
+      "name": "Glacier topographic and dynamic drivers (Glacier-collapse and debris-flow disasters at Langtang Lirung, Nepal).nc",
+      "ext": "nc",
+      "size": 362728,
+      "type": "file",
+      "path": "c2875b3e-7fd4-4b38-9814-fef64193d1a4/Glacier topographic and dynamic drivers (Glacier-collapse and debris-flow disasters at Langtang Lirung, Nepal).nc"
+    }
+  ],
+  "file_count": 1,
+  "total_size_bytes": 362728,
+  "fetched_at": "2026-10-24T02:58:57+00:00",
+  "list_url": "https://www.tpdc.ac.cn/file/file/getRootFileDataList",
+  "download_status": "ok",
+  "zip_path": "data/tpdc_files/tpdc_04_glacier_nc/20261024T030556Z.zip",
+  "zip_bytes": 319603,
+  "zip_members": 1,
+  "member_names": [
+    "吉隆口岸山洪灾害-蓝塘里壤峰冰崩前冰川地形、冰厚及表面速度数据集/Glacier topographic and dynamic drivers (Glacier-collapse and debris-flow disasters at Langtang Lirung, Nepal).nc"
+  ],
+  "downloaded_at": "2026-10-24T03:05:56+00:00",
+  "local_zip_members": 1,
+  "downloaded_members_expanded": 1,
+  "nested_archives": [],
+  "missing_vs_local": [],
+  "extra_vs_local": [],
+  "comparison_status": "same"
+}

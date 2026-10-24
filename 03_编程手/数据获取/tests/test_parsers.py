@@ -1,12 +1,15 @@
 from __future__ import annotations
 
+import io
 import json
 import unittest
+import zipfile
 from datetime import datetime
 from pathlib import Path
 
 from mtmcm_data import audit
 from mtmcm_data.config import Source, load_config
+from mtmcm_data.ziputil import expand_zip_names
 from mtmcm_data.http import build_url
 from mtmcm_data.manifest import Manifest, ManifestEntry, new_run_id
 from mtmcm_data.parsers import article, copernicus, nasa_power, open_meteo, tpdc
@@ -111,6 +114,21 @@ class ArticleParserTests(unittest.TestCase):
         self.assertEqual(article.clean_text("a\ue004b\xa0c"), "ab c")
 
 
+class ZipUtilTests(unittest.TestCase):
+    def test_expand_nested_zip(self):
+        inner = io.BytesIO()
+        with zipfile.ZipFile(inner, "w") as zf:
+            zf.writestr("a.csv", "x")
+            zf.writestr("b.csv", "y")
+        outer = io.BytesIO()
+        with zipfile.ZipFile(outer, "w") as zf:
+            zf.writestr("inner.zip", inner.getvalue())
+            zf.writestr("readme.txt", "z")
+        names, nested = expand_zip_names(outer.getvalue())
+        self.assertEqual(names, {"a.csv", "b.csv", "readme.txt"})
+        self.assertEqual(nested, ["inner.zip"])
+
+
 class AuditTests(unittest.TestCase):
     def test_parse_station_time_without_leading_zero(self):
         parsed = audit.parse_station_time("2026-8-26 10:00")
@@ -171,7 +189,7 @@ class ApiParserTests(unittest.TestCase):
             "value": [
                 {
                     "Id": "p1",
-                    "Name": "S2B_TEST",
+                    "Name": "S2B_MSIL2A_TEST",
                     "ContentDate": {"Start": "2026-08-26T00:00:00Z", "End": "2026-08-26T00:10:00Z"},
                     "ContentLength": 1000000,
                     "Online": True,
@@ -183,10 +201,19 @@ class ApiParserTests(unittest.TestCase):
                 }
             ]
         }
-        meta, rows = copernicus.parse(payload, make_source(id="s2", kind="api_json", parser="copernicus"))
+        source = make_source(
+            id="s2",
+            kind="api_json",
+            parser="copernicus",
+            study_area={"west": 85.1, "south": 28.4, "east": 85.4, "north": 28.8},
+        )
+        meta, rows = copernicus.parse(payload, source)
         self.assertEqual(meta["row_count"], 1)
         self.assertAlmostEqual(rows[0]["bbox_west"], 85.0)
         self.assertAlmostEqual(rows[0]["bbox_north"], 29.0)
+        self.assertEqual(rows[0]["product_type"], "MSIL2A")
+        self.assertTrue(rows[0]["core_overlap"])
+        self.assertEqual(meta["core_overlap_count"], 1)
 
 
 class ConfigAndManifestTests(unittest.TestCase):
@@ -194,6 +221,8 @@ class ConfigAndManifestTests(unittest.TestCase):
         config = load_config()
         self.assertGreaterEqual(len(config.sources), 15)
         self.assertEqual(config.get("tpdc_01_hourly").metadata_id, "5b09afd1-d11b-4150-a291-50f0484dddf1")
+        self.assertEqual(config.get("copernicus_s2").study_area["west"], 85.15)
+        self.assertEqual(config.get("baike_debris_flow").manual_snapshot, "data/manual/baike_debris_flow.html")
         self.assertTrue(config.get("baike_debris_flow").enabled)
         self.assertTrue(config.get("baike_debris_flow").allow_blocked)
 
