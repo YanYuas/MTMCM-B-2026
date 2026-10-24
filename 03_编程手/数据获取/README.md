@@ -364,7 +364,7 @@ POST /file/file/batchDownloadFile?metadataId=<uuid>   body: {"noToken": true}
 |---|---|---|
 | `spatial_baseline/` | `tpdc06_gully_overlay_stats.csv`：84 个沟域 × DEM/坡度/汇流/土地覆盖 | **23/84 落在 DEM 内** |
 | `spatial_baseline/` | `tpdc06_gully_id_mask.tif`：沟域 ID 栅格（1–84） | 27.5 KB |
-| `spatial_baseline/` | `summary.json` | DEM 内 408,718 像元；平均坡度 34.04°；沟道像元 4,946 |
+| `spatial_baseline/` | `summary.json` | DEM 内 408,718 像元；平均坡度 34.04°；沟道像元 **7,574**（填洼 D8） |
 
 关键约束：TPDC-01 的 `9999.9`/`QC=8` 已标缺失、不补零；TPDC-02 的 2025 只有 214 天；TPDC-06 的 `解译Time`/`影像Time` 不是事件发生时间；TPDC-05 的 0 是 nodata，不是类别；TPDC-07 的 D8 未填洼（4,888 个 sink），坡度按中心纬度近似米制间距，沟道阈值 1,000 cells；主流路/叠加结果都是**空间登记**，不是事件概率。
 

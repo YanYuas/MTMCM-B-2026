@@ -278,8 +278,19 @@ def process_gully_overlay(store: Store) -> dict[str, Any]:
     out.mkdir(parents=True, exist_ok=True)
     dem, tags = _load_tiff(store.data_dir / "processed" / "tpdc07_dem" / "dem_core_30m.tif")
     slope, _ = _load_tiff(store.data_dir / "processed" / "tpdc07_dem" / "slope_deg.tif")
-    accumulation, _ = _load_tiff(store.data_dir / "processed" / "tpdc07_dem" / "flow_accumulation_cells.tif")
-    channel, _ = _load_tiff(store.data_dir / "processed" / "tpdc07_dem" / "channel_mask_acc1000.tif")
+    channel_manifest = json.loads(
+        (store.data_dir / "processed" / "tpdc07_dem" / "manifest.json").read_text(encoding="utf-8")
+    )
+    threshold = int(channel_manifest.get("channel_threshold_cells", 1000))
+    filled_acc_path = store.data_dir / "processed" / "tpdc07_channel" / "flow_accumulation_filled.tif"
+    if filled_acc_path.exists():
+        accumulation, _ = _load_tiff(filled_acc_path)
+        channel = (accumulation >= threshold).astype("uint8")
+        channel_source = "filled_d8"
+    else:
+        accumulation, _ = _load_tiff(store.data_dir / "processed" / "tpdc07_dem" / "flow_accumulation_cells.tif")
+        channel, _ = _load_tiff(store.data_dir / "processed" / "tpdc07_dem" / "channel_mask_acc1000.tif")
+        channel_source = "unfilled_d8"
     landcover, lc_tags = _load_tiff(store.data_dir / "processed" / "tpdc05_landcover" / "jilong_LUCD_2023.tif")
     geojson = json.loads(
         (store.data_dir / "processed" / "tpdc06_points" / "tpdc06_points.geojson").read_text(encoding="utf-8")
@@ -378,11 +389,14 @@ def process_gully_overlay(store: Store) -> dict[str, Any]:
         "total_cells_in_dem": sum(r["cells"] for r in in_dem),
         "mean_slope_deg_in_dem": round(float(np.mean([r["mean_slope_deg"] for r in in_dem])), 3) if in_dem else None,
         "channel_cells_in_dem": sum(r["channel_cells"] for r in in_dem),
+        "channel_source": channel_source,
+        "channel_threshold_cells": threshold,
         "notes": [
             "84 个沟域多边形不是 84 次独立事件；本表只做空间登记叠加",
             "GeoJSON 坐标为 CGCS2000 近似 WGS84；与 DEM 叠加以像元中心为准",
             "土地覆盖 0=nodata，majority 只在 1–10 中统计，但无官方图例",
             "土地覆盖按最近邻采样到 DEM 网格（全县 30 m → 核心沟谷 30 m）",
+            "沟道统计优先使用 batch 3 的填洼 D8；没有时退回 batch 2 的未填洼层",
             "in_dem=False 表示该沟域完全落在 DEM 实际范围之外",
         ],
     }
